@@ -1,0 +1,5 @@
+# Images are personal art assets — not tracked by default.
+# Place your images in the subfolders below and they will not be committed.
+images/*
+!images/.gitkeep
+!images/**/
