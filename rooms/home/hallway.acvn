@@ -1,4 +1,5 @@
 #begin start
+{{- register_daily "hallway_enc_done" 0 -}}
 {{ state = clothing_state }}
 {{ inhibition = get_attr "mc" "inhibition" }}
 {{ hour = game_hour }}
@@ -25,6 +26,103 @@ You step into the hallway.
 {{ else }}
 <p>The flat is quiet at this hour. Most of the lights are off. The front door at the far end looks darker than usual.</p>
 {{ if hall_roll == 1 }}<p><em>The building has gone still. Just the occasional creak of the structure settling.</em></p>{{ end }}
+{{ end }}
+{{ if state != "dressed" && vars.hallway_enc_done == 0 }}
+{{ enc_chance = random_int 1 3 }}
+{{ if enc_chance == 1 }}
+{{ rob_home = (char_at "robert" "home_robert") || (char_at "robert" "home_livingroom") || (char_at "robert" "home_kitchen") }}
+{{ mom_home = (char_at "sandra" "home_parentroom") || (char_at "sandra" "home_livingroom") || (char_at "sandra" "home_kitchen") }}
+{{ dad_home = (char_at "thomas" "home_parentroom") || (char_at "thomas" "home_livingroom") || (char_at "thomas" "home_kitchen") }}
+{{ enc_who = random_int 1 3 }}
+{{ if enc_who == 1 && rob_home }}
+{{ vars.hallway_enc_done = 1 }}
+{{ rob_rel = get_attr "robert" "relationship" }}
+{{ if state == "underwear" }}
+<p>{{ robert.properties.firstname }}'s door swings open just as you step into the hallway. He walks out, looks up — and stops.</p>
+{{ if rob_rel >= 30 }}
+<p>A beat of silence. Then a slow, almost involuntary smile. "Morning," he says, voice carefully neutral. His gaze doesn't quite drop — but it takes visible effort to keep it up.</p>
+{{ attr_change "mc" "mood" 5 }}
+{{ attr_change "mc" "horny" 8 }}
+{{ attr_change "robert" "mood" 8 }}
+{{ attr_change "robert" "horny" 15 }}
+{{ else }}
+<p>His ears go red. He fixes his gaze very deliberately on the wall above your head. "I — hi. Sorry." He shuffles past, staring hard at nothing.</p>
+{{ attr_change "mc" "mood" -2 }}
+{{ attr_change "mc" "horny" 5 }}
+{{ attr_change "robert" "mood" 3 }}
+{{ attr_change "robert" "horny" 8 }}
+{{ end }}
+{{ else }}
+<p>{{ robert.properties.firstname }}'s door opens and he steps out — then immediately takes a half-step back, hand still on the handle.</p>
+{{ if rob_rel >= 30 }}
+<p>He stands there for a second, just looking. Then, quietly: "Okay." He walks past with his gaze fixed precisely forward, but his ears are pink.</p>
+{{ attr_change "mc" "mood" 3 }}
+{{ attr_change "mc" "horny" 15 }}
+{{ attr_change "robert" "mood" 5 }}
+{{ attr_change "robert" "horny" 25 }}
+{{ else }}
+<p>"I — sorry —" He backs into his doorway. "I didn't — I'm going back in." The door closes. You hear him exhale on the other side.</p>
+{{ attr_change "mc" "mood" -3 }}
+{{ attr_change "mc" "horny" 10 }}
+{{ attr_change "robert" "mood" -2 }}
+{{ attr_change "robert" "horny" 15 }}
+{{ end }}
+{{ end }}
+{{ else if enc_who == 2 && mom_home }}
+{{ vars.hallway_enc_done = 1 }}
+{{ mom_mood = get_attr "sandra" "mood" }}
+{{ if state == "underwear" }}
+<p>{{ sandra.properties.firstname }} steps out of the kitchen and stops when she sees you. "Oh!" A hand goes to her chest.</p>
+{{ if mom_mood >= 65 }}
+<p>She recovers quickly — a small, bemused look. "Good morning to you too." She turns back to the kitchen without another word.</p>
+{{ attr_change "mc" "mood" 3 }}
+{{ attr_change "sandra" "mood" 2 }}
+{{ attr_change "sandra" "horny" 5 }}
+{{ else }}
+<p>"Put something on, would you," she says, with a look that lands somewhere between disapproving and resigned. She goes back the way she came.</p>
+{{ attr_change "mc" "mood" -5 }}
+{{ attr_change "sandra" "mood" -3 }}
+{{ attr_change "sandra" "horny" 3 }}
+{{ end }}
+{{ else }}
+<p>{{ sandra.properties.firstname }} comes around the corner — and stops. A long pause. She looks at you. You look at her.</p>
+{{ if mom_mood >= 65 }}
+<p>"...Right," she says, very evenly. She turns and goes back the way she came. From the kitchen, a moment later, you hear what might just possibly be a quiet laugh.</p>
+{{ attr_change "mc" "mood" -2 }}
+{{ attr_change "mc" "horny" 8 }}
+{{ attr_change "sandra" "mood" 3 }}
+{{ attr_change "sandra" "horny" 12 }}
+{{ else }}
+<p>"This is a shared space," she says quietly. Not angry — just very clear. She turns around. "Please put something on before you come out here."</p>
+{{ attr_change "mc" "mood" -8 }}
+{{ attr_change "sandra" "mood" -5 }}
+{{ attr_change "sandra" "horny" 8 }}
+{{ end }}
+{{ end }}
+{{ else if enc_who == 3 && dad_home }}
+{{ vars.hallway_enc_done = 1 }}
+{{ dad_mood = get_attr "thomas" "mood" }}
+{{ if state == "underwear" }}
+<p>{{ thomas.properties.firstname }} appears from the living room and stops the moment he sees you. He looks at the ceiling — immediately, instinctively.</p>
+{{ if dad_mood >= 55 }}
+<p>"Right." He clears his throat. "I'll just—" He pivots and retreats back into the living room without another word.</p>
+{{ attr_change "mc" "mood" -4 }}
+{{ attr_change "thomas" "mood" -3 }}
+{{ attr_change "thomas" "horny" 5 }}
+{{ else }}
+<p>"This is a shared flat," he says to the ceiling tiles, firmly. Then he turns around and goes back the way he came.</p>
+{{ attr_change "mc" "mood" -7 }}
+{{ attr_change "thomas" "mood" -5 }}
+{{ attr_change "thomas" "horny" 3 }}
+{{ end }}
+{{ else }}
+<p>{{ thomas.properties.firstname }} rounds the corner — sees you — and makes an immediate about-face. No words. You hear him exhale slowly from the other side of the door.</p>
+{{ attr_change "mc" "mood" -10 }}
+{{ attr_change "thomas" "mood" -8 }}
+{{ attr_change "thomas" "horny" 5 }}
+{{ end }}
+{{ end }}
+{{ end }}
 {{ end }}
 [[Bedroom, home_room]]
 [[Bathroom, home_bathroom]]
