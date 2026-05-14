@@ -1,0 +1,362 @@
+#begin start
+{{- register_daily "frank_chat_done_today" false -}}
+{{ if vars.frank_nights_stayed == null }}{{ vars.frank_nights_stayed = 0 }}{{ end }}
+{{ frank_here = char_at "frank" "outdoor_frank_shelter" }}
+{{ quest_stage = quest_step "good_person" }}
+{{ hour = game_hour }}
+{{ has_food = (item_count "groceries") > 0 || (item_count "pizza") > 0 }}
+{{ if quest_stage == -1 }}{{ start_quest "good_person" }}{{ end }}
+{{ quest_stage = quest_step "good_person" }}
+You duck through a gap in the fence and follow a narrow path between the backs of buildings. Frank's shelter is tucked into a recess where a fire escape meets a low overhang — walls built from wooden pallets and corrugated metal sheets, a tarpaulin roof weighted with bricks, a strip of carpet laid over the ground for a floor.
+<p>It shouldn't feel like anywhere. Somehow, barely, it does.</p>
+{{ if frank_here }}
+<p>Frank is sitting on an upturned crate, hands around a tin cup of something warm. He straightens when he sees you — the reflex of someone who remembers being the kind of person who stands when company arrives.</p>
+{{ if quest_stage == 0 }}
+[[Say hello, outdoor_frank_shelter, frank_intro]]
+{{ else if quest_stage == 1 }}
+{{ if has_food }}
+[[Bring out the food, outdoor_frank_shelter, frank_food_deliver]]
+{{ end }}
+{{ if !vars.frank_chat_done_today }}[[Talk to Frank, outdoor_frank_shelter, frank_chat_general]]{{ end }}
+[["Sorry, not today.", outdoor_frank_shelter, frank_food_decline]]
+{{ else if quest_stage == 2 }}
+[[Talk to Frank, outdoor_frank_shelter, frank_shower_talk]]
+{{ if !vars.frank_chat_done_today }}[[Chat, outdoor_frank_shelter, frank_chat_general]]{{ end }}
+{{ else if quest_stage == 3 }}
+{{ if !vars.frank_chat_done_today }}[[Talk to Frank, outdoor_frank_shelter, frank_chat_general]]{{ end }}
+{{ if hour >= 20 || hour < 5 }}
+[[Stay for the night, outdoor_frank_shelter, frank_overnight_ask]]
+{{ else }}
+<p style="color:#666; font-size:11px; font-style:italic">Come back in the evening if you want to stay a while.</p>
+{{ end }}
+{{ else if quest_stage >= 4 }}
+{{ if !vars.frank_chat_done_today }}[[Talk to Frank, outdoor_frank_shelter, frank_chat_general]]{{ end }}
+{{ if hour >= 20 || hour < 5 }}
+[[Stay for the night, outdoor_frank_shelter, frank_overnight_ask]]
+{{ end }}
+{{ end }}
+{{ else }}
+<p style="color:#666; font-size:11px; font-style:italic">Frank isn't here right now.</p>
+{{ end }}
+[[Back to the street, outdoor_street]]
+#end
+
+
+#begin frank_intro
+{{ advance_quest "good_person" }}
+{{ advance_time 25 }}
+{{ attr_change "mc" "mood" 5 }}
+{{ attr_change "frank" "mood" 15 }}
+{{ attr_change "frank" "relationship" 10 }}
+He sets his tin cup down.
+<p>"You actually came." There's a quiet disbelief in it — like he'd steeled himself for disappointment and you didn't deliver. "I wasn't sure you would."</p>
+<p>He gestures at the upturned crate across from him. You sit. He talks — carefully at first, then more easily. Three months in the shelter. Before that, a council hostel in the next district. Before that, a run of things he doesn't go into in detail. He was a mechanic, once. He had a flat. He had things.</p>
+<p>"I'm not looking for sympathy," he says. "I just — you're the first person who's come in and actually sat down." He looks at his hands. "It's strange how much that means."</p>
+<p>A pause. He picks up the cup again.</p>
+<p>"I don't suppose..." He stops. Shakes his head. "Sorry. You've already been more than kind. Ignore me."</p>
+[["What were you going to say?", outdoor_frank_shelter, frank_food_request]]
+[["It's no trouble.", outdoor_frank_shelter, frank_food_request]]
+[[Just listen., outdoor_frank_shelter, frank_intro_end]]
+#end
+
+#begin frank_food_request
+{{ advance_time 5 }}
+"Groceries," he says, as if the word embarrasses him. "Or anything, really. I manage. But some days I don't bother eating, because there's no one to eat with, and it seems..." He trails off. "Foolish. I know it sounds foolish."
+<p>"It doesn't," you say.</p>
+<p>He nods. Doesn't quite meet your eyes. "Whenever you're passing a shop. No rush. No obligation."</p>
+<p style="color:#4CAF50; font-size:11px; font-style:italic">Quest updated: Bring Frank something to eat.</p>
+[[Back to the shelter, outdoor_frank_shelter]]
+#end
+
+#begin frank_intro_end
+{{ advance_time 5 }}
+You don't push. After a moment he nods — as if you'd answered a question he hadn't quite asked out loud.
+<p>"Right." He picks up the cup. "Well. Thank you. For coming. For sitting." He means it very specifically. "That's all I wanted to say."</p>
+<p style="color:#4CAF50; font-size:11px; font-style:italic">Quest updated: Bring Frank something to eat.</p>
+[[Back to the shelter, outdoor_frank_shelter]]
+#end
+
+
+#begin frank_chat_general
+{{ vars.frank_chat_done_today = true }}
+{{ frank_rel = get_attr "frank" "relationship" }}
+{{ quest_stage = quest_step "good_person" }}
+{{ advance_time 20 }}
+{{ attr_change "mc" "mood" 5 }}
+{{ attr_change "frank" "mood" 8 }}
+{{ if quest_stage == 1 }}
+<p>He talks about the neighbourhood — things he's observed from his spot on the street. The rhythms of the city, seen from the outside. You realise he notices a great deal more than people probably think he does, sitting there.</p>
+<p>"I'd offer you something," he says, looking around the spare space. "I haven't got anything to offer." A pause. "Yet."</p>
+{{ else if quest_stage == 2 }}
+<p>He seems more settled today — fuller, the way people are when they've eaten properly. He thanks you again for the food without drawing it out. Just a quiet, genuine word, no performance around it.</p>
+<p>You talk for a while. He has a dry sense of humour that surfaces in unexpected places, half-hidden under the careful way he speaks.</p>
+{{ else if quest_stage == 3 }}
+<p>Somewhere in the conversation it occurs to you that you know more about him now than you know about most people you've met in the last few months. He's cautious about being known — but he lets it happen in small increments, like opening a window a crack at a time.</p>
+{{ else }}
+{{ if frank_rel >= 50 }}
+<p>He has a cup out for you when you arrive — the cleaner one, without the chip on the rim. You're not sure when that started.</p>
+<p>The conversation goes easily. There are things he only says to you, you've started to realise. Things he's working out by saying them.</p>
+{{ else if frank_rel >= 30 }}
+<p>He relaxes when you sit down. The shoulders drop, the careful watching leaves his face. He's been thinking, he says — about something you said last time. He turns it over, examines it, gives it back.</p>
+{{ else }}
+<p>He talks a little, you talk a little. The shelter is quiet around you. Outside, the sounds of the street go on without you.</p>
+{{ end }}
+{{ end }}
+[[Back to the shelter, outdoor_frank_shelter]]
+#end
+
+
+#begin frank_food_deliver
+{{ advance_quest "good_person" }}
+{{ has_groceries = (item_count "groceries") > 0 }}
+{{ if has_groceries }}{{ spend_item "groceries" 1 }}{{ else }}{{ spend_item "pizza" 1 }}{{ end }}
+{{ attr_change "frank" "mood" 35 }}
+{{ attr_change "frank" "relationship" 15 }}
+{{ attr_change "mc" "mood" 15 }}
+{{ advance_time 10 }}
+You pull out the bag. He goes very still.
+<p>"You brought something." Not a question. Something in his voice he doesn't quite keep down.</p>
+<p>He takes it carefully — both hands, like it's more fragile than it is. He doesn't eat immediately. He sets it on the crate, straightens it, and looks at it for a moment.</p>
+<p>"Thank you." That's all. Two words, and no air left over in them.</p>
+<p>You watch him eat. He doesn't rush.</p>
+<p style="color:#4CAF50; font-size:11px; font-style:italic">Quest updated: Help Frank get a proper shower.</p>
+[[Back to the shelter, outdoor_frank_shelter]]
+#end
+
+#begin frank_food_decline
+{{ attr_change "mc" "mood" -8 }}
+{{ attr_change "frank" "mood" -15 }}
+{{ attr_change "frank" "relationship" -8 }}
+{{ advance_time 5 }}
+"Not today." Or something to that effect.
+<p>Frank nods. "Of course." He wraps both hands around the cup and looks at somewhere that isn't you. "Another time, maybe."</p>
+<p>He doesn't say anything else. He doesn't need to.</p>
+<p>The feeling that follows you home sits somewhere between your shoulder blades for the rest of the afternoon.</p>
+[[Back to the street, outdoor_street]]
+#end
+
+
+#begin frank_shower_talk
+{{ vars.frank_chat_done_today = true }}
+{{ advance_time 20 }}
+{{ attr_change "frank" "mood" 5 }}
+He's quiet for a moment. Then:
+<p>"Can I tell you something ridiculous?" He doesn't quite wait for an answer. "I've been thinking about a shower. Not even a long one. Just — hot water, and a door that closes properly." He looks at his own hands. "I know. In the grand scheme of things."</p>
+<p>"It's not ridiculous," you say.</p>
+<p>He almost smiles. "The thing is, I don't — I wouldn't ask. I know I wouldn't. But I thought about it, and then I couldn't stop thinking about it, and—" He stops. "Sorry. Ignore me. It's not your problem."</p>
+[["You could come to mine.", outdoor_frank_shelter, frank_shower_offer]]
+[["I'm sorry, I can't.", outdoor_frank_shelter, frank_shower_decline]]
+#end
+
+#begin frank_shower_offer
+{{ attr_change "frank" "mood" 30 }}
+{{ attr_change "frank" "relationship" 15 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ advance_time 5 }}
+He looks at you like you've said something in another language.
+<p>"To your — no. No, I couldn't ask you to do that. The people you live with—"</p>
+<p>"I'll work it out."</p>
+<p>A long pause. He looks at the wall. Then at you.</p>
+<p>"Are you sure?"</p>
+<p>"Yes."</p>
+<p>Something moves through his face. He straightens. "Alright." Very quietly: "Thank you."</p>
+<p style="color:#4CAF50; font-size:11px; font-style:italic">Quest updated: Help Frank get a proper shower.</p>
+[[Arrange a time, outdoor_frank_shelter, frank_shower_arrange]]
+#end
+
+#begin frank_shower_arrange
+{{ advance_quest "good_person" }}
+{{ advance_time 90 }}
+{{ attr_change "mc" "energy" -10 }}
+{{ attr_change "frank" "mood" 35 }}
+{{ attr_change "frank" "relationship" 20 }}
+{{ attr_change "mc" "mood" 15 }}
+You pick a quiet morning — early, when the flat is empty. You bring Frank in through the stairwell, quickly, no conversation. The bathroom door closes behind him.
+<p>You wait in the hallway with the door shut. You hear the shower start — and then it runs for a very long time.</p>
+<p>When he comes out, hair damp and a borrowed towel around his shoulders, he has an expression you don't have an exact word for. Not younger. Not different. Just more like himself.</p>
+<p>"I forgot," he says finally, "what that felt like."</p>
+<p>You get him back out the way you came. On the street he shakes your hand. You've never done that before — shaken hands. It feels heavier than a handshake usually does.</p>
+<p style="color:#4CAF50; font-size:11px; font-style:italic">Quest updated: Stay with Frank for the night.</p>
+[[Back to the shelter, outdoor_frank_shelter]]
+#end
+
+#begin frank_shower_decline
+{{ attr_change "mc" "mood" -10 }}
+{{ attr_change "frank" "mood" -20 }}
+{{ attr_change "frank" "relationship" -12 }}
+{{ advance_time 5 }}
+"I'm sorry. I can't."
+<p>"Of course." He nods before you've even finished. "I didn't mean — it was a foolish thought. Don't worry about it at all."</p>
+<p>He turns back to his crate. The subject is closed, and something else goes with it, at least for today.</p>
+<p>You leave with the image of him still in your mind — the careful way he made himself smaller.</p>
+[[Back to the street, outdoor_street]]
+#end
+
+
+#begin frank_overnight_ask
+{{ advance_time 10 }}
+Frank glances at the tarpaulin overhead — a strip of dark sky visible through the gaps, a single streetlamp caught between the rooflines.
+<p>"I know it isn't much to offer," he says. "But it's dry, and it's less cold than it was." A pause. "It gets quiet in a particular way at night, alone. You stop noticing after a while. But then someone visits, and you notice again."</p>
+<p>He meets your eyes briefly, then looks away. "You don't have to. I just thought I'd ask."</p>
+{{ if hour >= 22 || hour < 2 }}
+<p style="color:#888; font-size:11px; font-style:italic">It's very late. The streets outside are dark and quiet.</p>
+{{ end }}
+[[Stay for the night, outdoor_frank_shelter, frank_overnight_stay]]
+[["I should get home.", outdoor_frank_shelter, frank_overnight_decline]]
+#end
+
+#begin frank_overnight_stay
+{{ vars.frank_nights_stayed = vars.frank_nights_stayed + 1 }}
+{{ nights = vars.frank_nights_stayed }}
+{{ nights_mod = nights % 5 }}
+{{ if (quest_step "good_person") == 3 }}{{ advance_quest "good_person" }}{{ end }}
+{{ attr_change "mc" "energy" 50 }}
+{{ attr_change "mc" "hunger" -20 }}
+{{ attr_change "frank" "mood" 20 }}
+{{ attr_change "frank" "relationship" 5 }}
+{{ if nights == 1 }}
+He settles the blankets — there are more of them than you expected, layered thickly on the ground — and you work out, without discussing it, which side is yours.
+<p>He talks for a while. Small things: the stray cat that comes by some mornings, a market stall he likes, a song he heard through someone's window last week that he couldn't place. His voice is low in the shelter's quiet, and at some point it trails off into nothing.</p>
+<p>The city goes on outside. The tarpaulin gives a little in the wind. You're warmer than you expected.</p>
+<p>You sleep well.</p>
+<p style="color:#4CAF50; font-size:11px; font-style:italic">Quest complete: Be a good person! — for now.</p>
+[[Sleep, outdoor_frank_shelter, frank_morning]]
+{{ else if nights_mod == 0 && nights == 5 }}
+The shelter is dark — the streetlamp light finding its way in only through thin gaps in the corrugated metal, striping the floor in orange.
+<p>Frank falls asleep before you do, or seems to. His breathing slows and evens. The city does its late-night things outside.</p>
+<p>Somewhere in the small hours, you become aware of something warm against your hand. Not quite holding it — just resting there, his fingers alongside yours on the blanket.</p>
+<p>You open your eyes. His eyes are closed. His breathing hasn't changed.</p>
+<p>It might be accidental. It might not be.</p>
+[[Leave it where it is, outdoor_frank_shelter, frank_esc1_accept]]
+[[Move your hand away quietly, outdoor_frank_shelter, frank_esc1_reject]]
+{{ else if nights_mod == 0 && nights == 10 }}
+You've both developed a routine. A particular way of settling in — which side, which blanket, the silence that follows the talking.
+<p>Tonight he speaks longer than usual before the quiet comes. About where he grew up. A woman he was with, a long time ago. A summer. He doesn't dwell on the sadder edges of any of it — just lets the memories surface briefly and moves on. But you listen properly. Which is maybe why you don't notice, when the silence finally comes, that he hasn't quite moved back to his side.</p>
+<p>You wake at some point in the night. His arm is around you. Not pressing. Just there — the weight of it settled across you while you slept, the way something arrives when you're not watching.</p>
+[[Leave it, let him sleep, outdoor_frank_shelter, frank_esc2_accept]]
+[[Shift away carefully, outdoor_frank_shelter, frank_esc2_reject]]
+{{ else if nights_mod == 0 && nights == 15 }}
+The shelter is very still. The city is further away tonight, or seems to be.
+<p>He says your name softly in the dark. Not to wake you — you're already half-awake. Just to say it. The way you say something to make it real.</p>
+<p>"You don't know what it means," he says quietly. "Having someone here. Someone who just—" He stops. "I think about you. When you're not here."</p>
+<p>A long pause. The tarpaulin shifts in the wind.</p>
+<p>Then — slowly, leaving time for you to stop it — he leans toward you. His mouth, when it finds yours, is careful. Asking, not taking. Waiting to find out what kind of answer you'll give.</p>
+[[Kiss him back, outdoor_frank_shelter, frank_esc3_accept]]
+[["Frank—", outdoor_frank_shelter, frank_esc3_reject]]
+{{ else if nights_mod == 0 && nights >= 20 }}
+There are no more firsts.
+<p>The shelter is its own kind of familiar by now — the cold draft from the east-facing gap, the particular creak of the fire escape above in wind, the way the streetlamp light angles through at exactly this hour and falls across the floor in a long stripe.</p>
+<p>Frank is already settled when you arrive. He doesn't ask if you're staying. Neither of you does. The arrangement has grown up around you without either of you naming it.</p>
+<p>Later — in the warmth of whatever this has become — you think about how strange it is, what becomes ordinary.</p>
+{{ attr_change "mc" "horny" 20 }}
+{{ attr_change "mc" "mood" 12 }}
+{{ attr_change "frank" "horny" 20 }}
+{{ attr_change "frank" "relationship" 5 }}
+[[Sleep, outdoor_frank_shelter, frank_morning]]
+{{ else }}
+Night {{ nights }}. By now the shelter has its own geography — you know which patch of blanket is warmest, which gap lets the wind through, where to put your shoes so you'll find them in the dark.
+<p>He talks a little before the quiet comes. You do too. The conversation isn't about anything in particular, which is, you've started to think, its own kind of thing.</p>
+<p>At some point the talking stops and sleep takes over. You drift off to the sound of the street far away, and the steady quiet of him beside you.</p>
+{{ attr_change "mc" "mood" 5 }}
+{{ attr_change "frank" "mood" 10 }}
+[[Sleep, outdoor_frank_shelter, frank_morning]]
+{{ end }}
+#end
+
+#begin frank_overnight_decline
+{{ attr_change "mc" "mood" -12 }}
+{{ attr_change "mc" "energy" -5 }}
+{{ attr_change "frank" "mood" -10 }}
+{{ attr_change "frank" "relationship" -5 }}
+{{ advance_time 20 }}
+"I should get home," you say.
+<p>Frank nods. Something shifts in his face — quickly, before he can stop it — then settles. "Of course. Be careful out there."</p>
+<p>The streets are very dark at this hour. Quiet in the way that makes you aware of every footstep — yours and anyone else's. There's a sound behind you for half a block that's probably nothing, probably just the city doing what cities do at night. The streetlamps pool orange on the pavement and do nothing much about the spaces between them.</p>
+<p>You get home. You lock the door. You stand in the hallway for a moment longer than you need to, not entirely sure what you're waiting for.</p>
+[[Back to the street, outdoor_street]]
+#end
+
+
+#begin frank_esc1_accept
+{{ attr_change "mc" "horny" 10 }}
+{{ attr_change "mc" "mood" 5 }}
+{{ attr_change "frank" "horny" 10 }}
+{{ attr_change "frank" "relationship" 8 }}
+You don't move.
+<p>His breathing stays even. His hand stays where it is — barely touching, fingers alongside yours on the blanket, like something anchored there.</p>
+<p>You close your eyes. Sleep comes back slowly, warmer than before.</p>
+<p>In the morning, his hand is where it was all night. Neither of you mentions it.</p>
+[[Morning, outdoor_frank_shelter, frank_morning]]
+#end
+
+#begin frank_esc1_reject
+{{ attr_change "mc" "horny" 3 }}
+{{ attr_change "frank" "relationship" -3 }}
+You shift your hand away. Gently, without waking him.
+<p>He stirs anyway. "Sorry," he murmurs, half-asleep, and means it. He moves back to his side of the blanket and doesn't reach for you again.</p>
+<p>In the morning he doesn't mention it.</p>
+[[Morning, outdoor_frank_shelter, frank_morning]]
+#end
+
+
+#begin frank_esc2_accept
+{{ attr_change "mc" "horny" 15 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ attr_change "frank" "horny" 15 }}
+{{ attr_change "frank" "relationship" 12 }}
+You don't move.
+<p>His arm is heavier than you expected. Warmer. You lie there in the dark, watching the faint orange stripe on the floor, listening to his breathing.</p>
+<p>At some point you stop thinking about it and just let it be what it is.</p>
+<p>In the morning he wakes first, and by the time you open your eyes he's sitting up with the coffee on. He says good morning like nothing happened. But something in the way he says it is different — quieter, more careful — and you notice, and he knows you notice.</p>
+[[Morning, outdoor_frank_shelter, frank_morning]]
+#end
+
+#begin frank_esc2_reject
+{{ attr_change "mc" "horny" 5 }}
+{{ attr_change "frank" "relationship" -4 }}
+You shift, gently but clearly. He wakes.
+<p>For a moment neither of you moves. Then he takes his arm back. "Sorry," he says quietly. No excuse, no explanation. Just that.</p>
+<p>You lie there in the dark for a while. Eventually sleep comes back.</p>
+[[Morning, outdoor_frank_shelter, frank_morning]]
+#end
+
+
+#begin frank_esc3_accept
+{{ attr_change "mc" "horny" 30 }}
+{{ attr_change "mc" "mood" 15 }}
+{{ attr_change "frank" "horny" 35 }}
+{{ attr_change "frank" "relationship" 20 }}
+{{ attr_change "frank" "mood" 25 }}
+You don't pull back.
+<p>He kisses you again — less carefully this time, though still gently. His hand finds the side of your face. He kisses you like someone who has been saving it and is trying not to spend it all at once.</p>
+<p>After a while the conversation, if it could be called that, ends and something else begins. The shelter is very quiet. The blankets shift.</p>
+<p>His hands are warm. Warmer than you expected.</p>
+<p>Neither of you talks about it in the morning. Something has settled, though — a new kind of familiar. Something different from what was there before.</p>
+[[Morning, outdoor_frank_shelter, frank_morning]]
+#end
+
+#begin frank_esc3_reject
+{{ attr_change "mc" "horny" 8 }}
+{{ attr_change "frank" "relationship" -5 }}
+{{ attr_change "frank" "mood" -8 }}
+"Frank."
+<p>He stops immediately. Pulls back. His hand drops.</p>
+<p>"I'm sorry." His voice is low. "I shouldn't have — I'm sorry. That was wrong of me."</p>
+<p>He turns away and lies down on his side. You lie where you are, eyes open, listening to the city for a long time.</p>
+<p>In the morning he makes coffee and doesn't mention it, and you don't either. Something is different, though. You both know it.</p>
+[[Morning, outdoor_frank_shelter, frank_morning]]
+#end
+
+
+#begin frank_morning
+{{- reset_daily -}}
+{{ advance_to_hour 7 }}
+{{ attr_change "mc" "energy" 50 }}
+{{ attr_change "mc" "hunger" -25 }}
+The shelter is pale with early morning light — grey, flat, finding every gap.
+<p>Frank is awake before you. He has a small flame going and water heating in a battered tin pot. He hands you a cup without asking — instant coffee, black, faintly scorched.</p>
+<p>It tastes like coffee. This feels, for some reason, important.</p>
+<p>"Sleep alright?" he asks.</p>
+<p>You did.</p>
+[[Back to the street, outdoor_street]]
+#end

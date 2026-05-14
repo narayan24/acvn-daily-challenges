@@ -1,9 +1,14 @@
-﻿#begin start
+#begin start
 {{- register_daily "swim_count" 0 -}}
 {{- register_daily "pool_harassed_today" false -}}
 {{ has_swimwear = any_clothing_has_tag "swimming" }}
 {{ state = clothing_state }}
+{{ pat_here = char_at "patrick" "outdoor_pool_area" }}
+{{ inhibition = get_attr "mc" "inhibition" }}
 You are in the pool hall. The air is warm and heavy with chlorine. Lane ropes divide a long lap pool; to the side, the whirlpool bubbles steadily; at the far end, the slide towers rise to the ceiling.
+{{ if pat_here }}
+<p>Patrick is up in the lifeguard chair near the lane ropes, sunglasses pushed back, scanning the water — until he spots you. His gaze lingers a beat too long before he looks away.</p>
+{{ end }}
 {{ if !has_swimwear }}
 <p style="color:#FF6B6B; font-size:11px">A lifeguard raises an eyebrow at you. You can't be in the pool area without proper swimwear.</p>
 [[Changing room, outdoor_pool_changingroom]]
@@ -11,6 +16,10 @@ You are in the pool hall. The air is warm and heavy with chlorine. Lane ropes di
 [[Swim laps, outdoor_pool_area, swim]]
 [[Whirlpool, outdoor_pool_area, whirlpool]]
 [[Slides, outdoor_pool_area, slides]]
+{{ if pat_here }}
+[[Talk to Patrick, outdoor_pool_area, patrick_talk]]
+{{ if inhibition <= 60 }}[[Flirt with Patrick, outdoor_pool_area, patrick_flirt]]{{ end }}
+{{ end }}
 [[Changing room, outdoor_pool_changingroom]]
 {{ end }}
 #end
@@ -26,11 +35,21 @@ You are in the pool hall. The air is warm and heavy with chlorine. Lane ropes di
 {{ attr_change "mc" "hunger" -8 }}
 You push off from the wall and settle into a steady crawl. The lane is long and quiet. Your thoughts empty out with each stroke.
 {{ harass_roll = random_int 1 10 }}
+{{ pat_in_pool = char_at "patrick" "outdoor_pool_area" }}
 {{ if harass_roll == 1 && !vars.pool_harassed_today }}
 {{ vars.pool_harassed_today = true }}
+{{ if pat_in_pool }}
+{{ attr_change "mc" "mood" -8 }}
+{{ attr_change "mc" "horny" 10 }}
+{{ attr_change "patrick" "horny" 10 }}
+<p>You push off from the far wall for another length — and nearly collide with Patrick, who is doing what he calls "an inspection lap" and has apparently forgotten what personal space is. He steadies you by the shoulders, both hands, one beat too long.</p>
+<p>"Careful," he says. Very close. Sounding more amused than sorry.</p>
+<p>You pull free and keep swimming. You feel his gaze tracking you for the next two lengths.</p>
+{{ else }}
 {{ attr_change "mc" "mood" -10 }}
 {{ attr_change "mc" "horny" 5 }}
 <p>During a turn at the end of the lane, someone in the next lane brushes against you — too deliberately to be accidental. When you look up, they're already swimming away. You float there for a moment, pulse quickened.</p>
+{{ end }}
 {{ else }}
 <p>{{ if vars.swim_count == 1 }}A good first length. Your muscles are warm when you pull yourself out.{{ else }}Another solid set. Your body knows this now.{{ end }}</p>
 {{ end }}
@@ -52,19 +71,41 @@ You step down into the whirlpool. The water is hot and the jets pulse steadily a
 {{ attr_change "mc" "mood" 5 }}
 The heat and the steady thrum of the jets pull you under. You close your eyes and drift.
 {{ nap_harass_roll = random_int 1 100 }}
-{{ if nap_harass_roll <= 30 && !vars.pool_harassed_today }}
+{{ pat_in_pool = char_at "patrick" "outdoor_pool_area" }}
+{{ if nap_harass_roll <= 30 && !vars.pool_harassed_today && pat_in_pool }}
+{{ vars.pool_harassed_today = true }}
+{{ attr_change "mc" "mood" -10 }}
+{{ attr_change "mc" "horny" 15 }}
+{{ attr_change "patrick" "horny" 15 }}
+<p>You surface slowly, groggy from the heat. Something is off — there's a hand resting on your thigh. Heavy. Deliberate.</p>
+<p>You open your eyes. Patrick is sitting beside you in the whirlpool, apparently no longer on the clock. He meets your gaze without a flicker of guilt.</p>
+<p>"Morning," he says.</p>
+{{ inhibition_val = get_attr "mc" "inhibition" }}
+{{ if inhibition_val >= 60 }}
+[[Move his hand away and get out, outdoor_pool_area, whirlpool_pat_reject]]
+{{ else if inhibition_val >= 30 }}
+[[Move his hand away and get out, outdoor_pool_area, whirlpool_pat_reject]]
+[["Keep your hands to yourself, Patrick.", outdoor_pool_area, whirlpool_pat_warn]]
+{{ else }}
+[[Move his hand away and get out, outdoor_pool_area, whirlpool_pat_reject]]
+[["Keep your hands to yourself, Patrick.", outdoor_pool_area, whirlpool_pat_warn]]
+[["...", outdoor_pool_area, whirlpool_pat_stay]]
+{{ end }}
+{{ else if nap_harass_roll <= 30 && !vars.pool_harassed_today }}
 {{ vars.pool_harassed_today = true }}
 {{ attr_change "mc" "mood" -15 }}
 {{ attr_change "mc" "horny" 10 }}
 <p>You surface slowly. Something feels off — then you realise: a hand is resting on your thigh. Not accidental. The person next to you meets your gaze with an unreadable expression.</p>
 <p>The moment you shift away, they withdraw without a word and look back at the water, as if nothing happened.</p>
 <p>You sit very still for a moment before getting out.</p>
+[[Pool area, outdoor_pool_area]]
 {{ else if nap_harass_roll <= 50 && vars.pool_harassed_today }}
 <p>When you come back to yourself, the whirlpool is empty except for you. You feel rested, if slightly waterlogged.</p>
+[[Pool area, outdoor_pool_area]]
 {{ else }}
 <p>When you open your eyes, a few minutes — or maybe forty-five — have passed. The whirlpool hums on. You feel warm all the way through.</p>
-{{ end }}
 [[Pool area, outdoor_pool_area]]
+{{ end }}
 #end
 
 #begin slides
@@ -74,5 +115,114 @@ You climb the tower to the top of the slide and push off.
 {{ attr_change "mc" "energy" -5 }}
 The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You come up laughing despite yourself.
 [[Another go, outdoor_pool_area, slides]]
+[[Pool area, outdoor_pool_area]]
+#end
+
+#begin patrick_talk
+{{ pat_rel = get_attr "patrick" "relationship" }}
+{{ advance_time 10 }}
+You walk over to the lifeguard chair. Patrick leans down from it — elbows on his knees, sunglasses pushed up — and gives you that easy grin.
+{{ if pat_rel < 15 }}
+<p>"Hey. Didn't see you come in." His eyes do a slow, unhurried sweep before settling on your face. "Water's warm today. You should stay a while."</p>
+<p>You chat for a few minutes. He's relaxed, easy to talk to — and clearly aware of exactly how much of you the swimwear isn't covering. He doesn't quite manage to keep his eyes up the whole time.</p>
+<p>"Come back and say hi again," he says when you turn to leave. Not really a question.</p>
+{{ attr_change "patrick" "relationship" 4 }}
+{{ attr_change "mc" "mood" 3 }}
+{{ else if pat_rel < 25 }}
+<p>He drops down from the chair entirely. "Slow day," he says, like that explains it. He's close — closer than necessary.</p>
+<p>"I've been keeping an eye out for you." A tilt of the head. "Couldn't really help it."</p>
+<p>You're not sure whether that's flattering or a little much. Maybe both.</p>
+{{ attr_change "patrick" "relationship" 5 }}
+{{ attr_change "mc" "mood" 4 }}
+{{ attr_change "mc" "horny" 5 }}
+{{ else }}
+<p>He drops down from the chair the moment he sees you coming — like he's been waiting. "Thought you might skip today."</p>
+<p>He's easier to talk to than he probably should be. By the time you're ready to go back to the water, fifteen minutes have passed without you noticing.</p>
+<p>"Hey." His voice drops slightly. "Some of us are grabbing food Friday evening. You should come. I'd like it if you came."</p>
+[[Maybe. I'll think about it., outdoor_pool_area, patrick_talk_maybe]]
+[["Yeah. I'll be there.", outdoor_pool_area, patrick_talk_yes]]
+[["I don't think so.", outdoor_pool_area, patrick_talk_no]]
+{{ end }}
+{{ if pat_rel < 25 }}
+[[Pool area, outdoor_pool_area]]
+{{ end }}
+#end
+
+#begin patrick_talk_maybe
+{{ attr_change "patrick" "relationship" 3 }}
+{{ attr_change "mc" "mood" 3 }}
+{{ advance_time 2 }}
+<p>Patrick nods slowly — like he's already decided to take it as a yes. "I'll take that." He pulls himself back up to the chair. "Don't keep me waiting."</p>
+[[Pool area, outdoor_pool_area]]
+#end
+
+#begin patrick_talk_yes
+{{ attr_change "patrick" "relationship" 8 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ attr_change "mc" "horny" 8 }}
+{{ advance_time 2 }}
+<p>Something shifts in his expression — still easy, but more focused now. Like you've just become the most interesting thing about his afternoon.</p>
+<p>"Good." He climbs back up onto the chair but keeps looking at you a second longer. "Really good."</p>
+[[Pool area, outdoor_pool_area]]
+#end
+
+#begin patrick_talk_no
+{{ attr_change "patrick" "relationship" -3 }}
+{{ attr_change "mc" "mood" -2 }}
+{{ advance_time 2 }}
+<p>Patrick raises his hands, palms out. "Fair enough." He climbs back up to his perch without pushing it. "Offer stands, in case you change your mind."</p>
+[[Pool area, outdoor_pool_area]]
+#end
+
+#begin patrick_flirt
+{{ advance_time 10 }}
+You walk up to the base of the lifeguard chair and look up at him. He's already looking at you.
+<p>"You know," you say, keeping your voice easy, "it must be nice — just sitting up there watching all day."</p>
+<p>He grins — slow, and a little delighted. "The view's definitely improved."</p>
+<p>You give him a measured look, just enough to let him know you heard that. "Good answer."</p>
+<p>He laughs and runs a hand through his hair. "You're going to make my job so much harder." He says it like he doesn't mind at all.</p>
+{{ attr_change "mc" "mood" 10 }}
+{{ attr_change "mc" "horny" 12 }}
+{{ attr_change "patrick" "relationship" 8 }}
+{{ attr_change "patrick" "horny" 20 }}
+[[Pool area, outdoor_pool_area]]
+#end
+
+#begin whirlpool_pat_reject
+{{ attr_change "mc" "mood" -5 }}
+{{ attr_change "mc" "horny" 5 }}
+{{ attr_change "patrick" "horny" -5 }}
+{{ advance_time 3 }}
+You lift his hand and place it firmly on his own knee. He doesn't resist.
+<p>"Right," he says, not sounding especially sorry. "My bad."</p>
+<p>He stays. You get out.</p>
+[[Pool area, outdoor_pool_area]]
+#end
+
+#begin whirlpool_pat_warn
+{{ attr_change "mc" "mood" 3 }}
+{{ attr_change "mc" "horny" 12 }}
+{{ attr_change "patrick" "horny" 12 }}
+{{ attr_change "patrick" "relationship" 3 }}
+{{ advance_time 10 }}
+<p>"Keep your hands to yourself, Patrick," you say — not quite sharply. Somewhere between a warning and something that isn't quite a warning.</p>
+<p>He watches you for a moment. "You know my name."</p>
+<p>"It's on the sign."</p>
+<p>You shift slightly away. He doesn't follow — but he doesn't look away either. You both stay in the whirlpool. The jets hum. It's an odd kind of tension.</p>
+[[Pool area, outdoor_pool_area]]
+#end
+
+#begin whirlpool_pat_stay
+{{ attr_change "mc" "mood" 5 }}
+{{ attr_change "mc" "horny" 25 }}
+{{ attr_change "patrick" "horny" 25 }}
+{{ attr_change "patrick" "relationship" 10 }}
+{{ advance_time 15 }}
+You don't move.
+<p>A long moment passes. The jets pulse steadily. Patrick doesn't press further — he just stays very still, very close, like he's waiting to see what you'll do with it.</p>
+<p>Eventually he speaks, low: "You didn't move."</p>
+<p>"No."</p>
+<p>"Okay," he says. That's all.</p>
+<p>You stay like that for a while. The water is very warm.</p>
 [[Pool area, outdoor_pool_area]]
 #end

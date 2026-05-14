@@ -35,6 +35,17 @@
       "steps": [
         { "id": "buy_groceries",    "description": "Buy groceries at the supermarket." }
       ]
+    },
+    {
+      "id": "good_person",
+      "name": "Be a good person!",
+      "hint": "You've gotten to know someone in need. Visit him at his shelter.",
+      "steps": [
+        { "id": "visit_shelter",    "description": "Visit Frank at his shelter." },
+        { "id": "bring_food",       "description": "Bring Frank something to eat." },
+        { "id": "arrange_shower",   "description": "Help Frank get a proper shower." },
+        { "id": "stay_overnight",   "description": "Stay with Frank for the night." }
+      ]
     }
   ]
 }
