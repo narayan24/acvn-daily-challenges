@@ -1,6 +1,7 @@
 #begin start
 {{ if (quest_step "tutorial") == -1 }}{{ start_quest "tutorial" }}{{ end }}
 You are standing in your room.
+<p>It's the only space in the flat that's entirely yours.</p>
 <p>
     Your name is {{ mc.properties.firstname }} {{ mc.properties.lastname }},
     you are {{ mc.properties.age }} years old.
@@ -15,10 +16,17 @@ You are standing in your room.
 {{ else }}
 [[Go to bed, home_room, beddressed]]
 {{ end }}
-{{ if state == "naked" && (get_attr "mc" "inhibition") >= 20 }}
-<p style="color:#FF6B6B; font-size:12px">You are naked. You feel far too self-conscious to step out into the hallway like this.</p>
-{{ else }}
+{{ inhibition = get_attr "mc" "inhibition" }}
+{{ if state == "dressed" }}
 [[Hallway, home_hallway]]
+{{ else if state == "underwear" && inhibition <= 70 }}
+[[Hallway, home_hallway]]
+{{ else if state == "naked" && inhibition <= 35 }}
+[[Hallway, home_hallway]]
+{{ else if state == "underwear" }}
+<p style="color:#FF6B6B; font-size:12px">You're only in your underwear. You don't feel quite ready to step out into the shared hallway like this.</p>
+{{ else }}
+<p style="color:#FF6B6B; font-size:12px">You're naked. You can't bring yourself to walk out into the hallway.</p>
 {{ end }}
 #end
 

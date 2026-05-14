@@ -23,6 +23,17 @@
       "image": ""
     },
     {
+      "id": "bikini_top",
+      "name": "Bikini Top",
+      "subtype": "bra",
+      "description": "A simple bikini top. Perfectly normal at a pool; a little daring elsewhere.",
+      "durability": 100,
+      "daring": 45,
+      "inhibition": 60,
+      "tags": ["swimming", "outdoor"],
+      "image": ""
+    },
+    {
       "id": "panties_white",
       "name": "Panties (white)",
       "subtype": "panties",
@@ -42,6 +53,17 @@
       "daring": 10,
       "inhibition": 0,
       "tags": ["basic", "indoor"],
+      "image": ""
+    },
+    {
+      "id": "bikini_bottom",
+      "name": "Bikini Bottom",
+      "subtype": "panties",
+      "description": "Matching bikini bottoms.",
+      "durability": 100,
+      "daring": 45,
+      "inhibition": 60,
+      "tags": ["swimming", "outdoor"],
       "image": ""
     },
     {
@@ -70,10 +92,10 @@
       "id": "swimsuit",
       "name": "Swimsuit",
       "subtype": "clothes",
-      "description": "A blue one-piece swimsuit.",
+      "description": "A classic one-piece swimsuit. The standard choice for the pool.",
       "durability": 100,
-      "daring": 40,
-      "inhibition": 80,
+      "daring": 35,
+      "inhibition": 0,
       "tags": ["swimming", "outdoor"],
       "image": ""
     },

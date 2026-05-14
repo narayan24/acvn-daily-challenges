@@ -1,0 +1,88 @@
+#begin start
+{{- register_daily "jog_count" 0 -}}
+{{- register_daily "mugged_today" false -}}
+{{ hour = game_hour }}
+{{ is_dark = hour >= 21 || hour < 6 }}
+{{ state = clothing_state }}
+You are in the park. Trees line the paths, and a long loop of tarmac curves through the greenery.
+{{ if is_dark }}
+<p style="color:#888; font-size:11px; font-style:italic">It's dark. The park feels different at night — the paths are lit only by a few widely spaced lamps, and most of the benches are empty.</p>
+{{ else if hour >= 6 && hour < 10 }}
+<p>The park is quiet in the early morning. Joggers pass at steady intervals.</p>
+{{ else if hour >= 10 && hour < 18 }}
+<p>The park is lively. Families, people with dogs, the occasional runner.</p>
+{{ else }}
+<p>The park is winding down. A few people are still out, but the paths are thinning.</p>
+{{ end }}
+{{ if state != "dressed" }}
+<p style="color:#888; font-size:11px; font-style:italic">People are glancing at you.</p>
+{{ end }}
+[[Jog a lap, outdoor_park, jog]]
+[[Rest on a bench, outdoor_park, rest]]
+[[Leave the park, outdoor_hausausgang]]
+#end
+
+#begin jog
+{{ hour = game_hour }}
+{{ is_dark = hour >= 21 || hour < 6 }}
+{{ energy = get_attr "mc" "energy" }}
+{{ vars.jog_count = vars.jog_count + 1 }}
+{{ advance_time 25 }}
+{{ attr_change "mc" "energy" -15 }}
+{{ attr_change "mc" "stamina" 3 }}
+{{ attr_change "mc" "endurance" 2 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ attr_change "mc" "hunger" -5 }}
+You run a full lap of the park path.
+{{ if energy < 30 }}
+<p>Your legs feel heavy before you're even halfway around. You push through, but it costs you.</p>
+{{ else }}
+<p>Your breathing settles into a rhythm. By the time you finish, your legs are warm and your head is clearer.</p>
+{{ end }}
+{{ if is_dark && !vars.mugged_today }}
+{{ mug_roll = random_int 1 100 }}
+{{ if mug_roll <= 30 }}
+{{ vars.mugged_today = true }}
+{{ attr_change "mc" "health" -10 }}
+{{ attr_change "mc" "mood" -25 }}
+<p style="color:#FF6B6B">Someone steps out from behind a tree. "Phone and wallet. Now." Your pulse spikes. Before you can react, they shove you hard — you stumble, they grab what they can, and then they're gone, footsteps fading into the dark.</p>
+<p style="color:#FF6B6B; font-size:11px">You feel shaken. Your heart is still hammering when you reach the lamp post and stop.</p>
+{{ if (item_count "phone") > 0 }}
+{{ remove_item "phone" }}
+<p style="color:#FF6B6B; font-size:11px">They took your phone.</p>
+{{ end }}
+{{ else }}
+<p style="color:#888; font-size:11px; font-style:italic">Nothing happened — this time. But every shadow felt watched.</p>
+{{ end }}
+{{ end }}
+[[Park, outdoor_park]]
+#end
+
+#begin rest
+{{ hour = game_hour }}
+{{ is_dark = hour >= 21 || hour < 6 }}
+{{ advance_time 20 }}
+{{ attr_change "mc" "energy" 12 }}
+{{ attr_change "mc" "mood" 6 }}
+You sit down on one of the benches and let the park wash over you.
+{{ if is_dark }}
+<p>The night is quieter than you expected. Wind in the leaves. Distant traffic.</p>
+{{ if !vars.mugged_today }}
+{{ mug_roll = random_int 1 100 }}
+{{ if mug_roll <= 20 }}
+{{ vars.mugged_today = true }}
+{{ attr_change "mc" "health" -8 }}
+{{ attr_change "mc" "mood" -20 }}
+<p style="color:#FF6B6B">Two figures emerge from the shadows and sit down on either side of you without invitation. The one on the left says nothing — just holds out a hand. The one on the right watches you with flat, patient eyes.</p>
+<p style="color:#FF6B6B">You hand over what you have. They leave without a word. You sit there alone for a moment before you get up on shaky legs.</p>
+{{ if (item_count "phone") > 0 }}
+{{ remove_item "phone" }}
+<p style="color:#FF6B6B; font-size:11px">They took your phone.</p>
+{{ end }}
+{{ end }}
+{{ end }}
+{{ else }}
+<p>It's peaceful. The kind of stillness that actually settles something.</p>
+{{ end }}
+[[Park, outdoor_park]]
+#end
