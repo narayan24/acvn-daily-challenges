@@ -22,6 +22,20 @@
       "description": "A pizza."
     },
     {
+      "id": "groceries",
+      "type": "food",
+      "name": "Groceries",
+      "starting_quantity": 0,
+      "description": "A bag of basics: bread, something for dinner, a few essentials. Eat at home to restore hunger."
+    },
+    {
+      "id": "energy_drink",
+      "type": "food",
+      "name": "Energy Drink",
+      "starting_quantity": 0,
+      "description": "A slim silver can that promises more than it probably delivers. Restores some energy."
+    },
+    {
       "id": "razor",
       "type": "inventory",
       "name": "Razor",
@@ -34,6 +48,34 @@
       "name": "Smartphone",
       "starting_quantity": 0,
       "description": "Your smartphone."
+    },
+    {
+      "id": "pool_job",
+      "type": "inventory",
+      "name": "Pool Job",
+      "starting_quantity": 0,
+      "description": "Application accepted. You're on the cleaning rota at the municipal swimming pool."
+    },
+    {
+      "id": "laptop",
+      "type": "inventory",
+      "name": "Laptop",
+      "starting_quantity": 0,
+      "description": "A mid-range laptop. Fast enough for anything you'd actually use it for."
+    },
+    {
+      "id": "headphones",
+      "type": "inventory",
+      "name": "Headphones",
+      "starting_quantity": 0,
+      "description": "Over-ear headphones with decent sound isolation."
+    },
+    {
+      "id": "phone_charger",
+      "type": "inventory",
+      "name": "Phone Charger",
+      "starting_quantity": 0,
+      "description": "A universal cable. Because the old one eventually gives out."
     }
   ]
 }

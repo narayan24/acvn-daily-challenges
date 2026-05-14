@@ -29,6 +29,11 @@ You are standing in the living room. It is {{ time_str "HH:mm" }}.
 {{ else }}
 <p>You've already watched {{ vars.tv_hours }} hours of TV today. That's enough.</p>
 {{ end }}
+{{ energy = get_attr "mc" "energy" }}
+{{ if energy > 30 }}
+[[Work out, home_livingroom, workout]]
+{{ end }}
+[[Yoga / Stretch, home_livingroom, yoga]]
 {{ alone = !bro_here && !mom_here && !dad_here }}
 {{ mom_mood = get_attr "mother" "mood" }}
 {{ if alone && game_hour >= 22 && mom_mood >= 60 && !vars.late_encounter_done_today }}
@@ -535,4 +540,61 @@ There's a pause. She looks at you – really looks, for a moment that stretches 
 <p>"Sleep well," she says.</p>
 {{ attr_change "mother" "relationship" 10 }}
 [[Goodnight, home_room]]
+#end
+
+#begin workout
+You push the coffee table aside, roll your shoulders, and get to work.
+<p>Push-ups first — you count to twenty before your arms start to burn. Then squats, lunges, burpees. The living room is small but it's enough. You keep your movements tight and deliberate, breathing through your nose.</p>
+<p>Your pulse climbs. The sofa cushions shake a little each time you jump. You don't care.</p>
+{{ roll_bob = random_int 1 4 }}
+{{ bro_home = (char_at "brother" "home_livingroom") || (char_at "brother" "home_brother") || (char_at "brother" "home_kitchen") }}
+{{ if roll_bob == 1 && bro_home }}
+{{ bob_mood = get_attr "brother" "mood" }}
+{{ if bob_mood > 60 }}
+<p>You're mid-squat when {{ brother.properties.firstname }} wanders in. He stops in the doorway and takes in the scene.</p>
+<p>"Oh." A pause. Then, with a slow grin: "Didn't know the gym had moved in."</p>
+<p>You ignore him. He leans on the doorframe anyway, watching for a moment longer than necessary.</p>
+<p>"Not bad form," he says finally, and disappears into the kitchen.</p>
+<p>You feel the compliment more than you expected to.</p>
+{{ attr_change "mc" "mood" 5 }}
+{{ attr_change "brother" "mood" 5 }}
+{{ attr_change "brother" "horny" 5 }}
+{{ else }}
+<p>{{ brother.properties.firstname }} appears in the doorway, takes one look at you mid-burpee, and makes a face.</p>
+<p>"Really? Now?" He gestures vaguely at the TV. "I was going to sit here."</p>
+<p>"The floor's still free," you say, not breaking rhythm.</p>
+<p>He leaves without another word. The interaction doesn't exactly inspire you.</p>
+{{ attr_change "mc" "mood" -2 }}
+{{ end }}
+{{ end }}
+{{ advance_time 40 }}
+{{ attr_change "mc" "energy" -25 }}
+{{ attr_change "mc" "strength" 3 }}
+{{ attr_change "mc" "stamina" 2 }}
+{{ attr_change "mc" "endurance" 2 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ attr_change "mc" "hunger" -8 }}
+{{ attr_change "mc" "hygiene" -5 }}
+<p>Forty minutes later you straighten up and stand with your hands on your knees, catching your breath. Every muscle in your body has been reminded it exists.</p>
+<p>It's {{ time_str "HH:mm" }}. You're sweaty and your legs are shaky in the best possible way.</p>
+[[Shower (Bathroom), home_bathroom]]
+[[Stay in the living room, home_livingroom]]
+#end
+
+#begin yoga
+You find a clear patch of floor, fold a blanket into a rough mat, and take off your shoes.
+<p>You start with child's pose — forehead to the ground, arms stretched forward, breathing long and slow until your spine unclenches. From there you move through what you remember: cat-cow, downward dog, a warrior sequence that your hips protest mildly before they give in.</p>
+<p>There's no instructor, no mirror, no pressure. Just the sound of traffic outside and your own slow breathing.</p>
+{{ roll_yoga = random_int 1 5 }}
+{{ if roll_yoga == 1 }}
+<p>At some point — somewhere in a long hip-opener stretch, one leg folded beneath you — you stop thinking and just feel. The warmth in your muscles. The give of your body. Something slow and pleasant hums at the edges of your awareness.</p>
+{{ attr_change "mc" "horny" 8 }}
+{{ end }}
+{{ advance_time 25 }}
+{{ attr_change "mc" "energy" -8 }}
+{{ attr_change "mc" "agility" 3 }}
+{{ attr_change "mc" "mood" 12 }}
+<p>When you finally sit cross-legged and close your eyes for the last two minutes, the room feels quieter than it did before. It's {{ time_str "HH:mm" }}.</p>
+<p>You feel like you've done something kind for yourself.</p>
+[[Living Room, home_livingroom]]
 #end

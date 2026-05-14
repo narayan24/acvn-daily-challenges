@@ -1,0 +1,104 @@
+#begin start
+{{ hour = game_hour }}
+{{ if hour < 9 || hour >= 20 }}
+The clothing store is shuttered. The window display is lit — a few mannequins in this season's looks — but the door is locked.
+<p style="color:#888; font-size:11px">Open 09:00 – 20:00.</p>
+[[City Centre, city_center]]
+{{ else }}
+You push open the glass door and step into the clothing store. Soft music plays. Racks of folded and hanging clothes fill the space in neat, colour-coded rows.
+<p>A shop assistant glances up from behind the counter and gives a brief, professional smile. You're free to browse.</p>
+{{ kron = item_count "kron" }}
+<p>You have <strong>{{ kron }} Kron</strong>.</p>
+<p style="color:#888; font-size:11px; font-style:italic">— Activewear —</p>
+{{ has_sport = has_clothing "sport_outfit" }}
+{{ if has_sport }}
+<p><strong>Sport Set</strong> — leggings and crop top, 45 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+{{ else if kron >= 45 }}
+<p><strong>Sport Set</strong> — stretchy leggings and a fitted crop top. Good for working out or just looking like you might. 45 Kron.</p>
+[[Buy Sport Set (45 Kron), city_clothingstore, buysportoutfit]]
+{{ else }}
+<p><strong>Sport Set</strong> — leggings and crop top, 45 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
+{{ end }}
+{{ has_shoes = has_clothing "sport_shoes" }}
+{{ if has_shoes }}
+<p><strong>Sport Shoes</strong> — 25 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+{{ else if kron >= 25 }}
+<p><strong>Sport Shoes</strong> — light, supportive trainers. You could actually run in these. 25 Kron.</p>
+[[Buy Sport Shoes (25 Kron), city_clothingstore, buysportshoes]]
+{{ else }}
+<p><strong>Sport Shoes</strong> — 25 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
+{{ end }}
+<p style="color:#888; font-size:11px; font-style:italic">— Casual & Occasion —</p>
+{{ has_dress = has_clothing "sundress" }}
+{{ if has_dress }}
+<p><strong>Summer Dress</strong> — 38 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+{{ else if kron >= 38 }}
+<p><strong>Summer Dress</strong> — light cotton, a pattern that doesn't try too hard. Feels like a good day when you wear it. 38 Kron.</p>
+[[Buy Summer Dress (38 Kron), city_clothingstore, buysundress]]
+{{ else }}
+<p><strong>Summer Dress</strong> — 38 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
+{{ end }}
+{{ has_party = has_clothing "party_outfit" }}
+{{ if has_party }}
+<p><strong>Night Out Outfit</strong> — 55 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+{{ else if kron >= 55 }}
+<p><strong>Night Out Outfit</strong> — something you'd wear when you actually want to be noticed. 55 Kron.</p>
+[[Buy Night Out Outfit (55 Kron), city_clothingstore, buypartyoutfit]]
+{{ else }}
+<p><strong>Night Out Outfit</strong> — 55 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
+{{ end }}
+[[Leave, city_center]]
+{{ end }}
+#end
+
+#begin buysportoutfit
+You pull the set from the rack in your size and try it on in the fitting room. The leggings are high-waisted and comfortable. The crop top fits well.
+<p>You bring it to the counter. The assistant folds it efficiently into a paper bag.</p>
+{{ spend_item "kron" 45 }}
+{{ unlock_clothing "sport_outfit" }}
+{{ has_shoes = has_clothing "sport_shoes" }}
+{{ if has_shoes }}
+{{ if (quest_step "get_active") == 0 }}{{ advance_quest "get_active" }}{{ end }}
+<p><em>You now have everything you need to get moving.</em></p>
+{{ else }}
+<p><em>Sport Set added to your wardrobe. Pick up some sport shoes to complete the look.</em></p>
+{{ end }}
+[[Clothing Store, city_clothingstore]]
+[[Leave, city_center]]
+#end
+
+#begin buysportshoes
+You find your size tucked at the bottom of a display shelf and lace them up to check the fit. Good arch support. Lightweight.
+<p>You carry them to the counter.</p>
+{{ spend_item "kron" 25 }}
+{{ unlock_clothing "sport_shoes" }}
+{{ has_sport = has_clothing "sport_outfit" }}
+{{ if has_sport }}
+{{ if (quest_step "get_active") == 0 }}{{ advance_quest "get_active" }}{{ end }}
+<p><em>You now have everything you need to get moving.</em></p>
+{{ else }}
+<p><em>Sport Shoes added to your wardrobe. Grab a sport outfit to go with them.</em></p>
+{{ end }}
+[[Clothing Store, city_clothingstore]]
+[[Leave, city_center]]
+#end
+
+#begin buysundress
+You hold it up, then try it on. The fabric is light. The fit is good without trying.
+<p>You buy it without much deliberation.</p>
+{{ spend_item "kron" 38 }}
+{{ unlock_clothing "sundress" }}
+<p><em>Summer Dress added to your wardrobe.</em></p>
+[[Clothing Store, city_clothingstore]]
+[[Leave, city_center]]
+#end
+
+#begin buypartyoutfit
+It's the kind of outfit that asks something of you — a little more confidence, a little more presence. You try it on. It delivers.
+<p>You bring it to the counter without hesitating.</p>
+{{ spend_item "kron" 55 }}
+{{ unlock_clothing "party_outfit" }}
+<p><em>Night Out Outfit added to your wardrobe.</em></p>
+[[Clothing Store, city_clothingstore]]
+[[Leave, city_center]]
+#end

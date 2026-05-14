@@ -8,6 +8,7 @@
       "durability": 100,
       "daring": 5,
       "inhibition": 0,
+      "starting_quantity": 1,
       "tags": ["basic", "indoor"],
       "image": ""
     },
@@ -19,6 +20,7 @@
       "durability": 100,
       "daring": 10,
       "inhibition": 0,
+      "starting_quantity": 1,
       "tags": ["basic", "indoor"],
       "image": ""
     },
@@ -30,6 +32,7 @@
       "durability": 100,
       "daring": 45,
       "inhibition": 60,
+      "starting_quantity": 1,
       "tags": ["swimming", "outdoor"],
       "image": ""
     },
@@ -41,6 +44,7 @@
       "durability": 100,
       "daring": 5,
       "inhibition": 0,
+      "starting_quantity": 1,
       "tags": ["basic", "indoor"],
       "image": ""
     },
@@ -52,6 +56,7 @@
       "durability": 100,
       "daring": 10,
       "inhibition": 0,
+      "starting_quantity": 1,
       "tags": ["basic", "indoor"],
       "image": ""
     },
@@ -63,6 +68,7 @@
       "durability": 100,
       "daring": 45,
       "inhibition": 60,
+      "starting_quantity": 1,
       "tags": ["swimming", "outdoor"],
       "image": ""
     },
@@ -74,6 +80,7 @@
       "durability": 100,
       "daring": 10,
       "inhibition": 0,
+      "starting_quantity": 1,
       "tags": ["basic", "school", "indoor", "outdoor"],
       "image": ""
     },
@@ -85,6 +92,7 @@
       "durability": 100,
       "daring": 5,
       "inhibition": 0,
+      "starting_quantity": 1,
       "tags": ["basic", "indoor"],
       "image": ""
     },
@@ -96,7 +104,59 @@
       "durability": 100,
       "daring": 35,
       "inhibition": 0,
+      "starting_quantity": 1,
       "tags": ["swimming", "outdoor"],
+      "image": ""
+    },
+    {
+      "id": "sport_outfit",
+      "name": "Sport Set",
+      "subtype": "clothes",
+      "description": "High-waisted leggings and a fitted crop top. Comfortable, functional, and it looks the part.",
+      "durability": 100,
+      "daring": 20,
+      "inhibition": 0,
+      "starting_quantity": 0,
+      "price": 45,
+      "tags": ["sport", "outdoor", "indoor"],
+      "image": ""
+    },
+    {
+      "id": "sundress",
+      "name": "Summer Dress",
+      "subtype": "clothes",
+      "description": "Light cotton with a simple pattern. Feels like a good day when you wear it.",
+      "durability": 100,
+      "daring": 15,
+      "inhibition": 0,
+      "starting_quantity": 0,
+      "price": 38,
+      "tags": ["outdoor", "casual"],
+      "image": ""
+    },
+    {
+      "id": "party_outfit",
+      "name": "Night Out Outfit",
+      "subtype": "clothes",
+      "description": "Something you'd wear when you actually want to be noticed.",
+      "durability": 100,
+      "daring": 40,
+      "inhibition": 0,
+      "starting_quantity": 0,
+      "price": 55,
+      "tags": ["outdoor", "evening"],
+      "image": ""
+    },
+    {
+      "id": "work_uniform",
+      "name": "Work Uniform",
+      "subtype": "clothes",
+      "description": "A plain polo shirt and dark trousers. Functional, forgettable, yours.",
+      "durability": 100,
+      "daring": 5,
+      "inhibition": 0,
+      "starting_quantity": 0,
+      "tags": ["work", "indoor"],
       "image": ""
     },
     {
@@ -107,7 +167,21 @@
       "durability": 100,
       "daring": 5,
       "inhibition": 0,
+      "starting_quantity": 1,
       "tags": ["basic", "school", "outdoor"],
+      "image": ""
+    },
+    {
+      "id": "sport_shoes",
+      "name": "Sport Shoes",
+      "subtype": "shoes",
+      "description": "Light, supportive trainers. You could actually run in these.",
+      "durability": 100,
+      "daring": 5,
+      "inhibition": 0,
+      "starting_quantity": 0,
+      "price": 25,
+      "tags": ["sport", "outdoor"],
       "image": ""
     },
     {
@@ -118,6 +192,7 @@
       "durability": 100,
       "daring": 2,
       "inhibition": 0,
+      "starting_quantity": 1,
       "tags": ["basic", "indoor"],
       "image": ""
     }

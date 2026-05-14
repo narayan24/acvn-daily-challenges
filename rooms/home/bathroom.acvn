@@ -19,6 +19,7 @@ You are standing in the bathroom. It is {{ time_str "HH:mm" }}.
 {{ else }}
 <p>You've already brushed your teeth today.</p>
 {{ end }}
+[[Mirror, home_bathroom, mirror]]
 {{ end }}
 [[Hallway, home_hallway]]
 #end
@@ -160,4 +161,56 @@ You brush your teeth.
 You dry yourself off.
 {{ advance_time 5 }}
 [[Bathroom, home_bathroom]]
+#end
+
+#begin mirror
+You step up to the bathroom mirror. Under the cool white light, every detail of your face is plain — no filter, no flattering angle. Just you.
+<p>What do you want to work on?</p>
+[[Practice your smile, home_bathroom, mirrorsmile]]
+[[Check your posture, home_bathroom, mirrorposture]]
+[[Just look, home_bathroom, mirrorjust]]
+[[Back to the bathroom, home_bathroom]]
+#end
+
+#begin mirrorsmile
+You practice your smile — not the reflexive, polite one, but something more deliberate. Warmer. The kind that reaches the eyes.
+<p>It feels a little awkward at first, the way practicing anything in a mirror does. But after a minute or two you find the version of it that feels natural. You hold it for a moment, then let it go.</p>
+<p>Better.</p>
+{{ advance_time 10 }}
+{{ attr_change "mc" "energy" -3 }}
+{{ attr_change "mc" "charisma" 2 }}
+{{ attr_change "mc" "mood" 5 }}
+<p>It's {{ time_str "HH:mm" }}.</p>
+[[Back to the bathroom, home_bathroom]]
+#end
+
+#begin mirrorposture
+You stand up straight — properly straight, shoulders back, chin level. You watch yourself from different angles, adjusting until it feels right rather than forced.
+<p>There's something to it. The way you hold yourself changes how you feel, or maybe it's the other way around. Either way, the person in the mirror looks a little more like someone who knows where they're going.</p>
+{{ advance_time 10 }}
+{{ attr_change "mc" "energy" -3 }}
+{{ attr_change "mc" "charisma" 1 }}
+{{ attr_change "mc" "attractiveness" 1 }}
+{{ attr_change "mc" "mood" 3 }}
+<p>It's {{ time_str "HH:mm" }}.</p>
+[[Back to the bathroom, home_bathroom]]
+#end
+
+#begin mirrorjust
+You don't practice anything. You just look.
+{{ roll_mirror = random_int 1 3 }}
+{{ advance_time 5 }}
+{{ if roll_mirror == 1 }}
+<p>The light is kind today, or maybe you're just in the right mood for it. You notice the line of your collarbone. The softness of your expression when you're not performing anything for anyone. The way your eyes look when they're actually resting.</p>
+<p>A quiet warmth moves through you — something between confidence and something more private.</p>
+{{ attr_change "mc" "mood" 8 }}
+{{ attr_change "mc" "attractiveness" 1 }}
+{{ attr_change "mc" "horny" 5 }}
+{{ else }}
+<p>You look for a while. There are things you like and things you don't, the way there always are. You don't dwell. You just take stock.</p>
+<p>You look like yourself. That's something.</p>
+{{ attr_change "mc" "mood" 3 }}
+{{ end }}
+<p>It's {{ time_str "HH:mm" }}.</p>
+[[Back to the bathroom, home_bathroom]]
 #end

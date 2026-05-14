@@ -1,6 +1,8 @@
 ﻿#begin start
 {{- register_daily "pool_paid_today" false -}}
+{{- register_daily "shift_done_today" false -}}
 {{ kron = item_count "kron" }}
+{{ has_job = (item_count "pool_job") > 0 }}
 You are standing in the entrance of the municipal swimming pool. The smell of chlorine and damp tiles drifts out from beyond the turnstiles. A bored staff member sits at the counter.
 {{ if vars.pool_paid_today }}
 <p style="color:#4CAF50; font-size:11px">✓ You already paid today. Go right through.</p>
@@ -13,7 +15,37 @@ You are standing in the entrance of the municipal swimming pool. The smell of ch
 <p style="color:#FF6B6B; font-size:11px">You don't have enough Kron for the entry fee.</p>
 {{ end }}
 {{ end }}
+{{ if has_job }}
+{{ if !vars.shift_done_today }}
+[[Work cleaning shift, outdoor_pool, workshift]]
+{{ else }}
+<p style="color:#4CAF50; font-size:11px">✓ Shift done for today.</p>
+{{ end }}
+{{ end }}
 [[Leave, outdoor_street]]
+#end
+
+#begin workshift
+{{ hour = game_hour }}
+{{ if hour < 7 || hour > 19 }}
+<p>The pool isn't open for cleaning staff at this hour. Come back during the day.</p>
+[[Pool Entrance, outdoor_pool]]
+{{ else }}
+{{ vars.shift_done_today = true }}
+{{ advance_time 240 }}
+{{ attr_change "mc" "energy" -40 }}
+{{ attr_change "mc" "hygiene" -15 }}
+{{ attr_change "mc" "hunger" -20 }}
+{{ attr_change "mc" "mood" -5 }}
+{{ add_items "kron" 40 }}
+{{ unlock_clothing "work_uniform" }}
+You pull on your work uniform and get to it — mopping corridors, scrubbing the changing rooms, wiping down the pool edge. The work is repetitive and oddly meditative.
+<p>Four hours later, your back aches, your arms are tired, and your hands smell faintly of chlorine. A supervisor stops you on the way out.</p>
+<p>"Good work today." She hands you a small sealed envelope. Forty Kron, cash. It's not glamorous money, but it's yours.</p>
+{{ if (quest_step "find_work") == 1 }}{{ advance_quest "find_work" }}{{ end }}
+<p><em>+40 Kron earned. It's now {{ time_str "HH:mm" }}.</em></p>
+[[Pool Entrance, outdoor_pool]]
+{{ end }}
 #end
 
 #begin payentry
