@@ -1,0 +1,30 @@
+#begin start
+{{ state = clothing_state }}
+{{ inhibition = get_attr "mc" "inhibition" }}
+{{ neighbor_roll = random_int 1 10 }}
+You are standing in the stairwell. The stone steps echo. Letterboxes line the wall by the main entrance. It smells faintly of someone else's cooking.
+{{ if state != "dressed" && neighbor_roll == 1 }}
+<p>Footsteps above. Someone is coming down.</p>
+{{ if state == "underwear" }}
+<p>A neighbour rounds the landing and stops dead. An awkward second of eye contact before they look pointedly at the ceiling. "Morning," they manage, and brush past quickly.</p>
+{{ attr_change "mc" "mood" -5 }}
+{{ attr_change "mc" "horny" 3 }}
+{{ else }}
+<p>A neighbour rounds the landing — and immediately averts their gaze, cheeks going red. They speed past without a word.</p>
+{{ attr_change "mc" "mood" -8 }}
+{{ attr_change "mc" "horny" 8 }}
+{{ end }}
+{{ end }}
+[[Apartment, home_hallway]]
+{{ if state == "dressed" }}
+[[Leave the building, outdoor_hausausgang]]
+{{ else if state == "underwear" && inhibition <= 15 }}
+[[Leave the building, outdoor_hausausgang]]
+{{ else if state == "naked" && inhibition <= 5 }}
+[[Leave the building, outdoor_hausausgang]]
+{{ else if state == "underwear" }}
+<p style="color:#FF6B6B; font-size:12px">You're in your underwear. Stepping outside like this is a different matter entirely.</p>
+{{ else }}
+<p style="color:#FF6B6B; font-size:12px">You're naked. You can't go out onto the street like this.</p>
+{{ end }}
+#end

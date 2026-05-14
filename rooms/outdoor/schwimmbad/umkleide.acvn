@@ -1,0 +1,12 @@
+#begin start
+{{ has_swimwear = any_clothing_has_tag "swimming" }}
+You are in the changing room. Rows of lockers, the sound of running showers, wet footsteps on the floor.
+{{ if has_swimwear }}
+<p style="color:#4CAF50; font-size:11px">You're wearing your swimwear.</p>
+[[Pool area, outdoor_schwimmbad_pool]]
+{{ else }}
+<p>You need swimwear to get in the water. You don't seem to have anything suitable on you.</p>
+<p style="color:#888; font-size:11px; font-style:italic">Head home and grab a swimsuit or bikini from your wardrobe first.</p>
+{{ end }}
+[[Back to reception, outdoor_schwimmbad]]
+#end

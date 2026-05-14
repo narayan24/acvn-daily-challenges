@@ -1,0 +1,78 @@
+#begin start
+{{- register_daily "swim_count" 0 -}}
+{{- register_daily "pool_harassed_today" false -}}
+{{ has_swimwear = any_clothing_has_tag "swimming" }}
+{{ state = clothing_state }}
+You are in the pool hall. The air is warm and heavy with chlorine. Lane ropes divide a long lap pool; to the side, the whirlpool bubbles steadily; at the far end, the slide towers rise to the ceiling.
+{{ if !has_swimwear }}
+<p style="color:#FF6B6B; font-size:11px">A lifeguard raises an eyebrow at you. You can't be in the pool area without proper swimwear.</p>
+[[Changing room, outdoor_schwimmbad_umkleide]]
+{{ else }}
+[[Swim laps, outdoor_schwimmbad_pool, swim]]
+[[Whirlpool, outdoor_schwimmbad_pool, whirlpool]]
+[[Slides, outdoor_schwimmbad_pool, rutschen]]
+[[Changing room, outdoor_schwimmbad_umkleide]]
+{{ end }}
+#end
+
+#begin swim
+{{- register_daily "swim_count" 0 -}}
+{{ vars.swim_count = vars.swim_count + 1 }}
+{{ advance_time 30 }}
+{{ attr_change "mc" "energy" -10 }}
+{{ attr_change "mc" "endurance" 3 }}
+{{ attr_change "mc" "stamina" 2 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ attr_change "mc" "hunger" -8 }}
+You push off from the wall and settle into a steady crawl. The lane is long and quiet. Your thoughts empty out with each stroke.
+{{ harass_roll = random_int 1 10 }}
+{{ if harass_roll == 1 && !vars.pool_harassed_today }}
+{{ vars.pool_harassed_today = true }}
+{{ attr_change "mc" "mood" -10 }}
+{{ attr_change "mc" "horny" 5 }}
+<p>During a turn at the end of the lane, someone in the next lane brushes against you — too deliberately to be accidental. When you look up, they're already swimming away. You float there for a moment, pulse quickened.</p>
+{{ else }}
+<p>{{ if vars.swim_count == 1 }}A good first length. Your muscles are warm when you pull yourself out.{{ else }}Another solid set. Your body knows this now.{{ end }}</p>
+{{ end }}
+[[Pool area, outdoor_schwimmbad_pool]]
+#end
+
+#begin whirlpool
+You step down into the whirlpool. The water is hot and the jets pulse steadily against your back. Two other people are already in, at the far end, talking quietly.
+{{ advance_time 15 }}
+{{ attr_change "mc" "energy" 10 }}
+{{ attr_change "mc" "mood" 12 }}
+[[Stay and doze off, outdoor_schwimmbad_pool, whirlpoolnap]]
+[[Get out, outdoor_schwimmbad_pool]]
+#end
+
+#begin whirlpoolnap
+{{ advance_time 45 }}
+{{ attr_change "mc" "energy" 20 }}
+{{ attr_change "mc" "mood" 5 }}
+The heat and the steady thrum of the jets pull you under. You close your eyes and drift.
+{{ nap_harass_roll = random_int 1 100 }}
+{{ if nap_harass_roll <= 30 && !vars.pool_harassed_today }}
+{{ vars.pool_harassed_today = true }}
+{{ attr_change "mc" "mood" -15 }}
+{{ attr_change "mc" "horny" 10 }}
+<p>You surface slowly. Something feels off — then you realise: a hand is resting on your thigh. Not accidental. The person next to you meets your gaze with an unreadable expression.</p>
+<p>The moment you shift away, they withdraw without a word and look back at the water, as if nothing happened.</p>
+<p>You sit very still for a moment before getting out.</p>
+{{ else if nap_harass_roll <= 50 && vars.pool_harassed_today }}
+<p>When you come back to yourself, the whirlpool is empty except for you. You feel rested, if slightly waterlogged.</p>
+{{ else }}
+<p>When you open your eyes, a few minutes — or maybe forty-five — have passed. The whirlpool hums on. You feel warm all the way through.</p>
+{{ end }}
+[[Pool area, outdoor_schwimmbad_pool]]
+#end
+
+#begin rutschen
+You climb the tower to the top of the slide and push off.
+{{ advance_time 15 }}
+{{ attr_change "mc" "mood" 15 }}
+{{ attr_change "mc" "energy" -5 }}
+The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You come up laughing despite yourself.
+[[Another go, outdoor_schwimmbad_pool, rutschen]]
+[[Pool area, outdoor_schwimmbad_pool]]
+#end

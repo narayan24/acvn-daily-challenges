@@ -1,0 +1,16 @@
+#begin start
+{{ hour = game_hour }}
+You are standing outside the building entrance. The street stretches in both directions.
+{{ if hour >= 6 && hour < 12 }}
+<p>The morning air is fresh. The neighbourhood is just waking up.</p>
+{{ else if hour >= 12 && hour < 17 }}
+<p>The afternoon sun is out. People pass by on the pavement.</p>
+{{ else if hour >= 17 && hour < 21 }}
+<p>The evening is setting in. The light is warm and low.</p>
+{{ else }}
+<p>It's late. The street is quiet, lit only by the orange glow of the streetlamps.</p>
+{{ end }}
+[[Building entrance, home_treppenhaus]]
+[[Park, outdoor_park]]
+[[Swimming pool, outdoor_schwimmbad]]
+#end
