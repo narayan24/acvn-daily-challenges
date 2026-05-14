@@ -38,7 +38,7 @@ You step back into your room.
 {{ if room_roll == 1 }}<p><em>The building outside has gone still. Just the occasional creak of the structure settling.</em></p>{{ end }}
 {{ end }}
 [[Desk, home_room, desk]]
-[[Wardrobe, home_room, wardrobe]]
+[[Wardrobe, wardrobe]]
 [[Mirror, home_room, mirror]]
 {{ if state == "naked" }}
 [[Lie down naked, home_room, bednaked]]
