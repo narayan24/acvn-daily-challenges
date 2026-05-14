@@ -1,4 +1,4 @@
-#begin start
+﻿#begin start
 {{- register_daily "tv_hours" 0 -}}
 {{ bro_here = char_at "robert" "home_livingroom" }}
 {{ mom_here = char_at "sandra"  "home_livingroom" }}
@@ -266,27 +266,38 @@ You sit down next to {{ robert.properties.firstname }} and grab a controller.
 {{ advance_time 30 }}
 {{ attr_change "mc" "mood" 12 }}
 {{ attr_change "robert" "mood" -6 }}
+{{ inhibition = get_attr "mc" "inhibition" }}
 <p style="color:#4CAF50; font-weight:bold">🏆 You win!</p>
-<p>{{ robert.properties.firstname }} stares at the screen for a long moment. Then he sets the controller down. "Alright. Fine." He looks at you with an expression you can't quite read. "What's the dare?"</p>
+<p>{{ robert.properties.firstname }} stares at the screen for a long moment. Then he sets the controller down. "Alright. Fine." He looks at you. "What's the dare?"</p>
 {{ if vars.bet_stage == 1 }}
-<p><em>Stage 1 – start gentle.</em></p>
-[[Make me a sandwich – and bring it here., home_livingroom, darewin1]]
+<p><em>Start gentle.</em></p>
+[[Make me a sandwich — and bring it here., home_livingroom, darewin1]]
 [[Tell me something you've never told anyone., home_livingroom, darewin1b]]
 {{ else if vars.bet_stage == 2 }}
 [[Sing one verse of whatever song is in your head right now., home_livingroom, darewin2]]
 [[Let me scroll through your phone for thirty seconds., home_livingroom, darewin2b]]
 {{ else if vars.bet_stage == 3 }}
-{{ inhibition = get_attr "mc" "inhibition" }}
 {{ if inhibition >= 50 }}
-[[Give me a shoulder massage – you've been tense lately., home_livingroom, darewin3]]
+[[Give me a shoulder massage — you've been tense lately., home_livingroom, darewin3]]
 {{ end }}
-[[Take your shirt off for ten minutes., home_livingroom, darewin3b]]
-{{ else }}
-{{ inhibition = get_attr "mc" "inhibition" }}
+[[Take your shirt off for the next round., home_livingroom, darewin3b]]
+{{ else if vars.bet_stage == 4 }}
 {{ if inhibition >= 30 }}
-[[Give me a real massage., home_livingroom, darewin4]]
+[[Give me a proper back massage., home_livingroom, darewin4]]
 {{ end }}
-[[Walk to the kitchen and back – nothing on from the waist up., home_livingroom, darewin4b]]
+[[Walk to the kitchen and back. Nothing from the waist up., home_livingroom, darewin4b]]
+{{ else if vars.bet_stage == 5 }}
+[["Your hand on my leg. Don't move it.", home_livingroom, darewin5a]]
+{{ if inhibition <= 40 }}
+[["Kiss me.", home_livingroom, darewin5b]]
+{{ end }}
+{{ else if vars.bet_stage == 6 }}
+[["Jeans off. You started this.", home_livingroom, darewin6a]]
+{{ if inhibition <= 30 }}
+[["Come here.", home_livingroom, darewin6b]]
+{{ end }}
+{{ else }}
+[["I think we both know where this ends.", home_livingroom, darewin7]]
 {{ end }}
 #end
 
@@ -294,32 +305,47 @@ You sit down next to {{ robert.properties.firstname }} and grab a controller.
 {{ advance_time 30 }}
 {{ attr_change "mc" "mood" -5 }}
 {{ attr_change "robert" "mood" 8 }}
+{{ inhibition = get_attr "mc" "inhibition" }}
 <p style="color:#F44336; font-weight:bold">You lose.</p>
-<p>{{ robert.properties.firstname }} grins – but it's a different kind of grin than usual. Slower. Like he's been thinking about this.</p>
+<p>{{ robert.properties.firstname }} grins — but it's a different kind of grin than usual. Slower. Like he's been thinking about this.</p>
 {{ if vars.bet_stage == 1 }}
-<p>"Dare number one," he says. "You make the snacks. And you have to bring them in without complaining."</p>
+<p>"Dare number one," he says. "You make the snacks. And you bring them in without complaining."</p>
 [[Seriously? Fine., home_livingroom, darelost1]]
 {{ else if vars.bet_stage == 2 }}
-<p>"Tell me your most embarrassing memory," he says. "And no skipping the good parts."</p>
+<p>"Tell me your most embarrassing memory," he says. "No skipping the good parts."</p>
 [[...Okay., home_livingroom, darelost2]]
 {{ else if vars.bet_stage == 3 }}
-{{ inhibition = get_attr "mc" "inhibition" }}
-<p>"Next round," he says carefully, watching your face, "you play in just a t-shirt and underwear. For the whole game."</p>
+<p>"Next round," he says carefully, watching your face, "you play in just a t-shirt and underwear. Whole game."</p>
 {{ if inhibition >= 60 }}
-[[No way. Dare's off., home_livingroom, betrefuse]]
+[[No way., home_livingroom, betrefuse]]
 {{ end }}
-{{ if inhibition < 60 }}
 [["...You're serious.", home_livingroom, darelost3]]
-{{ end }}
-{{ else }}
-{{ inhibition = get_attr "mc" "inhibition" }}
-<p>He leans forward and says it quietly. "Sit here next to me for the next round. No shirt." A pause. "I won't make it weird."</p>
+{{ else if vars.bet_stage == 4 }}
+<p>He leans forward and says it quietly. "Sit next to me. No shirt." A pause. "I won't make it weird."</p>
 {{ if inhibition >= 50 }}
 [[Absolutely not., home_livingroom, betrefuse]]
 {{ end }}
 {{ if inhibition < 50 }}
 [["...You're really pushing it.", home_livingroom, darelost4]]
 {{ end }}
+{{ else if vars.bet_stage == 5 }}
+<p>"Sit in my lap," he says. "Both hands on the controller." He holds her gaze. "That's the dare."</p>
+{{ if inhibition >= 60 }}
+[[That's not happening., home_livingroom, betrefuse]]
+{{ end }}
+[["...Fine.", home_livingroom, darelost5]]
+{{ else if vars.bet_stage == 6 }}
+<p>He looks at her steadily. "Take everything off," he says. "You know the rules."</p>
+{{ if inhibition >= 50 }}
+[[Not a chance., home_livingroom, betrefuse]]
+{{ end }}
+[["You're going to regret this.", home_livingroom, darelost6]]
+{{ else }}
+<p>He looks at her for a moment without saying anything. Then, quietly: "Come here."</p>
+{{ if inhibition >= 40 }}
+[[Not like this., home_livingroom, betrefuse]]
+{{ end }}
+[["...Yeah.", home_livingroom, darelost7]]
 {{ end }}
 #end
 
@@ -367,11 +393,16 @@ You sit down next to {{ robert.properties.firstname }} and grab a controller.
 #begin darewin3
 {{ attr_change "robert" "mood" -3 }}
 {{ attr_change "mc" "mood" 8 }}
+{{ attr_change "mc" "horny" 10 }}
+{{ attr_change "robert" "horny" 12 }}
 {{ advance_time 15 }}
-<p>He moves behind you without much argument – which surprises you. His hands are careful, a little uncertain at first. Then less so.</p>
-<p>You stare at the paused game screen. "You're... actually not terrible at that."</p>
-<p>"Don't read into it."</p>
-<p>You don't say anything. But you don't tell him to stop, either.</p>
+He moves behind her without much argument. His hands settle on her shoulders — careful at first, like someone not quite sure how to begin. Then something in him relaxes and the pressure increases.
+<p>He finds the knot at the base of her neck and works at it slowly. She closes her eyes.</p>
+<p>"Right there," she says, without meaning to say it out loud.</p>
+<p>He doesn't say anything. He keeps going. His thumbs trace the line of her shoulder blades and she goes very still — staring at the paused game screen, not seeing it at all.</p>
+<p>When he finally stops, neither of them moves for a moment. His hands stay on her shoulders a beat longer than necessary.</p>
+<p>"You're really tense," he says. It's not what he was going to say.</p>
+<p>"Yeah," she says. It's not what she was going to say either.</p>
 {{ vars.bet_stage = vars.bet_stage + 1 }}
 [[Play another round, home_livingroom, betplay]]
 [[That's enough for tonight, home_livingroom]]
@@ -380,10 +411,14 @@ You sit down next to {{ robert.properties.firstname }} and grab a controller.
 #begin darewin3b
 {{ attr_change "robert" "mood" -10 }}
 {{ attr_change "mc" "mood" 5 }}
+{{ attr_change "mc" "horny" 15 }}
+{{ attr_change "robert" "horny" 10 }}
 {{ advance_time 10 }}
-<p>There's a long pause. Then he pulls his shirt over his head and drops it on the sofa cushion. He doesn't say anything. Neither do you. You both look back at the screen.</p>
-<p>After about thirty seconds he says, "Happy?"</p>
-<p>"Extremely."</p>
+There's a pause. Then he grabs the hem of his shirt and pulls it over his head in one motion. He drops it on the sofa cushion and sits back down.
+<p>She looks. She can't entirely help it — the flat of his stomach, the line of his shoulder, the way the lamplight catches the edge of his collarbone. He stares at the screen with impeccable precision from the moment his shirt hits the cushion.</p>
+<p>"Ten minutes," he says.</p>
+<p>"Ten minutes," she confirms.</p>
+<p>The first minute is the longest. After that she stops pretending not to look. He might notice. If he does, he doesn't say anything. But there's a particular stillness to him that wasn't there before.</p>
 {{ vars.bet_stage = vars.bet_stage + 1 }}
 [[Play another round, home_livingroom, betplay]]
 [[That's enough, home_livingroom]]
@@ -391,14 +426,18 @@ You sit down next to {{ robert.properties.firstname }} and grab a controller.
 
 #begin darewin4
 {{ attr_change "mc" "mood" 15 }}
-{{ attr_change "mc" "horny" 15 }}
+{{ attr_change "mc" "horny" 20 }}
 {{ attr_change "robert" "mood" 8 }}
-{{ attr_change "robert" "horny" 20 }}
-{{ advance_time 20 }}
-<p>He lies face-down on the sofa without complaint. Your hands find the knots in his shoulders. For a while neither of you speaks.</p>
-<p>At some point his breathing slows. You're not sure if he's fallen asleep or just stopped pretending to be casual.</p>
-<p>You stop eventually. He doesn't move right away.</p>
-<p>"...Thanks," he says, quietly. Not like he usually says things.</p>
+{{ attr_change "robert" "horny" 25 }}
+{{ advance_time 25 }}
+He lies face-down on the sofa without much ceremony, arms folded under his chin. She climbs onto the sofa beside him and starts with his shoulders.
+<p>She takes her time. Works the tension out of his upper back with the heels of her hands. He doesn't speak. After a while his breathing slows and deepens — the particular kind of quiet that means someone has stopped performing relaxation and actually arrived there.</p>
+<p>Her hands move lower. The small of his back. He shifts slightly under her hands — a slow, involuntary thing.</p>
+<p>"That's...," he starts.</p>
+<p>"I know," she says.</p>
+<p>Neither of them finishes the sentence. She keeps going. At some point she's aware of sitting on the backs of his thighs, her own weight settled there, and neither of them has remarked on it.</p>
+<p>When she finally stops, there's a long pause before he says anything.</p>
+<p>"...Thanks," he says. Quietly. Not like he usually says things.</p>
 {{ vars.bet_stage = vars.bet_stage + 1 }}
 [[Play another round, home_livingroom, betplay]]
 [[Good night, home_livingroom]]
@@ -406,11 +445,16 @@ You sit down next to {{ robert.properties.firstname }} and grab a controller.
 
 #begin darewin4b
 {{ attr_change "mc" "mood" 8 }}
-{{ attr_change "mc" "horny" 20 }}
-{{ attr_change "robert" "horny" 30 }}
-{{ advance_time 5 }}
-<p>You pull your shirt off and set it on the cushion beside you. You pick up the controller. {{ robert.properties.firstname }} very deliberately looks at the TV screen.</p>
-<p>You play the next round in silence. He loses – badly. You're pretty sure it's not all coincidence.</p>
+{{ attr_change "mc" "horny" 25 }}
+{{ attr_change "robert" "horny" 35 }}
+{{ advance_time 8 }}
+She sets the controller down, pulls her shirt off, and lays it deliberately across her knees. Then she picks the controller back up.
+<p>{{ robert.properties.firstname }} looks at the TV with extraordinary concentration.</p>
+<p>She starts the round. He plays. Halfway through he makes a mistake he would never normally make — a simple dodge he misses, an opening he doesn't take. She scores three kills she shouldn't have been able to land.</p>
+<p>He doesn't comment on any of it.</p>
+<p>When the round ends he finally glances at her — just briefly — and then away again. His ears are pink.</p>
+<p>"Another?" he asks.</p>
+<p>"Definitely," she says.</p>
 {{ vars.bet_stage = vars.bet_stage + 1 }}
 [[Play another round, home_livingroom, betplay]]
 [[Call it a night, home_livingroom]]
@@ -441,27 +485,31 @@ You tell him. He listens – actually listens, which is somehow worse than if he
 #end
 
 #begin darelost3
-{{ attr_change "mc" "horny" 15 }}
-{{ attr_change "robert" "horny" 20 }}
+{{ attr_change "mc" "horny" 18 }}
+{{ attr_change "robert" "horny" 25 }}
 {{ advance_time 30 }}
-You look at him for a moment. Then you stand up, pull your jeans off, and sit back down in just your t-shirt and underwear.
-<p>{{ robert.properties.firstname }} blinks. To his credit, he recovers quickly – picks up the controller and un-pauses without a word.</p>
-<p>The game goes on. You're both pretending very hard that this is normal. It is, somehow, almost comfortable.</p>
+She looks at him for a second. Then she stands up, pushes her jeans down and off, and sits back down in her t-shirt and underwear.
+<p>{{ robert.properties.firstname }} blinks. To his credit, he recovers fast — picks up his controller, un-pauses, focuses. Professional.</p>
+<p>They play.</p>
+<p>She notices things. The way he shifts on the sofa — once, then again — so that his thigh ends up against hers, warm and solid in the narrow space. The way he doesn't look at her, deliberately, when she stretches. The way he does look, twice, when he thinks she's too busy with the screen to catch it.</p>
+<p>She says nothing. She scores three kills in a row she'd normally never land and decides not to mention that either.</p>
 {{ vars.bet_stage = vars.bet_stage + 1 }}
 [[Play another round, home_livingroom, betplay]]
 [[That's enough for tonight, home_livingroom]]
 #end
 
 #begin darelost4
-{{ attr_change "mc" "horny" 25 }}
-{{ attr_change "robert" "horny" 30 }}
+{{ attr_change "mc" "horny" 30 }}
+{{ attr_change "robert" "horny" 40 }}
 {{ attr_change "mc" "mood" 5 }}
-{{ advance_time 20 }}
-You set the controller down. You pull your shirt off slowly and lay it across your knees. Then you pick the controller back up.
-<p>{{ robert.properties.firstname }} doesn't say a word. He looks at the screen. He presses start.</p>
-<p>You play a whole round side by side in near-silence. The TV light is warm. Somewhere in the second half he shifts slightly closer on the sofa. Neither of you mentions it.</p>
-<p>When the round ends, he says: "Another one?"</p>
-<p>"...Yeah," you say. "Another one."</p>
+{{ advance_time 25 }}
+She sets the controller down. Pulls her shirt off slowly and deliberately — no drama, because drama would mean embarrassment, and she's decided she isn't embarrassed — and lays it across her knees. Then she picks the controller back up.
+<p>{{ robert.properties.firstname }} looks at the screen with absolute concentration.</p>
+<p>They play in silence. The lamplight is warm. Somewhere in the second minute she notices they've drifted together — his shoulder against hers, his thigh against hers — and neither of them has done anything obvious to cause it. It just happened. The way things do, when you're not watching.</p>
+<p>She can feel that his breathing has changed. It's slower. Not quite steady.</p>
+<p>When the round ends he doesn't start the next one immediately. He just sits there for a second, close and warm, and she can almost hear him decide not to say whatever he was going to say.</p>
+<p>"Another round?" he asks.</p>
+<p>"Another round," she says.</p>
 {{ vars.bet_stage = vars.bet_stage + 1 }}
 [[Keep playing, home_livingroom, betplay]]
 [[Not tonight, home_livingroom]]
@@ -614,4 +662,152 @@ You find a clear patch of floor, fold a blanket into a rough mat, and take off y
 <p>When you finally sit cross-legged and close your eyes for the last two minutes, the room feels quieter than it did before. It's {{ time_str "HH:mm" }}.</p>
 <p>You feel like you've done something kind for yourself.</p>
 [[Living Room, home_livingroom]]
+#end
+
+#begin darewin5a
+{{ attr_change "mc" "horny" 20 }}
+{{ attr_change "robert" "horny" 30 }}
+{{ attr_change "mc" "mood" 10 }}
+{{ advance_time 30 }}
+He goes still for a moment. Then he shifts on the sofa and places his hand on her thigh. Palm down, warm through the fabric. He looks at the screen.
+<p>She picks up her controller. The round starts.</p>
+<p>She focuses on the game. She is not focusing on the game at all. His hand is very warm. At some point his thumb moves — just barely, against the fabric — a slow, barely-there pressure. She misses three shots she would normally land in her sleep.</p>
+<p>His hand doesn't move from her thigh for the rest of the round. When the round ends he lifts it and picks up his controller without comment.</p>
+<p>"Another?" he asks.</p>
+<p>"Yeah," she says. "Another one."</p>
+{{ vars.bet_stage = vars.bet_stage + 1 }}
+[[Play another round, home_livingroom, betplay]]
+[[That's enough for tonight, home_livingroom]]
+#end
+
+#begin darewin5b
+{{ attr_change "mc" "horny" 30 }}
+{{ attr_change "robert" "horny" 35 }}
+{{ attr_change "mc" "mood" 12 }}
+{{ attr_change "robert" "mood" 10 }}
+{{ attr_change "robert" "relationship" 5 }}
+{{ advance_time 10 }}
+He turns to look at her. For a second she thinks he's going to argue. He doesn't.
+<p>He leans across and kisses her — just once, careful and slow, one hand bracing on the sofa cushion beside her. His mouth is warm. It lasts a moment longer than strictly necessary and then he pulls back.</p>
+<p>He looks at the screen for a moment. His jaw is set.</p>
+<p>"There," he says, very evenly.</p>
+<p>"There," she agrees.</p>
+<p>He picks up his controller. She picks up hers. They both know something has shifted. Neither of them is quite sure what to do with that yet — but neither of them stops playing.</p>
+{{ vars.bet_stage = vars.bet_stage + 1 }}
+[[Play another round, home_livingroom, betplay]]
+[[Call it a night, home_livingroom]]
+#end
+
+#begin darelost5
+{{ attr_change "mc" "horny" 25 }}
+{{ attr_change "robert" "horny" 35 }}
+{{ attr_change "mc" "mood" 5 }}
+{{ advance_time 30 }}
+She gets up. Turns around. Sits.
+<p>His arms come up on either side of her to reach the controllers — there's no way around that geometry. He's careful not to make a big deal of it. So is she. The game starts.</p>
+<p>She tries to focus on the screen. He's warm against her back. She can feel when he shifts his weight, when he leans slightly forward to see better. Once, when she hesitates at an intersection, he says "left" quietly — close to her ear — and she goes left without thinking.</p>
+<p>She is not thinking about the game.</p>
+<p>When the round ends she starts to get up. His arm doesn't move immediately — not gripping, just there, a beat longer than it should be.</p>
+<p>"One more," he says.</p>
+<p>She stays.</p>
+{{ vars.bet_stage = vars.bet_stage + 1 }}
+[[Keep playing, home_livingroom, betplay]]
+[[Not tonight, home_livingroom]]
+#end
+
+#begin darewin6a
+{{ attr_change "mc" "horny" 25 }}
+{{ attr_change "robert" "horny" 30 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ advance_time 12 }}
+He looks at her for a long moment.
+<p>Then he stands up, undoes the button of his jeans, and steps out of them. He drops them over the back of the sofa and sits back down in his boxers like it's the most normal thing in the world.</p>
+<p>It is not the most normal thing in the world.</p>
+<p>She makes a point of looking at the TV. He makes a point of looking at the TV. The living room is somehow considerably warmer than it was three minutes ago.</p>
+<p>"Start the round," he says.</p>
+<p>"Right," she says.</p>
+<p>She starts the round. She loses by a wide margin. She's not sorry about it.</p>
+{{ vars.bet_stage = vars.bet_stage + 1 }}
+[[Play another round, home_livingroom, betplay]]
+[[That's enough, home_livingroom]]
+#end
+
+#begin darewin6b
+{{ attr_change "mc" "horny" 40 }}
+{{ attr_change "robert" "horny" 45 }}
+{{ attr_change "mc" "mood" 20 }}
+{{ attr_change "robert" "mood" 20 }}
+{{ attr_change "robert" "relationship" 15 }}
+{{ advance_time 60 }}
+He looks at her. Something in his expression shifts — the last layer of careful neutrality dropping away.
+<p>He comes.</p>
+<p>She'll think later that there wasn't a particular decision — just a momentum that had been building since the first dare, and at some point became inevitable. His hands first, then his mouth, then everything. The controller ends up somewhere on the floor. The game times out on its own.</p>
+<p>Much later, in the blue light of the standby screen, he says: "Best two out of three?"</p>
+<p>She laughs. She can't quite believe she's laughing. "You're terrible."</p>
+<p>He doesn't disagree.</p>
+{{ vars.bet_stage = 1 }}
+{{ vars.bet_offered = false }}
+{{ vars.bro_wins = 0 }}
+[[Living Room, home_livingroom]]
+[[Go to bed, home_room]]
+#end
+
+#begin darelost6
+{{ attr_change "mc" "horny" 40 }}
+{{ attr_change "robert" "horny" 50 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ advance_time 20 }}
+She looks at him. He looks back. There's nothing casual about his expression anymore.
+<p>She stands up. Takes a slow breath. Then she takes everything off — unhurried, deliberate, not looking away. Jeans, shirt, the rest. She folds nothing. When she sits back down she's completely bare, and she picks up her controller with a steadiness she doesn't entirely feel.</p>
+<p>He doesn't speak for a moment.</p>
+<p>"Well," he says, finally.</p>
+<p>"Well," she agrees.</p>
+<p>He reaches over and starts the game. His hands are not quite steady.</p>
+{{ vars.bet_stage = vars.bet_stage + 1 }}
+[[Keep playing, home_livingroom, betplay]]
+[[Stop the game, home_livingroom]]
+#end
+
+#begin darewin7
+{{ attr_change "mc" "horny" 45 }}
+{{ attr_change "robert" "horny" 50 }}
+{{ attr_change "mc" "mood" 25 }}
+{{ attr_change "robert" "mood" 25 }}
+{{ attr_change "robert" "relationship" 20 }}
+{{ advance_time 90 }}
+The score hangs on the screen. The apartment is quiet.
+<p>"I think," she says, "we both know where this is going."</p>
+<p>{{ robert.properties.firstname }} looks at her. Then he sets his controller down on the coffee table, very carefully.</p>
+<p>"Yeah," he says.</p>
+<p>The game doesn't get finished. The TV eventually dims on its own. The living room is dark and warm when they finally stop paying attention to any of it.</p>
+<p>Afterward they lie still for a while — her back against his chest, his arm loose across her. His breathing is slow. Outside, the city goes about its business without them.</p>
+<p>"That was a terrible bet," he says eventually, into her hair.</p>
+<p>"Worst idea you've ever had," she agrees.</p>
+<p>Neither of them means it.</p>
+{{ vars.bet_stage = 1 }}
+{{ vars.bet_offered = false }}
+{{ vars.bro_wins = 0 }}
+[[Stay here a while longer, home_livingroom]]
+[[Go to bed, home_room]]
+#end
+
+#begin darelost7
+{{ attr_change "mc" "horny" 45 }}
+{{ attr_change "robert" "horny" 50 }}
+{{ attr_change "mc" "mood" 25 }}
+{{ attr_change "robert" "mood" 25 }}
+{{ attr_change "robert" "relationship" 20 }}
+{{ advance_time 90 }}
+She looks at him for a long moment. Then she goes.
+<p>She doesn't know, afterward, which one of them moved first. It doesn't seem like the sort of thing that matters. His hands in her hair and his mouth warm against hers and the sofa narrow beneath them and none of that mattering either.</p>
+<p>Later — much later — the TV has gone to standby, the controller has ended up on the floor, and {{ robert.properties.firstname }} has his back against the sofa cushion with his eyes closed and his arm around her.</p>
+<p>"You cheated, by the way," he says quietly. "In round four."</p>
+<p>"I absolutely did not."</p>
+<p>"You absolutely did."</p>
+<p>She doesn't answer. She can feel him almost smiling. The apartment breathes around them.</p>
+{{ vars.bet_stage = 1 }}
+{{ vars.bet_offered = false }}
+{{ vars.bro_wins = 0 }}
+[[Stay here a while longer, home_livingroom]]
+[[Go to bed, home_room]]
 #end
