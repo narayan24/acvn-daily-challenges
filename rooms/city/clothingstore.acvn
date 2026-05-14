@@ -13,37 +13,33 @@ You push open the glass door and step into the clothing store. Soft music plays.
 <p style="color:#888; font-size:11px; font-style:italic">— Activewear —</p>
 {{ has_sport = has_clothing "sport_outfit" }}
 {{ if has_sport }}
-<p><strong>Sport Set</strong> — 45 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Sport Set</strong> — leggings and crop top, 45 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 45 }}
-<p><strong>Sport Set</strong> — stretchy leggings and a fitted crop top. Good for working out or just looking like you might. 45 Kron.</p>
-[[Buy Sport Set (45 Kron), city_clothingstore, buysportoutfit]]
+<p><strong>Sport Set</strong> — stretchy leggings and a fitted crop top. Good for working out or just looking like you might. 45 Kron. <a href="acvn://city_clothingstore/buysportoutfit">→ Buy</a></p>
 {{ else }}
-<p><strong>Sport Set</strong> — 45 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
+<p><strong>Sport Set</strong> — leggings and crop top, 45 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_yoga = has_clothing "yoga_set" }}
 {{ if has_yoga }}
-<p><strong>Yoga Set</strong> — 40 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Yoga Set</strong> — leggings and sports bra, 40 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 40 }}
-<p><strong>Yoga Set</strong> — soft, high-waisted leggings and a cropped sports bra. Fits like a second skin. 40 Kron.</p>
-[[Buy Yoga Set (40 Kron), city_clothingstore, buyyogaset]]
+<p><strong>Yoga Set</strong> — soft, high-waisted leggings and a cropped sports bra. Fits like a second skin. 40 Kron. <a href="acvn://city_clothingstore/buyyogaset">→ Buy</a></p>
 {{ else }}
-<p><strong>Yoga Set</strong> — 40 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
+<p><strong>Yoga Set</strong> — leggings and sports bra, 40 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_run = has_clothing "running_shorts" }}
 {{ if has_run }}
-<p><strong>Running Shorts & Tank</strong> — 28 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Running Shorts & Tank</strong> — 28 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 28 }}
-<p><strong>Running Shorts & Tank</strong> — lightweight shorts and a breathable tank top. Built for movement. 28 Kron.</p>
-[[Buy Running Shorts & Tank (28 Kron), city_clothingstore, buyrunningshorts]]
+<p><strong>Running Shorts & Tank</strong> — lightweight shorts and a breathable tank top. Built for movement. 28 Kron. <a href="acvn://city_clothingstore/buyrunningshorts">→ Buy</a></p>
 {{ else }}
 <p><strong>Running Shorts & Tank</strong> — 28 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_shoes = has_clothing "sport_shoes" }}
 {{ if has_shoes }}
-<p><strong>Sport Shoes</strong> — 25 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Sport Shoes</strong> — 25 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 25 }}
-<p><strong>Sport Shoes</strong> — light, supportive trainers. You could actually run in these. 25 Kron.</p>
-[[Buy Sport Shoes (25 Kron), city_clothingstore, buysportshoes]]
+<p><strong>Sport Shoes</strong> — light, supportive trainers. You could actually run in these. 25 Kron. <a href="acvn://city_clothingstore/buysportshoes">→ Buy</a></p>
 {{ else }}
 <p><strong>Sport Shoes</strong> — 25 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
@@ -51,46 +47,41 @@ You push open the glass door and step into the clothing store. Soft music plays.
 <p style="color:#888; font-size:11px; font-style:italic">— Casual & Occasion —</p>
 {{ has_dress = has_clothing "sundress" }}
 {{ if has_dress }}
-<p><strong>Summer Dress</strong> — 38 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Summer Dress</strong> — 38 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 38 }}
-<p><strong>Summer Dress</strong> — light cotton, a pattern that doesn't try too hard. Feels like a good day when you wear it. 38 Kron.</p>
-[[Buy Summer Dress (38 Kron), city_clothingstore, buysundress]]
+<p><strong>Summer Dress</strong> — light cotton, a pattern that doesn't try too hard. Feels like a good day when you wear it. 38 Kron. <a href="acvn://city_clothingstore/buysundress">→ Buy</a></p>
 {{ else }}
 <p><strong>Summer Dress</strong> — 38 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_jeans = has_clothing "jeans_blouse" }}
 {{ if has_jeans }}
-<p><strong>Slim Jeans & Blouse</strong> — 48 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Slim Jeans & Blouse</strong> — 48 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 48 }}
-<p><strong>Slim Jeans & Blouse</strong> — slim-cut jeans and a loose blouse. Somewhere between casual and put-together. 48 Kron.</p>
-[[Buy Slim Jeans & Blouse (48 Kron), city_clothingstore, buyjeanblouse]]
+<p><strong>Slim Jeans & Blouse</strong> — slim-cut jeans and a loose blouse. Somewhere between casual and put-together. 48 Kron. <a href="acvn://city_clothingstore/buyjeanblouse">→ Buy</a></p>
 {{ else }}
 <p><strong>Slim Jeans & Blouse</strong> — 48 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_mini = has_clothing "miniskirt_top" }}
 {{ if has_mini }}
-<p><strong>Mini Skirt & Top</strong> — 42 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Mini Skirt & Top</strong> — 42 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 42 }}
-<p><strong>Mini Skirt & Top</strong> — a short skirt and a fitted top. You'll notice people noticing. 42 Kron.</p>
-[[Buy Mini Skirt & Top (42 Kron), city_clothingstore, buyminiskirt]]
+<p><strong>Mini Skirt & Top</strong> — a short skirt and a fitted top. You'll notice people noticing. 42 Kron. <a href="acvn://city_clothingstore/buyminiskirt">→ Buy</a></p>
 {{ else }}
 <p><strong>Mini Skirt & Top</strong> — 42 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_party = has_clothing "party_outfit" }}
 {{ if has_party }}
-<p><strong>Night Out Outfit</strong> — 55 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Night Out Outfit</strong> — 55 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 55 }}
-<p><strong>Night Out Outfit</strong> — something you'd wear when you actually want to be noticed. 55 Kron.</p>
-[[Buy Night Out Outfit (55 Kron), city_clothingstore, buypartyoutfit]]
+<p><strong>Night Out Outfit</strong> — something you'd wear when you actually want to be noticed. 55 Kron. <a href="acvn://city_clothingstore/buypartyoutfit">→ Buy</a></p>
 {{ else }}
 <p><strong>Night Out Outfit</strong> — 55 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_eve = has_clothing "evening_dress" }}
 {{ if has_eve }}
-<p><strong>Evening Dress</strong> — 90 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Evening Dress</strong> — 90 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 90 }}
-<p><strong>Evening Dress</strong> — floor-length with a slit. The kind that changes how you enter a room. 90 Kron.</p>
-[[Buy Evening Dress (90 Kron), city_clothingstore, buyeveningdress]]
+<p><strong>Evening Dress</strong> — floor-length with a slit. The kind that changes how you enter a room. 90 Kron. <a href="acvn://city_clothingstore/buyeveningdress">→ Buy</a></p>
 {{ else }}
 <p><strong>Evening Dress</strong> — 90 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
@@ -98,28 +89,25 @@ You push open the glass door and step into the clothing store. Soft music plays.
 <p style="color:#888; font-size:11px; font-style:italic">— Lingerie —</p>
 {{ has_lace_bra = has_clothing "bra_lace" }}
 {{ if has_lace_bra }}
-<p><strong>Lace Bralette</strong> — 28 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Lace Bralette</strong> — 28 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 28 }}
-<p><strong>Lace Bralette</strong> — delicate lace, more intentional than the basics. 28 Kron.</p>
-[[Buy Lace Bralette (28 Kron), city_clothingstore, buylacebra]]
+<p><strong>Lace Bralette</strong> — delicate lace, more intentional than the basics. 28 Kron. <a href="acvn://city_clothingstore/buylacebra">→ Buy</a></p>
 {{ else }}
 <p><strong>Lace Bralette</strong> — 28 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_lace_pan = has_clothing "panties_lace" }}
 {{ if has_lace_pan }}
-<p><strong>Lace Panties</strong> — 20 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Lace Panties</strong> — 20 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 20 }}
-<p><strong>Lace Panties</strong> — matching lace panties. Goes with the bralette, or on their own. 20 Kron.</p>
-[[Buy Lace Panties (20 Kron), city_clothingstore, buylacepanties]]
+<p><strong>Lace Panties</strong> — matching lace panties. Goes with the bralette, or on their own. 20 Kron. <a href="acvn://city_clothingstore/buylacepanties">→ Buy</a></p>
 {{ else }}
 <p><strong>Lace Panties</strong> — 20 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_linge = has_clothing "lingerie_set" }}
 {{ if has_linge }}
-<p><strong>Lingerie Set</strong> — 55 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Lingerie Set</strong> — 55 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 55 }}
-<p><strong>Lingerie Set</strong> — silk-look fabric, matching cut. Very much not for sleeping in. 55 Kron.</p>
-[[Buy Lingerie Set (55 Kron), city_clothingstore, buylingerieset]]
+<p><strong>Lingerie Set</strong> — silk-look fabric, matching cut. Very much not for sleeping in. 55 Kron. <a href="acvn://city_clothingstore/buylingerieset">→ Buy</a></p>
 {{ else }}
 <p><strong>Lingerie Set</strong> — 55 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
@@ -127,28 +115,25 @@ You push open the glass door and step into the clothing store. Soft music plays.
 <p style="color:#888; font-size:11px; font-style:italic">— Footwear —</p>
 {{ has_heels = has_clothing "heels" }}
 {{ if has_heels }}
-<p><strong>Block Heels</strong> — 45 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Block Heels</strong> — 45 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 45 }}
-<p><strong>Block Heels</strong> — strappy block heels. Add height and a different kind of confidence. 45 Kron.</p>
-[[Buy Block Heels (45 Kron), city_clothingstore, buyheels]]
+<p><strong>Block Heels</strong> — strappy block heels. Add height and a different kind of confidence. 45 Kron. <a href="acvn://city_clothingstore/buyheels">→ Buy</a></p>
 {{ else }}
 <p><strong>Block Heels</strong> — 45 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_boots = has_clothing "ankle_boots" }}
 {{ if has_boots }}
-<p><strong>Ankle Boots</strong> — 55 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Ankle Boots</strong> — 55 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 55 }}
-<p><strong>Ankle Boots</strong> — short leather-look boots. Practical and sharp. 55 Kron.</p>
-[[Buy Ankle Boots (55 Kron), city_clothingstore, buyankleboots]]
+<p><strong>Ankle Boots</strong> — short leather-look boots. Practical and sharp. 55 Kron. <a href="acvn://city_clothingstore/buyankleboots">→ Buy</a></p>
 {{ else }}
 <p><strong>Ankle Boots</strong> — 55 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_sandals = has_clothing "sandals" }}
 {{ if has_sandals }}
-<p><strong>Sandals</strong> — 22 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Sandals</strong> — 22 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 22 }}
-<p><strong>Sandals</strong> — simple flat sandals. Good for warm days. 22 Kron.</p>
-[[Buy Sandals (22 Kron), city_clothingstore, buysandals]]
+<p><strong>Sandals</strong> — simple flat sandals. Good for warm days. 22 Kron. <a href="acvn://city_clothingstore/buysandals">→ Buy</a></p>
 {{ else }}
 <p><strong>Sandals</strong> — 22 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
@@ -156,37 +141,33 @@ You push open the glass door and step into the clothing store. Soft music plays.
 <p style="color:#888; font-size:11px; font-style:italic">— Swimwear —</p>
 {{ has_red_top = has_clothing "bikini_red_top" }}
 {{ if has_red_top }}
-<p><strong>Bikini Top (red)</strong> — 30 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Bikini Top (red)</strong> — 30 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 30 }}
-<p><strong>Bikini Top (red)</strong> — a red string bikini top. Small, bright, confident. 30 Kron.</p>
-[[Buy Bikini Top – red (30 Kron), city_clothingstore, buybikiniredtop]]
+<p><strong>Bikini Top (red)</strong> — a red string bikini top. Small, bright, confident. 30 Kron. <a href="acvn://city_clothingstore/buybikiniredtop">→ Buy</a></p>
 {{ else }}
 <p><strong>Bikini Top (red)</strong> — 30 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_red_bot = has_clothing "bikini_red_bottom" }}
 {{ if has_red_bot }}
-<p><strong>Bikini Bottom (red)</strong> — 25 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Bikini Bottom (red)</strong> — 25 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 25 }}
-<p><strong>Bikini Bottom (red)</strong> — matching red string bikini bottoms. 25 Kron.</p>
-[[Buy Bikini Bottom – red (25 Kron), city_clothingstore, buybikiniredbottom]]
+<p><strong>Bikini Bottom (red)</strong> — matching red string bikini bottoms. 25 Kron. <a href="acvn://city_clothingstore/buybikiniredbottom">→ Buy</a></p>
 {{ else }}
 <p><strong>Bikini Bottom (red)</strong> — 25 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_spo_top = has_clothing "bikini_sporty_top" }}
 {{ if has_spo_top }}
-<p><strong>Sports Bikini Top</strong> — 32 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Sports Bikini Top</strong> — 32 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 32 }}
-<p><strong>Sports Bikini Top</strong> — a bandeau sports bikini top. More coverage, still clearly a bikini. 32 Kron.</p>
-[[Buy Sports Bikini Top (32 Kron), city_clothingstore, buysportbikinit]]
+<p><strong>Sports Bikini Top</strong> — a bandeau sports bikini top. More coverage, still clearly a bikini. 32 Kron. <a href="acvn://city_clothingstore/buysportbikinit">→ Buy</a></p>
 {{ else }}
 <p><strong>Sports Bikini Top</strong> — 32 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
 {{ has_spo_bot = has_clothing "bikini_sporty_bottom" }}
 {{ if has_spo_bot }}
-<p><strong>Sports Bikini Bottom</strong> — 28 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+<p><strong>Sports Bikini Bottom</strong> — 28 Kron <span style="color:#4CAF50; font-size:11px">✓</span></p>
 {{ else if kron >= 28 }}
-<p><strong>Sports Bikini Bottom</strong> — high-waisted bikini bottoms with a sporty cut. 28 Kron.</p>
-[[Buy Sports Bikini Bottom (28 Kron), city_clothingstore, buysportbikinibot]]
+<p><strong>Sports Bikini Bottom</strong> — high-waisted bikini bottoms with a sporty cut. 28 Kron. <a href="acvn://city_clothingstore/buysportbikinibot">→ Buy</a></p>
 {{ else }}
 <p><strong>Sports Bikini Bottom</strong> — 28 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
 {{ end }}
