@@ -1,4 +1,4 @@
-#begin start
+﻿#begin start
 {{- register_daily "jog_count" 0 -}}
 {{- register_daily "mugged_today" false -}}
 {{ hour = game_hour }}
@@ -19,7 +19,7 @@ You are in the park. Trees line the paths, and a long loop of tarmac curves thro
 {{ end }}
 [[Jog a lap, outdoor_park, jog]]
 [[Rest on a bench, outdoor_park, rest]]
-[[Leave the park, outdoor_hausausgang]]
+[[Leave the park, outdoor_street]]
 #end
 
 #begin jog

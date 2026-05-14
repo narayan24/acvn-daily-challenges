@@ -1,19 +1,19 @@
-#begin start
+﻿#begin start
 {{- register_daily "pool_paid_today" false -}}
 You are standing in the entrance of the municipal swimming pool. The smell of chlorine and damp tiles drifts out from beyond the turnstiles. A bored staff member sits at the counter.
 {{ if vars.pool_paid_today }}
 <p style="color:#4CAF50; font-size:11px">✓ You already paid today. Go right through.</p>
-[[Changing room, outdoor_schwimmbad_umkleide]]
+[[Changing room, outdoor_pool_changingroom]]
 {{ else }}
 <p>Entry costs a few euros for the day.</p>
-[[Pay entry and go in, outdoor_schwimmbad, payentry]]
+[[Pay entry and go in, outdoor_pool, payentry]]
 {{ end }}
-[[Leave, outdoor_hausausgang]]
+[[Leave, outdoor_street]]
 #end
 
 #begin payentry
 {{ advance_time 5 }}
 {{ vars.pool_paid_today = true }}
 You hand over the entry fee and push through the turnstile. The noise of the pool beyond the next set of doors fills the corridor.
-[[Changing room, outdoor_schwimmbad_umkleide]]
+[[Changing room, outdoor_pool_changingroom]]
 #end
