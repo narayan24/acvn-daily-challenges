@@ -1,19 +1,25 @@
 ﻿#begin start
 {{- register_daily "pool_paid_today" false -}}
+{{ kron = item_count "kron" }}
 You are standing in the entrance of the municipal swimming pool. The smell of chlorine and damp tiles drifts out from beyond the turnstiles. A bored staff member sits at the counter.
 {{ if vars.pool_paid_today }}
 <p style="color:#4CAF50; font-size:11px">✓ You already paid today. Go right through.</p>
 [[Changing room, outdoor_pool_changingroom]]
 {{ else }}
-<p>Entry costs a few euros for the day.</p>
-[[Pay entry and go in, outdoor_pool, payentry]]
+<p>Day entry costs <strong>10 Kron</strong>. You have <strong>{{ kron }} Kron</strong>.</p>
+{{ if kron >= 10 }}
+[[Pay entry (10 Kron), outdoor_pool, payentry]]
+{{ else }}
+<p style="color:#FF6B6B; font-size:11px">You don't have enough Kron for the entry fee.</p>
+{{ end }}
 {{ end }}
 [[Leave, outdoor_street]]
 #end
 
 #begin payentry
 {{ advance_time 5 }}
+{{ spend_item "kron" 10 }}
 {{ vars.pool_paid_today = true }}
-You hand over the entry fee and push through the turnstile. The noise of the pool beyond the next set of doors fills the corridor.
+You count out ten Kron and slide them across the counter. The staff member tears off a wristband and hands it to you. You push through the turnstile — the warm, chlorine-heavy air of the pool hits you immediately.
 [[Changing room, outdoor_pool_changingroom]]
 #end

@@ -1,6 +1,13 @@
 {
   "items": [
     {
+      "id": "kron",
+      "type": "currency",
+      "name": "Kron",
+      "starting_quantity": 165,
+      "description": "The local currency. Spend it wisely."
+    },
+    {
       "id": "condom",
       "type": "inventory",
       "name": "Condom",
