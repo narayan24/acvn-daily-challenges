@@ -1,7 +1,14 @@
 #begin start
 {{ mom_here = char_at "sandra" "home_parentroom" }}
 {{ dad_here = char_at "thomas" "home_parentroom" }}
-You are standing outside your parents' bedroom.
+{{ hour = game_hour }}
+{{ if hour >= 22 || hour < 7 }}
+You're outside your landlords' bedroom. At this hour the door is closed, the light underneath it off.
+{{ else if hour >= 7 && hour < 10 }}
+You're outside the bedroom. The door is ajar — the room is already empty. They're early risers.
+{{ else }}
+You're outside the bedroom. The door is half-open.
+{{ end }}
 {{ if mom_here || dad_here }}
 <p>
 {{ if mom_here && dad_here }}

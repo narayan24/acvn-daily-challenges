@@ -2,7 +2,16 @@
 {{ state = clothing_state }}
 {{ inhibition = get_attr "mc" "inhibition" }}
 {{ neighbor_roll = random_int 1 10 }}
-You are standing in the stairwell. The stone steps echo. Letterboxes line the wall by the main entrance. It smells faintly of someone else's cooking.
+{{ hour = game_hour }}
+{{ if hour >= 6 && hour < 9 }}
+The stairwell is active at this hour — someone above you is already moving, doors opening and closing up the flights. The letterboxes rattle as the morning post arrives.
+{{ else if hour >= 9 && hour < 18 }}
+The stairwell is quiet. Stone steps, echoing. Letterboxes along the wall. It smells faintly of someone else's cooking and the cold concrete of the building.
+{{ else if hour >= 18 && hour < 22 }}
+The stairwell is mostly quiet now. A cooking smell hangs in the air from somewhere above. The overhead light flickers once and settles.
+{{ else }}
+The stairwell is silent at this hour. The main entrance light is the only thing on. The steps going down look very bare.
+{{ end }}
 {{ if state != "dressed" && neighbor_roll == 1 }}
 <p>Footsteps above. Someone is coming down.</p>
 {{ if state == "underwear" }}
