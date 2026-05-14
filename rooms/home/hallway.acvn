@@ -1,4 +1,4 @@
-#begin start
+﻿#begin start
 {{ state = clothing_state }}
 {{ inhibition = get_attr "mc" "inhibition" }}
 You step into the hallway of the apartment. It is {{ time_str "HH:mm" }}.
@@ -10,11 +10,11 @@ You step into the hallway of the apartment. It is {{ time_str "HH:mm" }}.
 [[{{ brother.properties.firstname }}'s Room, home_brother]]
 [[Parents' Room, home_parentroom]]
 {{ if state == "dressed" }}
-[[Stairwell, home_treppenhaus]]
+[[Stairwell, home_stairwell]]
 {{ else if state == "underwear" && inhibition <= 25 }}
-[[Stairwell, home_treppenhaus]]
+[[Stairwell, home_stairwell]]
 {{ else if state == "naked" && inhibition <= 10 }}
-[[Stairwell, home_treppenhaus]]
+[[Stairwell, home_stairwell]]
 {{ else if state == "underwear" }}
 <p style="color:#FF6B6B; font-size:12px">You're in your underwear. Stepping out into the stairwell where the neighbours could see you feels like too much right now.</p>
 {{ else if state == "naked" }}

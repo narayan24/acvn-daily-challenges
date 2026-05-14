@@ -1,4 +1,4 @@
-#begin start
+﻿#begin start
 {{- register_daily "swim_count" 0 -}}
 {{- register_daily "pool_harassed_today" false -}}
 {{ has_swimwear = any_clothing_has_tag "swimming" }}
@@ -6,12 +6,12 @@
 You are in the pool hall. The air is warm and heavy with chlorine. Lane ropes divide a long lap pool; to the side, the whirlpool bubbles steadily; at the far end, the slide towers rise to the ceiling.
 {{ if !has_swimwear }}
 <p style="color:#FF6B6B; font-size:11px">A lifeguard raises an eyebrow at you. You can't be in the pool area without proper swimwear.</p>
-[[Changing room, outdoor_schwimmbad_umkleide]]
+[[Changing room, outdoor_pool_changingroom]]
 {{ else }}
-[[Swim laps, outdoor_schwimmbad_pool, swim]]
-[[Whirlpool, outdoor_schwimmbad_pool, whirlpool]]
-[[Slides, outdoor_schwimmbad_pool, rutschen]]
-[[Changing room, outdoor_schwimmbad_umkleide]]
+[[Swim laps, outdoor_pool_area, swim]]
+[[Whirlpool, outdoor_pool_area, whirlpool]]
+[[Slides, outdoor_pool_area, slides]]
+[[Changing room, outdoor_pool_changingroom]]
 {{ end }}
 #end
 
@@ -34,7 +34,7 @@ You push off from the wall and settle into a steady crawl. The lane is long and 
 {{ else }}
 <p>{{ if vars.swim_count == 1 }}A good first length. Your muscles are warm when you pull yourself out.{{ else }}Another solid set. Your body knows this now.{{ end }}</p>
 {{ end }}
-[[Pool area, outdoor_schwimmbad_pool]]
+[[Pool area, outdoor_pool_area]]
 #end
 
 #begin whirlpool
@@ -42,8 +42,8 @@ You step down into the whirlpool. The water is hot and the jets pulse steadily a
 {{ advance_time 15 }}
 {{ attr_change "mc" "energy" 10 }}
 {{ attr_change "mc" "mood" 12 }}
-[[Stay and doze off, outdoor_schwimmbad_pool, whirlpoolnap]]
-[[Get out, outdoor_schwimmbad_pool]]
+[[Stay and doze off, outdoor_pool_area, whirlpoolnap]]
+[[Get out, outdoor_pool_area]]
 #end
 
 #begin whirlpoolnap
@@ -64,15 +64,15 @@ The heat and the steady thrum of the jets pull you under. You close your eyes an
 {{ else }}
 <p>When you open your eyes, a few minutes — or maybe forty-five — have passed. The whirlpool hums on. You feel warm all the way through.</p>
 {{ end }}
-[[Pool area, outdoor_schwimmbad_pool]]
+[[Pool area, outdoor_pool_area]]
 #end
 
-#begin rutschen
+#begin slides
 You climb the tower to the top of the slide and push off.
 {{ advance_time 15 }}
 {{ attr_change "mc" "mood" 15 }}
 {{ attr_change "mc" "energy" -5 }}
 The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You come up laughing despite yourself.
-[[Another go, outdoor_schwimmbad_pool, rutschen]]
-[[Pool area, outdoor_schwimmbad_pool]]
+[[Another go, outdoor_pool_area, slides]]
+[[Pool area, outdoor_pool_area]]
 #end

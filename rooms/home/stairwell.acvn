@@ -1,4 +1,4 @@
-#begin start
+﻿#begin start
 {{ state = clothing_state }}
 {{ inhibition = get_attr "mc" "inhibition" }}
 {{ neighbor_roll = random_int 1 10 }}
@@ -17,11 +17,11 @@ You are standing in the stairwell. The stone steps echo. Letterboxes line the wa
 {{ end }}
 [[Apartment, home_hallway]]
 {{ if state == "dressed" }}
-[[Leave the building, outdoor_hausausgang]]
+[[Leave the building, outdoor_street]]
 {{ else if state == "underwear" && inhibition <= 15 }}
-[[Leave the building, outdoor_hausausgang]]
+[[Leave the building, outdoor_street]]
 {{ else if state == "naked" && inhibition <= 5 }}
-[[Leave the building, outdoor_hausausgang]]
+[[Leave the building, outdoor_street]]
 {{ else if state == "underwear" }}
 <p style="color:#FF6B6B; font-size:12px">You're in your underwear. Stepping outside like this is a different matter entirely.</p>
 {{ else }}
