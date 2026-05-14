@@ -18,7 +18,7 @@ You are in the pool hall. The air is warm and heavy with chlorine. Lane ropes di
 [[Slides, outdoor_pool_area, slides]]
 {{ if pat_here }}
 [[Talk to Patrick, outdoor_pool_area, patrick_talk]]
-{{ if inhibition <= 60 }}[[Flirt with Patrick, outdoor_pool_area, patrick_flirt]]{{ end }}
+{{ if inhibition <= 60 }}[[Flirt with Patrick, outdoor_pool_area, patrick_flirt]]{{ else }}<p style="color:#888; font-size:11px; font-style:italic">You'd like to — but you can't quite make yourself be that forward. Not yet.</p>{{ end }}
 {{ end }}
 [[Changing room, outdoor_pool_changingroom]]
 {{ end }}

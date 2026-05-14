@@ -290,11 +290,15 @@ You sit down next to {{ robert.properties.firstname }} and grab a controller.
 [["Your hand on my leg. Don't move it.", home_livingroom, darewin5a]]
 {{ if inhibition <= 40 }}
 [["Kiss me.", home_livingroom, darewin5b]]
+{{ else }}
+<p style="color:#888; font-size:11px; font-style:italic">You're not quite ready to say that out loud yet.</p>
 {{ end }}
 {{ else if vars.bet_stage == 6 }}
 [["Jeans off. You started this.", home_livingroom, darewin6a]]
 {{ if inhibition <= 30 }}
 [["Come here.", home_livingroom, darewin6b]]
+{{ else }}
+<p style="color:#888; font-size:11px; font-style:italic">You can feel where this is heading — but you're not there yet.</p>
 {{ end }}
 {{ else }}
 [["I think we both know where this ends.", home_livingroom, darewin7]]
@@ -318,6 +322,8 @@ You sit down next to {{ robert.properties.firstname }} and grab a controller.
 <p>"Next round," he says carefully, watching your face, "you play in just a t-shirt and underwear. Whole game."</p>
 {{ if inhibition >= 60 }}
 [[No way., home_livingroom, betrefuse]]
+{{ else }}
+<p style="color:#888; font-size:11px; font-style:italic">Something in you has already decided you're not going to refuse.</p>
 {{ end }}
 [["...You're serious.", home_livingroom, darelost3]]
 {{ else if vars.bet_stage == 4 }}
@@ -332,18 +338,24 @@ You sit down next to {{ robert.properties.firstname }} and grab a controller.
 <p>"Sit in my lap," he says. "Both hands on the controller." He holds her gaze. "That's the dare."</p>
 {{ if inhibition >= 60 }}
 [[That's not happening., home_livingroom, betrefuse]]
+{{ else }}
+<p style="color:#888; font-size:11px; font-style:italic">Part of you already knows you're going to say yes.</p>
 {{ end }}
 [["...Fine.", home_livingroom, darelost5]]
 {{ else if vars.bet_stage == 6 }}
 <p>He looks at her steadily. "Take everything off," he says. "You know the rules."</p>
 {{ if inhibition >= 50 }}
 [[Not a chance., home_livingroom, betrefuse]]
+{{ else }}
+<p style="color:#888; font-size:11px; font-style:italic">You're past the point of pretending this surprises you.</p>
 {{ end }}
 [["You're going to regret this.", home_livingroom, darelost6]]
 {{ else }}
 <p>He looks at her for a moment without saying anything. Then, quietly: "Come here."</p>
 {{ if inhibition >= 40 }}
 [[Not like this., home_livingroom, betrefuse]]
+{{ else }}
+<p style="color:#888; font-size:11px; font-style:italic">There's nothing in you that wants to stop this.</p>
 {{ end }}
 [["...Yeah.", home_livingroom, darelost7]]
 {{ end }}
