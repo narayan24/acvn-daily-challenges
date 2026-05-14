@@ -29,7 +29,8 @@
 			}
 		},
 		{
-			"id": "brother",
+			"id": "robert",
+      "is_main_character": true,
 			"firstname": "Robert",
 			"lastname": "Smith",
 			"nickname": "Bob",
@@ -45,7 +46,8 @@
 			}
 		},
 		{
-			"id": "mother",
+			"id": "sandra",
+      "is_main_character": true,
 			"firstname": "Sandra",
 			"lastname": "Smith",
 			"relation": "Landlady",
@@ -60,7 +62,8 @@
 			}
 		},
 		{
-			"id": "father",
+			"id": "thomas",
+      "is_main_character": true,
 			"firstname": "Thomas",
 			"lastname": "Smith",
 			"relation": "Landlord",
@@ -72,6 +75,37 @@
 				"mood": { "min": 0, "max": 100, "value": 60, "name": "Mood" },
 				"horny": { "min": 0, "max": 100, "value": 15,  "name": "Horny" },
 				"inhibition": { "min": 0, "max": 100, "value": 75, "name": "Inhibition", "hidden": true }
+			}
+		},
+		{
+			"id": "patrick",
+			"firstname": "Patrick",
+			"lastname": "Star",
+			"nickname": "Pat",
+			"relation": "Coworker",
+			"relation_reverse": "Coworker",
+			"age": 28,
+			"gender": "male",
+			"relationship": 5,
+			"attributes": {
+				"mood": { "min": 0, "max": 100, "value": 75, "name": "Mood" },
+				"horny": { "min": 0, "max": 100, "value": 60, "name": "Horny" },
+				"inhibition": { "min": 0, "max": 100, "value": 20, "name": "Inhibition", "hidden": true }
+			}
+		},
+		{
+			"id": "frank",
+			"firstname": "Frank",
+			"lastname": "",
+			"relation": "Acquaintance",
+			"relation_reverse": "Acquaintance",
+			"age": 52,
+			"gender": "male",
+			"relationship": 0,
+			"attributes": {
+				"mood": { "min": 0, "max": 100, "value": 40, "name": "Mood" },
+				"horny": { "min": 0, "max": 100, "value": 65, "name": "Horny" },
+				"inhibition": { "min": 0, "max": 100, "value": 15, "name": "Inhibition", "hidden": true }
 			}
 		}
 	]

@@ -1,0 +1,101 @@
+#begin start
+{{ bro_here = char_at "robert" "home_robert" }}
+{{ bro_activity = char_activity "robert" }}
+You are standing in {{ robert.properties.firstname }}'s room.
+{{ if bro_here }}
+{{ if bro_activity == "sleeping" || bro_activity == "sleeping in" }}
+<p>The room is dark. {{ robert.properties.firstname }} is asleep, his breathing slow and steady.</p>
+[[Wake {{ robert.properties.firstname }} up, home_robert, wakeup]]
+{{ else if bro_activity == "doing homework" }}
+<p>{{ robert.properties.firstname }} sits at his desk with a furrowed brow, working through his homework. A few crumpled sheets of paper are scattered on the floor.</p>
+[[Talk to {{ robert.properties.firstname }}, home_robert, talkhomework]]
+[[Help with homework, home_robert, helphomework]]
+{{ else if bro_activity == "lying in bed on his phone" }}
+<p>{{ robert.properties.firstname }} is lying on his bed, scrolling absent-mindedly through his phone, completely in his own world.</p>
+[[Talk to him, home_robert, talkphone]]
+{{ else if bro_activity == "watching TV or streaming" }}
+<p>{{ robert.properties.firstname }} is stretched out on his bed staring at his laptop – some show is playing.</p>
+[[Watch with him, home_robert, watchtogether]]
+{{ else }}
+<p>{{ robert.properties.firstname }} is here.</p>
+[[Talk to {{ robert.properties.firstname }}, home_robert, talk]]
+{{ end }}
+{{ else }}
+<p>The room is empty.</p>
+{{ if bro_activity != "" }}
+<p style="color:#666; font-size:11px; font-style:italic">{{ robert.properties.firstname }} is elsewhere right now – {{ bro_activity }}.</p>
+{{ end }}
+{{ end }}
+[[Hallway, home_hallway]]
+#end
+
+#begin wakeup
+{{ bro_mood = get_attr "robert" "mood" }}
+You gently shake {{ robert.properties.firstname }} by the shoulder.
+{{ if bro_mood > 50 }}
+<p>He blinks sleepily, mumbles something incomprehensible, then rolls over. "Mmh... five more minutes."</p>
+{{ attr_change "mc" "mood" 3 }}
+{{ else }}
+<p>He snaps his eyes open and glares at you. "What the hell?! Let me sleep!"</p>
+{{ attr_change "mc" "mood" -2 }}
+{{ attr_change "robert" "mood" -5 }}
+{{ end }}
+{{ advance_time 3 }}
+[[{{ robert.properties.firstname }}'s Room, home_robert]]
+#end
+
+#begin talkhomework
+You knock on the door frame. {{ robert.properties.firstname }} looks up briefly, a slightly annoyed expression on his face.
+<p>"What do you want?" He sounds tense, but not unfriendly.</p>
+<p>"Nothing much. How's it going?"</p>
+<p>He sighs and leans back. "Maths. Three problems and I don't get half of them. Typical."</p>
+<p>You chat for a bit, then he turns back to his notebook.</p>
+{{ advance_time 5 }}
+{{ attr_change "mc" "mood" 3 }}
+[[{{ robert.properties.firstname }}'s Room, home_robert]]
+#end
+
+#begin helphomework
+You sit down next to {{ robert.properties.firstname }} and look at the problems.
+{{ roll = random_int 1 100 }}
+{{ if roll > 35 }}
+<p>The problems are manageable – you walk him through it step by step. {{ robert.properties.firstname }} nods slowly as it clicks.</p>
+<p>"Oh. Okay, that... actually makes sense." He sounds surprisingly grateful.</p>
+{{ attr_change "robert" "mood" 10 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ else }}
+<p>You look at the problems and furrow your brow. Maths was never your strong suit.</p>
+<p>{{ robert.properties.firstname }} grins. "See? Hopeless case, both of us."</p>
+{{ attr_change "mc" "mood" -2 }}
+{{ attr_change "robert" "mood" 3 }}
+{{ end }}
+{{ advance_time 20 }}
+[[{{ robert.properties.firstname }}'s Room, home_robert]]
+#end
+
+#begin talkphone
+You tap {{ robert.properties.firstname }} on the arm. He briefly glances up from the screen.
+<p>"Hm?"</p>
+<p>You exchange a few words – he's half there, most of his attention still on the screen.</p>
+{{ advance_time 5 }}
+{{ attr_change "mc" "mood" 2 }}
+[[{{ robert.properties.firstname }}'s Room, home_robert]]
+#end
+
+#begin watchtogether
+You sit on the edge of the bed and watch with him. {{ robert.properties.firstname }} makes a little room without taking his eyes off the laptop.
+<p>"This is the third episode today", he says casually. "It gets better."</p>
+<p>You watch together for half an hour – no big conversation, just being there.</p>
+{{ advance_time 30 }}
+{{ attr_change "mc" "mood" 10 }}
+{{ attr_change "robert" "mood" 5 }}
+[[{{ robert.properties.firstname }}'s Room, home_robert]]
+#end
+
+#begin talk
+You chat with {{ robert.properties.firstname }} for a while.
+{{ advance_time 10 }}
+{{ attr_change "mc" "mood" 5 }}
+<p>It's now {{ time_str "HH:mm" }}.</p>
+[[{{ robert.properties.firstname }}'s Room, home_robert]]
+#end

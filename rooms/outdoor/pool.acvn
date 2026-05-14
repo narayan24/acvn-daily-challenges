@@ -44,8 +44,43 @@ You pull on your work uniform and get to it — mopping corridors, scrubbing the
 <p>"Good work today." She hands you a small sealed envelope. Forty Kron, cash. It's not glamorous money, but it's yours.</p>
 {{ if (quest_step "find_work") == 1 }}{{ advance_quest "find_work" }}{{ end }}
 <p><em>+40 Kron earned. It's now {{ time_str "HH:mm" }}.</em></p>
+{{ pat_shift = char_at "patrick" "outdoor_pool_area" }}
+{{ if pat_shift }}
+<p>As you gather your things, Patrick appears around the corner in his lifeguard shirt — technically still on the clock. He takes in your uniform and the cleaning equipment with a slow sweep of his eyes.</p>
+<p>"Didn't know you worked here," he says. "How long have you been coming in without saying hello?"</p>
+[[Just head out, outdoor_pool, workshift_leave]]
+[[Stop and talk, outdoor_pool, workshift_patrick_chat]]
+{{ else }}
 [[Pool Entrance, outdoor_pool]]
 {{ end }}
+{{ end }}
+#end
+
+#begin workshift_leave
+{{ advance_time 2 }}
+You don't stop. As you push through the exit door you hear him laugh — low and unhurried, like he's got all the time in the world.
+[[Pool Entrance, outdoor_pool]]
+#end
+
+#begin workshift_patrick_chat
+{{ advance_time 10 }}
+{{ pat_rel = get_attr "patrick" "relationship" }}
+You stop. He straightens up from the wall slightly, like he didn't entirely expect it.
+<p>"Long shift," you say.</p>
+<p>"Tell me about it." His gaze does a brief, shameless pass over you before settling back on your face. "You're getting quick. I've noticed."</p>
+<p>The way he says <em>noticed</em> is slightly too deliberate to be innocent.</p>
+{{ if pat_rel < 15 }}
+<p>You raise an eyebrow. He grins and holds the door open for you. "See you next shift?"</p>
+{{ attr_change "patrick" "relationship" 4 }}
+{{ attr_change "mc" "mood" 4 }}
+{{ else }}
+<p>"You always watch the staff?" you ask.</p>
+<p>"Only the interesting ones." Still holding the door. Still watching you. "Hey — some of us are grabbing food Friday evening. You should come by. No pressure. Just a thought."</p>
+{{ attr_change "patrick" "relationship" 7 }}
+{{ attr_change "mc" "mood" 6 }}
+{{ attr_change "mc" "horny" 8 }}
+{{ end }}
+[[Pool Entrance, outdoor_pool]]
 #end
 
 #begin payentry

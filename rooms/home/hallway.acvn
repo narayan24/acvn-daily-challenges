@@ -1,4 +1,4 @@
-﻿#begin start
+#begin start
 {{ state = clothing_state }}
 {{ inhibition = get_attr "mc" "inhibition" }}
 You step into the hallway of the apartment. It is {{ time_str "HH:mm" }}.
@@ -7,7 +7,7 @@ You step into the hallway of the apartment. It is {{ time_str "HH:mm" }}.
 [[Bathroom, home_bathroom]]
 [[Kitchen, home_kitchen]]
 [[Living Room, home_livingroom]]
-[[{{ brother.properties.firstname }}'s Room, home_brother]]
+[[{{ robert.properties.firstname }}'s Room, home_robert]]
 [[Parents' Room, home_parentroom]]
 {{ if state == "dressed" }}
 [[Stairwell, home_stairwell]]

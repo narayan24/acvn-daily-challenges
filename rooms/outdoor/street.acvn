@@ -1,5 +1,8 @@
 #begin start
 {{ hour = game_hour }}
+{{ frank_here = char_at "frank" "outdoor_street" }}
+{{ kron = item_count "kron" }}
+{{ if vars.kron_given_frank == null }}{{ vars.kron_given_frank = 0 }}{{ end }}
 You are standing outside the building entrance. The street stretches in both directions.
 {{ if hour >= 6 && hour < 12 }}
 <p>The morning air is fresh. The neighbourhood is just waking up.</p>
@@ -13,8 +16,107 @@ You are standing outside the building entrance. The street stretches in both dir
 {{ if hour >= 22 }}
 <p style="color:#888; font-size:11px; font-style:italic">Most shops will be closed at this hour — but the city centre is still out there if you need it.</p>
 {{ end }}
+{{ if frank_here }}
+{{ if vars.frank_shelter_unlocked }}
+<p>Frank is in his usual spot by the wall. He nods when he sees you — a small, unhurried acknowledgement.</p>
+[[Talk to Frank, outdoor_street, frank_street_chat]]
+{{ else if vars.kron_given_frank >= 30 }}
+<p>The man from the wall is standing as you approach — actually on his feet, steadier than you'd have expected. He clears his throat. "Excuse me. I've been hoping you'd come by again."</p>
+[[Stop and listen, outdoor_street, frank_invite]]
+{{ else }}
+<p>A man is sitting against the wall beside the entrance — worn coat, a square of cardboard for a sign, a tin cup propped by his knee. He doesn't call out or perform it. He just looks up at you briefly, with tired eyes.</p>
+{{ if vars.kron_given_frank > 0 }}
+<p><em>He recognises you. Something at the corner of his mouth shifts, almost imperceptibly.</em></p>
+{{ end }}
+{{ if kron >= 10 }}[[Give 10 Kron, outdoor_street, frank_give10]]{{ end }}
+{{ if kron >= 5 }}[[Give 5 Kron, outdoor_street, frank_give5]]{{ end }}
+[["Sorry, not today.", outdoor_street, frank_pass]]
+{{ end }}
+{{ end }}
 [[Building entrance, home_stairwell]]
 [[Park, outdoor_park]]
 [[Swimming pool, outdoor_pool]]
 [[City Centre, city_center]]
+{{ if vars.frank_shelter_unlocked }}
+[[Frank's place, outdoor_frank_shelter]]
+{{ end }}
+#end
+
+#begin frank_give10
+{{ if vars.kron_given_frank == null }}{{ vars.kron_given_frank = 0 }}{{ end }}
+{{ vars.kron_given_frank = vars.kron_given_frank + 10 }}
+{{ spend_item "kron" 10 }}
+{{ attr_change "frank" "mood" 10 }}
+{{ attr_change "frank" "relationship" 5 }}
+{{ attr_change "mc" "mood" 5 }}
+{{ advance_time 2 }}
+You reach into your pocket. His hand is already out, patient and unsurprised. The coins change hands without ceremony.
+<p>"Thank you." He doesn't count it in front of you. He just says that.</p>
+<p><em style="color:#888; font-size:11px">Total given: {{ vars.kron_given_frank }} Kron.</em></p>
+[[Street, outdoor_street]]
+#end
+
+#begin frank_give5
+{{ if vars.kron_given_frank == null }}{{ vars.kron_given_frank = 0 }}{{ end }}
+{{ vars.kron_given_frank = vars.kron_given_frank + 5 }}
+{{ spend_item "kron" 5 }}
+{{ attr_change "frank" "mood" 5 }}
+{{ attr_change "frank" "relationship" 3 }}
+{{ attr_change "mc" "mood" 4 }}
+{{ advance_time 2 }}
+Five Kron. He takes it and tucks it into his coat pocket without looking down.
+<p>"Much appreciated," he says quietly. His eyes don't quite meet yours — not from shame, but from long habit.</p>
+<p><em style="color:#888; font-size:11px">Total given: {{ vars.kron_given_frank }} Kron.</em></p>
+[[Street, outdoor_street]]
+#end
+
+#begin frank_pass
+{{ attr_change "mc" "mood" -2 }}
+{{ advance_time 1 }}
+You walk past. He doesn't follow you with his eyes.
+<p>Somehow that's worse than if he had.</p>
+[[Street, outdoor_street]]
+#end
+
+#begin frank_invite
+{{ vars.frank_shelter_unlocked = true }}
+{{ vars.frank_invited = true }}
+{{ attr_change "frank" "mood" 20 }}
+{{ attr_change "frank" "relationship" 15 }}
+{{ attr_change "mc" "mood" 5 }}
+{{ advance_time 12 }}
+He holds himself differently when he's standing. More upright, considered. He clears his throat again.
+<p>"You've been kind to me. Several times now, without — without needing to be." He looks at you steadily. "Most people don't bother."</p>
+<p>"I wanted to say thank you properly. And I thought—" He pauses. "If you'd like to come by sometime. See where I am. I know it isn't anything to look at, but it would mean something. Having a visitor."</p>
+<p>He describes the way: through the gap in the fence at the south end of the street, between the buildings, under the fire escape. You'd know it when you saw it.</p>
+<p>"No obligation," he says. "Just — if you wanted to."</p>
+[["I'll come by.", outdoor_street, frank_invite_accept]]
+[["Maybe sometime.", outdoor_street]]
+#end
+
+#begin frank_invite_accept
+{{ attr_change "frank" "mood" 15 }}
+{{ attr_change "frank" "relationship" 8 }}
+{{ advance_time 3 }}
+Something in his face shifts — carefully, like he doesn't want to make too much of it.
+<p>"Good." A nod. "I'll be there."</p>
+[[Street, outdoor_street]]
+#end
+
+#begin frank_street_chat
+{{ frank_rel = get_attr "frank" "relationship" }}
+{{ advance_time 10 }}
+{{ attr_change "mc" "mood" 3 }}
+{{ attr_change "frank" "mood" 5 }}
+You stop. He shifts to give you more room on the pavement, though there's plenty.
+{{ if frank_rel < 20 }}
+<p>You exchange a few words. Out here he's more guarded than in his shelter — watching the street with the habitual wariness of someone used to being moved along. But he talks. He asks how your day is going, and seems to genuinely want to know the answer.</p>
+{{ else if frank_rel < 40 }}
+<p>He relaxes the moment you stop. The shoulders drop, the careful neutrality leaves his face. "I was hoping you'd come by." He asks about you — real questions, not small talk.</p>
+{{ else }}
+<p>He looks up the moment he hears your footsteps — he recognises them now. His eyes are warm. "There you are."</p>
+<p>You talk for a while. He makes you laugh at one point, unexpectedly. Out here on the pavement he still seems slightly smaller than he does in his shelter, but less so than before.</p>
+{{ attr_change "mc" "mood" 2 }}
+{{ end }}
+[[Street, outdoor_street]]
 #end
