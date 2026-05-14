@@ -1,0 +1,71 @@
+#begin start
+{{ hour = game_hour }}
+{{ if hour < 9 || hour >= 20 }}
+The electronics store is closed. Through the window you can see rows of devices still glowing with display-mode screens, cycling through their demos for no one.
+<p style="color:#888; font-size:11px">Open 09:00 – 20:00.</p>
+[[City Centre, city_center]]
+{{ else }}
+You step into the electronics store. It's cooler in here than outside, and the air smells faintly of plastic packaging and new cables. Screens of various sizes line the walls, all displaying the same rotating wallpaper.
+<p>A member of staff catches your eye and gives a nod that means <em>let me know if you need anything</em>. You nod back and start browsing.</p>
+{{ kron = item_count "kron" }}
+<p>You have <strong>{{ kron }} Kron</strong>.</p>
+{{ has_laptop = (item_count "laptop") > 0 }}
+{{ if has_laptop }}
+<p><strong>Laptop</strong> — 220 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+{{ else if kron >= 220 }}
+<p><strong>Laptop</strong> — a mid-range model, nothing flashy, but solid. Fast enough for anything you'd actually use it for. 220 Kron.</p>
+[[Buy Laptop (220 Kron), city_electronics, buylaptop]]
+{{ else }}
+<p><strong>Laptop</strong> — 220 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
+{{ end }}
+{{ has_headphones = (item_count "headphones") > 0 }}
+{{ if has_headphones }}
+<p><strong>Headphones</strong> — 35 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+{{ else if kron >= 35 }}
+<p><strong>Headphones</strong> — over-ear, decent sound isolation, comfortable enough to wear for a few hours. 35 Kron.</p>
+[[Buy Headphones (35 Kron), city_electronics, buyheadphones]]
+{{ else }}
+<p><strong>Headphones</strong> — 35 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
+{{ end }}
+{{ has_charger = (item_count "phone_charger") > 0 }}
+{{ if has_charger }}
+<p><strong>Phone Charger</strong> — 12 Kron <span style="color:#4CAF50; font-size:11px">✓ Already owned</span></p>
+{{ else if kron >= 12 }}
+<p><strong>Phone Charger</strong> — universal cable, compatible with your phone. Because the old one eventually gives out. 12 Kron.</p>
+[[Buy Phone Charger (12 Kron), city_electronics, buycharger]]
+{{ else }}
+<p><strong>Phone Charger</strong> — 12 Kron <span style="color:#888; font-size:11px">not enough funds</span></p>
+{{ end }}
+[[Leave, city_center]]
+{{ end }}
+#end
+
+#begin buylaptop
+The staff member helps you get the right model down from the shelf and walks you through the specs in about thirty seconds. You don't need the extended warranty. You pay.
+<p>The box is heavier than you expect. You carry it to the door with the particular satisfaction of a decision made and followed through.</p>
+{{ spend_item "kron" 220 }}
+{{ add_item "laptop" }}
+<p><em>Laptop added to your inventory.</em></p>
+[[Electronics Store, city_electronics]]
+[[Leave, city_center]]
+#end
+
+#begin buyheadphones
+You try them on at the display stand — the ambient noise of the shop drops away considerably. That'll do.
+<p>You carry the box to the counter.</p>
+{{ spend_item "kron" 35 }}
+{{ add_item "headphones" }}
+<p><em>Headphones added to your inventory.</em></p>
+[[Electronics Store, city_electronics]]
+[[Leave, city_center]]
+#end
+
+#begin buycharger
+You find the right cable on a hook near the register. It's the least exciting purchase imaginable.
+<p>The staff member rings it through without comment. You both know what this is.</p>
+{{ spend_item "kron" 12 }}
+{{ add_item "phone_charger" }}
+<p><em>Phone Charger added to your inventory.</em></p>
+[[Electronics Store, city_electronics]]
+[[Leave, city_center]]
+#end

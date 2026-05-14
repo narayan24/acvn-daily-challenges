@@ -1,0 +1,60 @@
+#begin start
+{{ hour = game_hour }}
+You are standing on the main high street of the city centre. Shopfronts line both sides, their signs bright against the pavement.
+{{ if hour >= 6 && hour < 12 }}
+<p>The morning is crisp and unhurried. A few early shoppers drift past. Most places have just opened their doors.</p>
+{{ else if hour >= 12 && hour < 17 }}
+<p>The afternoon is busy. People move in both directions, bags in hand, phones out. The smell of coffee and fresh bread drifts from somewhere nearby.</p>
+{{ else if hour >= 17 && hour < 21 }}
+<p>The evening crowd is out — a mix of people finishing work and others just starting their night. The shops are still lit and open.</p>
+{{ else }}
+<p>The high street is quiet. Most of the lights are off. A few people pass without meeting your eyes.</p>
+{{ end }}
+{{ if hour >= 21 || hour < 8 }}
+<p><em>Most shops are closed for the night.</em></p>
+{{ end }}
+{{ if hour >= 8 && hour < 21 }}
+[[Supermarket, city_supermarket]]
+{{ else }}
+<p style="color:#888; font-size:11px">Supermarket — closed</p>
+{{ end }}
+{{ if hour >= 9 && hour < 20 }}
+[[Clothing Store, city_clothingstore]]
+[[Electronics Store, city_electronics]]
+{{ else }}
+<p style="color:#888; font-size:11px">Clothing Store — closed</p>
+<p style="color:#888; font-size:11px">Electronics Store — closed</p>
+{{ end }}
+[[Job Board, city_center, jobboard]]
+[[Back to the street, outdoor_street]]
+#end
+
+#begin jobboard
+There's a community job board bolted to the wall near the post office — a corkboard thick with printed flyers, hand-written cards, and the odd QR code someone has taped hopefully over an older listing.
+<p>You scan through it.</p>
+{{ has_pool_job = (item_count "pool_job") > 0 }}
+{{ if has_pool_job }}
+<p>You already work at the pool. You scan the board out of habit, but nothing new catches your eye.</p>
+[[City Centre, city_center]]
+{{ else }}
+<p>Two listings stand out:</p>
+<p><strong>Pool Cleaning — Municipal Swimming Pool</strong><br>
+Part-time position. Flexible hours. 40 Kron per shift. No experience required — training provided on site.<br>
+<em>Apply in person or fill out the short form below.</em></p>
+[[Apply for Pool Cleaning job, city_center, applypoolob]]
+<p style="color:#888"><strong>Reception Assistant — Wellness Centre</strong><br>
+Part-time. Customer-facing role. Previous experience in hospitality required.<br>
+<em>You don't quite meet the requirements yet.</em></p>
+[[City Centre, city_center]]
+{{ end }}
+#end
+
+#begin applypoolob
+You pull a blank application slip from the sleeve at the bottom of the listing and borrow a pen from your bag.
+<p>Name. Address. Availability. The form is mercifully short — three questions and a signature. You fill it out leaning against the wall, then fold it and drop it into the collection box mounted beside the board.</p>
+<p>It's done in under five minutes. Oddly satisfying for such a small thing.</p>
+{{ add_item "pool_job" }}
+{{ if (quest_step "find_work") == 0 }}{{ advance_quest "find_work" }}{{ end }}
+<p><em>You've applied for the pool cleaning position. Check back at the swimming pool to start your first shift.</em></p>
+[[City Centre, city_center]]
+#end

@@ -34,6 +34,7 @@ You are in the park. Trees line the paths, and a long loop of tarmac curves thro
 {{ attr_change "mc" "mood" 8 }}
 {{ attr_change "mc" "hunger" -5 }}
 You run a full lap of the park path.
+{{ if (any_clothing_has_tag "sport") && (quest_step "get_active") == 1 }}{{ advance_quest "get_active" }}{{ end }}
 {{ if energy < 30 }}
 <p>Your legs feel heavy before you're even halfway around. You push through, but it costs you.</p>
 {{ else }}

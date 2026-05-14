@@ -1,4 +1,4 @@
-﻿#begin start
+#begin start
 {{ hour = game_hour }}
 You are standing outside the building entrance. The street stretches in both directions.
 {{ if hour >= 6 && hour < 12 }}
@@ -10,7 +10,11 @@ You are standing outside the building entrance. The street stretches in both dir
 {{ else }}
 <p>It's late. The street is quiet, lit only by the orange glow of the streetlamps.</p>
 {{ end }}
+{{ if hour >= 22 }}
+<p style="color:#888; font-size:11px; font-style:italic">Most shops will be closed at this hour — but the city centre is still out there if you need it.</p>
+{{ end }}
 [[Building entrance, home_stairwell]]
 [[Park, outdoor_park]]
 [[Swimming pool, outdoor_pool]]
+[[City Centre, city_center]]
 #end

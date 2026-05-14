@@ -5,9 +5,35 @@
       "name": "First Steps",
       "hint": "Go to the desk in your room.",
       "steps": [
-        { "id": "pickup_phone",    "description": "Pick up the phone from the desk!" },
-        { "id": "go_to_bathroom",  "description": "Go to the bathroom!" },
-        { "id": "shower_and_brush","description": "Shower and brush your teeth!" }
+        { "id": "pickup_phone",     "description": "Pick up the phone from the desk." },
+        { "id": "go_to_bathroom",   "description": "Go to the bathroom." },
+        { "id": "shower_and_brush", "description": "Shower and brush your teeth." }
+      ]
+    },
+    {
+      "id": "get_active",
+      "name": "Get Active",
+      "hint": "Head to the city centre and visit the clothing store.",
+      "steps": [
+        { "id": "buy_sportswear",   "description": "Buy a sport outfit and sport shoes at the clothing store in the city." },
+        { "id": "go_jogging",       "description": "Put on your sport set and go for a jog in the park." }
+      ]
+    },
+    {
+      "id": "find_work",
+      "name": "Find Work",
+      "hint": "Money doesn't last forever. Head to the city and check the job board.",
+      "steps": [
+        { "id": "apply_for_job",    "description": "Visit the job board in the city centre and apply for a position." },
+        { "id": "first_shift",      "description": "Go to the swimming pool and work your first cleaning shift." }
+      ]
+    },
+    {
+      "id": "grocery_run",
+      "name": "Stock Up",
+      "hint": "Your fridge is looking sparse. Visit the supermarket in the city centre.",
+      "steps": [
+        { "id": "buy_groceries",    "description": "Buy groceries at the supermarket." }
       ]
     }
   ]

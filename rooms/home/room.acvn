@@ -1,13 +1,24 @@
 #begin start
 {{ if (quest_step "tutorial") == -1 }}{{ start_quest "tutorial" }}{{ end }}
+{{- if (quest_step "tutorial") >= 3 -}}
+{{-   if (quest_step "get_active")   == -1 }}{{ start_quest "get_active"   }}{{ end -}}
+{{-   if (quest_step "find_work")    == -1 }}{{ start_quest "find_work"    }}{{ end -}}
+{{-   if (quest_step "grocery_run")  == -1 }}{{ start_quest "grocery_run"  }}{{ end -}}
+{{- end -}}
 You are standing in your room.
 <p>It's the only space in the flat that's entirely yours.</p>
 <p>
     Your name is {{ mc.properties.firstname }} {{ mc.properties.lastname }},
     you are {{ mc.properties.age }} years old.
 </p>
+{{ hour = game_hour }}
+{{ energy = get_attr "mc" "energy" }}
+{{ if hour >= 20 && energy < 40 }}
+<p><em>You feel the tiredness of the day settling in.</em></p>
+{{ end }}
 [[Desk, home_room, desk]]
 [[Wardrobe, home_room, wardrobe]]
+[[Mirror, home_room, mirror]]
 {{ state = clothing_state }}
 {{ if state == "naked" }}
 [[Lie down naked, home_room, bednaked]]
@@ -15,6 +26,9 @@ You are standing in your room.
 [[Lie down in underwear, home_room, bedunderwear]]
 {{ else }}
 [[Go to bed, home_room, beddressed]]
+{{ end }}
+{{ if state != "dressed" }}
+[[Private time, home_room, privatetime]]
 {{ end }}
 {{ inhibition = get_attr "mc" "inhibition" }}
 {{ if state == "dressed" }}
@@ -51,6 +65,65 @@ You pick up the phone from the desk.
 {{ if (quest_step "tutorial") == 0 }}{{ advance_quest "tutorial" }}{{ end }}
 <p>The smartphone is now in your inventory.</p>
 [[Desk, home_room, desk]]
+#end
+
+#begin mirror
+You stop in front of the wardrobe mirror and look at yourself properly for the first time today.
+<p>The reflection stares back — a little tired, maybe, but there. Present. Yours.</p>
+<p>You straighten your posture. Roll your shoulders back. Try a smile — first a performative one, then something quieter and more real.</p>
+<p>You practice holding your chin up. The way confident people do, like they've decided to take up space.</p>
+{{ advance_time 15 }}
+{{ attr_change "mc" "energy" -5 }}
+{{ attr_change "mc" "charisma" 2 }}
+{{ attr_change "mc" "attractiveness" 1 }}
+{{ attr_change "mc" "mood" 5 }}
+{{ roll_mirror = random_int 1 3 }}
+{{ if roll_mirror == 1 }}
+<p>At some point you stop practicing and just... look. The light is soft. You notice the curve of your jaw, the way your hair falls. Something quiet stirs — a warmth that has nothing to do with confidence training.</p>
+{{ attr_change "mc" "horny" 5 }}
+{{ end }}
+<p>It's {{ time_str "HH:mm" }}. You feel a little more sure of yourself.</p>
+[[Back to your room, home_room]]
+#end
+
+#begin privatetime
+{{ roll_scenario = random_int 1 3 }}
+{{ has_phone = (item_count "phone") > 0 }}
+{{ if roll_scenario == 2 && !has_phone }}
+{{ roll_scenario = 1 }}
+{{ end }}
+{{ if roll_scenario == 1 }}
+You pull the curtains, fold yourself onto the bed, and let your mind go somewhere warm.
+<p>There's no particular plan — just permission. You close your eyes and let a fantasy take shape slowly, like something surfacing from deep water. Private and unhurried.</p>
+<p>You don't rush it. The afternoon — or evening — can wait.</p>
+{{ advance_time 20 }}
+{{ attr_change "mc" "mood" 12 }}
+{{ attr_change "mc" "horny" 30 }}
+{{ attr_change "mc" "horny" -20 }}
+{{ attr_change "mc" "energy" -8 }}
+<p>Afterward you lie still for a moment, breathing slowly. The room feels quieter than before. Good quiet.</p>
+{{ else if roll_scenario == 2 }}
+You pull the covers up to your waist, grab your phone, and open an old reading app you haven't touched in months.
+<p>There's a story saved there — something you bookmarked ages ago and never quite got around to. You start reading.</p>
+<p>The writing isn't especially polished, but it doesn't need to be. The scenes build slowly, and you find yourself reading certain passages twice. The phone screen is warm in your hand.</p>
+{{ advance_time 25 }}
+{{ attr_change "mc" "mood" 8 }}
+{{ attr_change "mc" "horny" 25 }}
+{{ attr_change "mc" "horny" -15 }}
+{{ attr_change "mc" "energy" -5 }}
+<p>Eventually you set the phone face-down on the covers and just breathe for a minute. The story still playing out behind your eyes.</p>
+{{ else }}
+You lock the door, pull the blinds, and take your time.
+<p>This is yours — completely. No audience, no performance, no apologies.</p>
+<p>You know your own rhythms by now. You take what you need.</p>
+{{ advance_time 30 }}
+{{ attr_change "mc" "mood" 15 }}
+{{ attr_change "mc" "horny" 35 }}
+{{ attr_change "mc" "horny" -30 }}
+{{ attr_change "mc" "energy" -10 }}
+<p>Afterward you lie flat on your back, staring at the ceiling. Loose-limbed. At ease. The day feels considerably more manageable from here.</p>
+{{ end }}
+[[Back to your room, home_room]]
 #end
 
 #begin bednaked

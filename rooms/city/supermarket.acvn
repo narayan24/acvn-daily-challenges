@@ -1,0 +1,62 @@
+#begin start
+{{- register_daily "supermarket_visits" 0 -}}
+{{ hour = game_hour }}
+{{ if hour < 8 || hour >= 21 }}
+The automatic doors are dark. A handwritten sign taped to the glass reads: <em>Open 08:00 – 21:00.</em>
+<p>You'll have to come back during opening hours.</p>
+[[City Centre, city_center]]
+{{ else }}
+{{ vars.supermarket_visits = vars.supermarket_visits + 1 }}
+You step through the automatic doors into the cool, fluorescent brightness of the supermarket.
+{{ if vars.supermarket_visits == 1 }}
+<p>It's a medium-sized place — clean enough, a little generic, the kind of shop that has everything you need and nothing you actually came for. The produce section is near the entrance, and it smells faintly of bread from the bakery counter at the back.</p>
+{{ else }}
+<p>The familiar hum of refrigerators, the same playlist that was playing last time. You know your way around by now.</p>
+{{ end }}
+{{ kron = item_count "kron" }}
+<p>You have <strong>{{ kron }} Kron</strong>.</p>
+{{ if kron >= 12 }}
+[[Buy groceries (12 Kron), city_supermarket, buygroceries]]
+{{ else }}
+<p style="color:#888; font-size:11px">Groceries (12 Kron) — not enough funds</p>
+{{ end }}
+{{ if kron >= 6 }}
+[[Buy energy drink (6 Kron), city_supermarket, buyenergy]]
+{{ else }}
+<p style="color:#888; font-size:11px">Energy drink (6 Kron) — not enough funds</p>
+{{ end }}
+[[Browse, city_supermarket, browse]]
+[[Leave, city_center]]
+{{ end }}
+#end
+
+#begin buygroceries
+You work your way through the aisles methodically — bread, something for dinner, a few basics. Nothing exciting, but everything you actually need.
+<p>At the checkout the total comes to 12 Kron. You tap your card and pocket the receipt.</p>
+{{ spend_item "kron" 12 }}
+{{ add_item "groceries" }}
+{{ if (quest_step "grocery_run") == 0 }}{{ advance_quest "grocery_run" }}{{ end }}
+<p><em>Groceries added to your inventory. Eat them at home to restore hunger.</em></p>
+[[Keep shopping, city_supermarket]]
+[[Leave, city_center]]
+#end
+
+#begin buyenergy
+You grab an energy drink from the refrigerated section near the back — the kind in a slim silver can that promises more than it probably delivers.
+<p>6 Kron. You pay and drop it in your bag.</p>
+{{ spend_item "kron" 6 }}
+{{ add_item "energy_drink" }}
+<p><em>Energy drink added to your inventory. Drink it when you need a boost.</em></p>
+[[Keep shopping, city_supermarket]]
+[[Leave, city_center]]
+#end
+
+#begin browse
+You don't have a list. You just walk the aisles slowly, picking things up and putting them down again.
+<p>There's something oddly restful about it — the low hum of the fridges, the muted colours of packaged food, the gentle background noise of other people going about their ordinary business. You're not really looking for anything. You're just here.</p>
+{{ advance_time 10 }}
+{{ attr_change "mc" "mood" 2 }}
+<p>It's {{ time_str "HH:mm" }}. You emerge slightly calmer than you went in, empty-handed.</p>
+[[Supermarket, city_supermarket]]
+[[Leave, city_center]]
+#end
