@@ -3,3 +3,15 @@ body {
     background-color: #333;
     color: #fff;
 }
+
+a[href^="acvn://"] {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+a[href^="acvn://"]:hover {
+    text-decoration: underline;
+    color: #81C784;
+}
