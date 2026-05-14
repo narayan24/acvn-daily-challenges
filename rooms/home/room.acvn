@@ -5,21 +5,41 @@
 {{-   if (quest_step "find_work")    == -1 }}{{ start_quest "find_work"    }}{{ end -}}
 {{-   if (quest_step "grocery_run")  == -1 }}{{ start_quest "grocery_run"  }}{{ end -}}
 {{- end -}}
-You are standing in your room.
-<p>It's the only space in the flat that's entirely yours.</p>
-<p>
-    Your name is {{ mc.properties.firstname }} {{ mc.properties.lastname }},
-    you are {{ mc.properties.age }} years old.
-</p>
 {{ hour = game_hour }}
 {{ energy = get_attr "mc" "energy" }}
-{{ if hour >= 20 && energy < 40 }}
-<p><em>You feel the tiredness of the day settling in.</em></p>
+{{ state = clothing_state }}
+{{ room_roll = random_int 1 5 }}
+{{ if (quest_step "tutorial") == 0 }}
+You are in your room. It's the only space in the flat that's entirely yours.
+<p>Your name is {{ mc.properties.firstname }} {{ mc.properties.lastname }}, you are {{ mc.properties.age }} years old.</p>
+{{ else }}
+You step back into your room.
+{{ end }}
+{{ if hour >= 6 && hour < 10 }}
+<p>Morning light filters through the curtains, pale and thin. The flat beyond the door is starting to stir.</p>
+{{ if room_roll == 1 }}<p><em>Something clinks in the kitchen. Someone is already up.</em></p>{{ end }}
+{{ if room_roll == 2 }}<p><em>The smell of coffee has made it this far. Someone brewed a pot early.</em></p>{{ end }}
+{{ else if hour >= 10 && hour < 14 }}
+<p>Midday light falls across the floor in a long, slow stripe. The room is bright and still.</p>
+{{ if room_roll == 1 && (char_at "robert" "home_robert") }}<p><em>Through the wall — the faint, rhythmic thump of {{ robert.properties.firstname }}'s music.</em></p>{{ end }}
+{{ if room_roll == 2 }}<p><em>The flat sounds quiet from here. You can't tell if anyone is around.</em></p>{{ end }}
+{{ else if hour >= 14 && hour < 18 }}
+<p>The afternoon has settled in. The light is soft and nothing seems to be in any particular hurry.</p>
+{{ if room_roll == 1 }}<p><em>A door closes somewhere in the flat. Then quiet again.</em></p>{{ end }}
+{{ if room_roll == 2 }}<p><em>A car drifts past on the street below. Then nothing.</em></p>{{ end }}
+{{ if room_roll == 3 && (char_at "robert" "home_livingroom") }}<p><em>Muffled game sounds from the living room. {{ robert.properties.firstname }} is on the console again.</em></p>{{ end }}
+{{ else if hour >= 18 && hour < 22 }}
+<p>The room holds the warm, dimmed quality of evening. The day is winding down beyond the door.</p>
+{{ if room_roll == 1 }}<p><em>The smell of dinner finds its way under the door.</em></p>{{ end }}
+{{ if room_roll == 2 }}<p><em>Voices drift from the living room — the TV, or maybe actual conversation.</em></p>{{ end }}
+{{ else }}
+<p>It's late. The room is quiet, lit only by whatever light you've left on.</p>
+{{ if energy < 40 }}<p><em>You feel the tiredness of the day pulling at you.</em></p>{{ end }}
+{{ if room_roll == 1 }}<p><em>The building outside has gone still. Just the occasional creak of the structure settling.</em></p>{{ end }}
 {{ end }}
 [[Desk, home_room, desk]]
 [[Wardrobe, home_room, wardrobe]]
 [[Mirror, home_room, mirror]]
-{{ state = clothing_state }}
 {{ if state == "naked" }}
 [[Lie down naked, home_room, bednaked]]
 {{ else if state == "underwear" }}
@@ -30,18 +50,7 @@ You are standing in your room.
 {{ if state != "dressed" }}
 [[Private time, home_room, privatetime]]
 {{ end }}
-{{ inhibition = get_attr "mc" "inhibition" }}
-{{ if state == "dressed" }}
 [[Hallway, home_hallway]]
-{{ else if state == "underwear" && inhibition <= 70 }}
-[[Hallway, home_hallway]]
-{{ else if state == "naked" && inhibition <= 35 }}
-[[Hallway, home_hallway]]
-{{ else if state == "underwear" }}
-<p style="color:#FF6B6B; font-size:12px">You're only in your underwear. You don't feel quite ready to step out into the shared hallway like this.</p>
-{{ else }}
-<p style="color:#FF6B6B; font-size:12px">You're naked. You can't bring yourself to walk out into the hallway.</p>
-{{ end }}
 #end
 
 #begin desk

@@ -4,7 +4,23 @@
 {{ mom_here    = char_at "sandra"  "home_kitchen" }}
 {{ dad_here    = char_at "thomas"  "home_kitchen" }}
 {{ anyone_here = bro_here || mom_here || dad_here }}
-You are standing in the kitchen. It is {{ time_str "HH:mm" }}.
+{{ hour = game_hour }}
+{{ kitchen_roll = random_int 1 4 }}
+{{ if hour >= 6 && hour < 10 }}
+The kitchen is purposeful at this hour. Someone already brewed coffee — the smell has filled the whole room.
+{{ if kitchen_roll == 1 }}<p><em>A pan is drying on the rack from last night. Crumbs on the counter from an early breakfast.</em></p>{{ end }}
+{{ else if hour >= 10 && hour < 14 }}
+The kitchen is quiet and bright. The counters are clean, the morning dishes put away. Light falls sharp through the window.
+{{ if kitchen_roll == 1 }}<p><em>The coffee machine is still warm. Whoever used it wasn't long ago.</em></p>{{ end }}
+{{ else if hour >= 14 && hour < 18 }}
+<p>The afternoon lull. The kitchen smells faintly of whatever was cooked for lunch, the air still slightly warm from the stove.</p>
+{{ else if hour >= 17 && hour < 21 }}
+The kitchen is warm and fragrant — dinner either happening or just finished. The extractor fan hums quietly.
+{{ if kitchen_roll == 1 }}<p><em>A pot on the back burner, lid slightly ajar. Someone was thorough tonight.</em></p>{{ end }}
+{{ else }}
+The kitchen is quiet. The lights are low. Everything has been cleaned up and put away for the night.
+{{ if kitchen_roll == 1 }}<p><em>The tap drips once, then stops. The fridge hums steadily.</em></p>{{ end }}
+{{ end }}
 {{ if anyone_here }}
 <p>
 {{ if bro_here }}{{ robert.properties.firstname }} is here – {{ char_activity "robert" }}.{{ end }}

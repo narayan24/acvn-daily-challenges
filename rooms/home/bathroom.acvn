@@ -2,7 +2,14 @@
 {{- register_daily "shower_count" 0 -}}
 {{- register_daily "brush_count" 0 -}}
 {{ bro_in_bath = char_at "robert" "home_bathroom" }}
-You are standing in the bathroom. It is {{ time_str "HH:mm" }}.
+{{ hour = game_hour }}
+{{ if hour >= 6 && hour < 10 }}
+The bathroom is cool, the tiles still holding the night's chill. Pale morning light comes through the frosted window above the bath.
+{{ else if hour >= 22 || hour < 6 }}
+The bathroom light is harsh at this hour — you squint for a second before your eyes adjust. The rest of the flat is quiet.
+{{ else }}
+You step into the bathroom. A strip of daylight comes through the frosted glass. The room smells faintly of shampoo and damp towels.
+{{ end }}
 {{ if (quest_step "tutorial") == 1 }}{{ advance_quest "tutorial" }}{{ end }}
 {{ if bro_in_bath }}
 <p>The door is locked from the inside. You can hear the shower running – {{ robert.properties.firstname }} is in there.</p>

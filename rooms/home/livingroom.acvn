@@ -3,7 +3,24 @@
 {{ bro_here = char_at "robert" "home_livingroom" }}
 {{ mom_here = char_at "sandra"  "home_livingroom" }}
 {{ dad_here = char_at "thomas"  "home_livingroom" }}
-You are standing in the living room. It is {{ time_str "HH:mm" }}.
+{{ hour = game_hour }}
+{{ lr_roll = random_int 1 5 }}
+{{ if hour >= 6 && hour < 10 }}
+The living room is quiet this early. Morning light comes through the curtains at a low angle, catching dust in the air. The sofa cushions are still slightly dented from last night.
+{{ else if hour >= 10 && hour < 14 }}
+The living room is bright and still. The curtains are open. Someone left a glass on the coffee table.
+{{ if lr_roll == 1 }}<p><em>The remote is wedged between the sofa cushions. The TV is off, for once.</em></p>{{ end }}
+{{ else if hour >= 14 && hour < 18 }}
+The afternoon light cuts across the room at a comfortable angle. The sofa looks very inviting.
+{{ if lr_roll == 1 }}<p><em>One of {{ robert.properties.firstname }}'s hoodies is draped over the armchair. He was probably here earlier.</em></p>{{ end }}
+{{ if lr_roll == 2 }}<p><em>Something is playing faintly on the TV — someone left it on standby and it cycled back to the menu screen.</em></p>{{ end }}
+{{ else if hour >= 18 && hour < 22 }}
+The living room is warm and lit at this hour. The TV glow mixes with the lamp in the corner.
+{{ if lr_roll == 1 }}<p><em>Someone left a mug on the side table. Still a little warm.</em></p>{{ end }}
+{{ else }}
+The living room is dim and quiet. Most of the lights are off. The TV standby light blinks slowly in the dark.
+{{ if lr_roll == 1 }}<p><em>The whole flat has gone still. You can hear the building breathing around you.</em></p>{{ end }}
+{{ end }}
 {{ if bro_here }}
 <p>{{ robert.properties.firstname }} is sitting on the couch noisily gaming on the console. You feel like playing a round with him. Want to ask?</p>
 [[Ask {{ robert.properties.firstname }} to play, home_livingroom, askplay]]

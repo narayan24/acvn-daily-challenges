@@ -1,8 +1,31 @@
 #begin start
 {{ state = clothing_state }}
 {{ inhibition = get_attr "mc" "inhibition" }}
-You step into the hallway of the apartment. It is {{ time_str "HH:mm" }}.
-<p>The front door is at the far end. Beyond it: the stairwell, the building, the world.</p>
+{{ hour = game_hour }}
+{{ hall_roll = random_int 1 6 }}
+{{ can_roam = state == "dressed" || (state == "underwear" && inhibition <= 70) || (state == "naked" && inhibition <= 35) }}
+{{ if can_roam }}
+You step into the hallway.
+{{ if hour >= 6 && hour < 10 }}
+<p>Morning light comes through the glass panel above the front door, thin and angled. The flat smells of toast and someone's shower gel.</p>
+{{ if hall_roll == 1 && (char_at "thomas" "home_kitchen") }}<p><em>{{ thomas.properties.firstname }}'s shoes are by the door — he's getting ready to leave for work.</em></p>{{ end }}
+{{ if hall_roll == 2 }}<p><em>The bathroom door is ajar, steam still hanging in the air from an early shower.</em></p>{{ end }}
+{{ else if hour >= 10 && hour < 14 }}
+<p>The hallway is bright and unhurried. Coats on their hooks, shoes lined up near the door. The flat is quiet at this hour.</p>
+{{ if hall_roll == 1 }}<p><em>From somewhere behind a closed door — the muffled sound of someone on a call, or maybe the TV.</em></p>{{ end }}
+{{ if hall_roll == 2 && (char_at "sandra" "home_livingroom") }}<p><em>{{ sandra.properties.firstname }}'s cardigan is draped over the stair post. She's probably been home a while.</em></p>{{ end }}
+{{ else if hour >= 14 && hour < 18 }}
+<p>The afternoon quiet settles in the hallway. The building mostly holds its breath at this hour.</p>
+{{ if hall_roll == 1 }}<p><em>A low bass thrum from {{ robert.properties.firstname }}'s room — headphones not quite doing their job.</em></p>{{ end }}
+{{ if hall_roll == 2 }}<p><em>Someone opened a window somewhere. A faint breeze works its way through the flat.</em></p>{{ end }}
+{{ else if hour >= 18 && hour < 22 }}
+<p>The hallway fills with the smell of whatever is being cooked, or has just been cooked. Warm light spills from under the kitchen door.</p>
+{{ if hall_roll == 1 }}<p><em>Laughter from the living room. The TV is on, or someone is genuinely in a good mood.</em></p>{{ end }}
+{{ if hall_roll == 2 }}<p><em>{{ sandra.properties.firstname }}'s apron is hanging on the hook by the kitchen — dinner was hers tonight.</em></p>{{ end }}
+{{ else }}
+<p>The flat is quiet at this hour. Most of the lights are off. The front door at the far end looks darker than usual.</p>
+{{ if hall_roll == 1 }}<p><em>The building has gone still. Just the occasional creak of the structure settling.</em></p>{{ end }}
+{{ end }}
 [[Bedroom, home_room]]
 [[Bathroom, home_bathroom]]
 [[Kitchen, home_kitchen]]
@@ -19,5 +42,14 @@ You step into the hallway of the apartment. It is {{ time_str "HH:mm" }}.
 <p style="color:#FF6B6B; font-size:12px">You're in your underwear. Stepping out into the stairwell where the neighbours could see you feels like too much right now.</p>
 {{ else if state == "naked" }}
 <p style="color:#FF6B6B; font-size:12px">You're naked. Even if you wanted to, you couldn't make yourself open that front door.</p>
+{{ end }}
+{{ else }}
+You step out of your room — and immediately stop.
+{{ if state == "underwear" }}
+<p>The shared hallway stretches ahead: kitchen, living room, everyone's doors. In just your underwear it feels too exposed. You're not ready to be seen like this.</p>
+{{ else }}
+<p>The hallway feels very open when you're wearing nothing at all. You can hear the TV from the living room. Your heart rate ticks up.</p>
+{{ end }}
+[[Back to your room, home_room]]
 {{ end }}
 #end

@@ -1,7 +1,24 @@
 #begin start
 {{ bro_here = char_at "robert" "home_robert" }}
 {{ bro_activity = char_activity "robert" }}
-You are standing in {{ robert.properties.firstname }}'s room.
+{{ hour = game_hour }}
+{{ rob_roll = random_int 1 4 }}
+{{ if bro_here }}
+{{ if bro_activity == "sleeping" || bro_activity == "sleeping in" }}
+You push open the door to {{ robert.properties.firstname }}'s room.
+{{ else if hour >= 6 && hour < 10 }}
+You knock and push the door open. {{ robert.properties.firstname }}'s room smells of sleep and old laundry.
+{{ else if hour >= 18 }}
+You push open the door. The room is lit by the glow of his monitor and nothing else.
+{{ else }}
+You push open the door to {{ robert.properties.firstname }}'s room.
+{{ if rob_roll == 1 }}<p><em>Empty cans on the desk. Clothes on the floor. Comfortable chaos.</em></p>{{ end }}
+{{ end }}
+{{ else }}
+You push open the door to {{ robert.properties.firstname }}'s room. It's empty.
+{{ if hour >= 6 && hour < 10 }}<p><em>The bed is unmade. He wasn't up long before he left.</em></p>{{ end }}
+{{ if hour >= 14 && hour < 18 && rob_roll == 1 }}<p><em>His headphones are on the desk. His phone charger is still plugged in. He's coming back.</em></p>{{ end }}
+{{ end }}
 {{ if bro_here }}
 {{ if bro_activity == "sleeping" || bro_activity == "sleeping in" }}
 <p>The room is dark. {{ robert.properties.firstname }} is asleep, his breathing slow and steady.</p>
@@ -21,7 +38,6 @@ You are standing in {{ robert.properties.firstname }}'s room.
 [[Talk to {{ robert.properties.firstname }}, home_robert, talk]]
 {{ end }}
 {{ else }}
-<p>The room is empty.</p>
 {{ if bro_activity != "" }}
 <p style="color:#666; font-size:11px; font-style:italic">{{ robert.properties.firstname }} is elsewhere right now – {{ bro_activity }}.</p>
 {{ end }}
