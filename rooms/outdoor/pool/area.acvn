@@ -1,13 +1,24 @@
 #begin start
 {{- register_daily "swim_count" 0 -}}
 {{- register_daily "pool_harassed_today" false -}}
+{{- register_daily "pool_lane_today" false -}}
+{{- register_daily "pool_wp_event" false -}}
+{{- register_daily "pool_slide_event" false -}}
 {{ has_swimwear = any_clothing_has_tag "swimming" }}
 {{ state = clothing_state }}
 {{ pat_here = char_at "patrick" "outdoor_pool_area" }}
 {{ inhibition = get_attr "mc" "inhibition" }}
+{{ area_roll = random_int 1 6 }}
 You are in the pool hall. The air is warm and heavy with chlorine. Lane ropes divide a long lap pool; to the side, the whirlpool bubbles steadily; at the far end, the slide towers rise to the ceiling.
 {{ if pat_here }}
 <p>Patrick is up in the lifeguard chair near the lane ropes, sunglasses pushed back, scanning the water — until he spots you. His gaze lingers a beat too long before he looks away.</p>
+{{ end }}
+{{ if has_swimwear && area_roll == 1 }}
+<p><em>A small group at the pool edge falls quiet as you walk past. You catch a low exchange between two of them — too brief to make out — before they look back at the water.</em></p>
+{{ attr_change "mc" "horny" 4 }}
+{{ else if has_swimwear && area_roll == 2 }}
+<p><em>Someone resting on the lane rope watches you approach. He doesn't try to hide it. When you meet his gaze he just nods, once, like he's decided something.</em></p>
+{{ attr_change "mc" "horny" 5 }}
 {{ end }}
 {{ if !has_swimwear }}
 <p style="color:#FF6B6B; font-size:11px">A lifeguard raises an eyebrow at you. You can't be in the pool area without proper swimwear.</p>
@@ -53,14 +64,32 @@ You push off from the wall and settle into a steady crawl. The lane is long and 
 {{ else }}
 <p>{{ if vars.swim_count == 1 }}A good first length. Your muscles are warm when you pull yourself out.{{ else }}Another solid set. Your body knows this now.{{ end }}</p>
 {{ end }}
+{{ lane_roll = random_int 1 7 }}
+{{ if lane_roll == 1 && !vars.pool_lane_today }}
+{{ vars.pool_lane_today = true }}
+{{ attr_change "mc" "horny" 6 }}
+<p>Somewhere around the fourth length you notice the swimmer in the next lane has started matching your pace exactly — stroke for stroke, turn for turn. You glance sideways through the water. Dark goggles. A deliberate half-smile as they push off the wall beside you.</p>
+<p>You keep swimming. They keep pace for two more lengths, then let you pull ahead without comment. You tell yourself it was coincidence.</p>
+{{ end }}
 [[Pool area, outdoor_pool_area]]
 #end
 
 #begin whirlpool
-You step down into the whirlpool. The water is hot and the jets pulse steadily against your back. Two other people are already in, at the far end, talking quietly.
+You step down into the whirlpool. The water is hot and the jets pulse steadily against your back.
 {{ advance_time 15 }}
 {{ attr_change "mc" "energy" 10 }}
 {{ attr_change "mc" "mood" 12 }}
+{{ wp_roll = random_int 1 5 }}
+{{ if wp_roll == 1 && !vars.pool_wp_event }}
+{{ vars.pool_wp_event = true }}
+<p>A man settles in across from you — closer than the available space requires. He doesn't say anything. The jets push warm water between you in a slow, steady pulse. He lets his gaze rest on you for a moment before looking away, and then back again.</p>
+<p>You hold your position. The water is very warm.</p>
+{{ attr_change "mc" "horny" 8 }}
+{{ else if wp_roll == 2 }}
+<p>There are two others already in — a couple at the far end, talking quietly, not paying attention to anything else. The jets hum. Steam drifts up toward the ceiling panels.</p>
+{{ else }}
+<p>The heat takes hold almost immediately. You close your eyes and let the jets work on your back.</p>
+{{ end }}
 [[Stay and doze off, outdoor_pool_area, whirlpoolnap]]
 [[Get out, outdoor_pool_area]]
 #end
@@ -109,11 +138,26 @@ The heat and the steady thrum of the jets pull you under. You close your eyes an
 #end
 
 #begin slides
+{{ slide_roll = random_int 1 4 }}
+{{ if slide_roll == 1 && !vars.pool_slide_event }}
+{{ vars.pool_slide_event = true }}
+You climb the steps to the top. There's a short queue — a few kids, a couple, and one man standing just behind you who is maybe half a step too close. You can feel the warmth coming off him in the humid air of the tower.
+<p>He doesn't speak. You reach the top and push off without looking back.</p>
+{{ attr_change "mc" "horny" 5 }}
+{{ else }}
 You climb the tower to the top of the slide and push off.
+{{ end }}
 {{ advance_time 15 }}
 {{ attr_change "mc" "mood" 15 }}
 {{ attr_change "mc" "energy" -5 }}
+{{ if slide_roll == 2 && !vars.pool_slide_event }}
+{{ vars.pool_slide_event = true }}
+The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You surface, laughing, and push your hair out of your face. Someone is already in the pool — a man, standing waist-deep, watching the slide. He doesn't move out of the way. You end up closer than either of you planned, water moving between you.
+<p>He reaches out and steadies you by the arm without being asked, grip easy and unhurried. "You alright?" he asks, and waits for your answer before letting go.</p>
+{{ attr_change "mc" "horny" 7 }}
+{{ else }}
 The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You come up laughing despite yourself.
+{{ end }}
 [[Another go, outdoor_pool_area, slides]]
 [[Pool area, outdoor_pool_area]]
 #end
