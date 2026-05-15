@@ -141,23 +141,22 @@ The heat and the steady thrum of the jets pull you under. You close your eyes an
 {{ slide_roll = random_int 1 4 }}
 {{ if slide_roll == 1 && !vars.pool_slide_event }}
 {{ vars.pool_slide_event = true }}
-You climb the steps to the top. There's a short queue — a few kids, a couple, and one man standing just behind you who is maybe half a step too close. You can feel the warmth coming off him in the humid air of the tower.
-<p>He doesn't speak. You reach the top and push off without looking back.</p>
 {{ attr_change "mc" "horny" 5 }}
+You climb the steps to the top. There's a short queue — a few kids, a couple, and one man standing just behind you who is maybe half a step too close. You can feel the warmth coming off him in the humid air of the tower.
+<p>He doesn't speak. You reach the top and push off without looking back. The rush hits fast — speed, then the cool slap of the splash pool. You come up laughing despite yourself.</p>
+{{ else if slide_roll == 2 && !vars.pool_slide_event }}
+{{ vars.pool_slide_event = true }}
+{{ attr_change "mc" "horny" 7 }}
+You climb the tower and push off.
+<p>The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You surface, laughing, and push your hair out of your face. Someone is already in the pool — a man, standing waist-deep, watching the slide. He doesn't move out of the way. You end up closer than either of you planned, water moving between you.</p>
+<p>He reaches out and steadies you by the arm without being asked, grip easy and unhurried. "You alright?" he asks, and waits for your answer before letting go.</p>
 {{ else }}
 You climb the tower to the top of the slide and push off.
+<p>The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You come up laughing despite yourself.</p>
 {{ end }}
 {{ advance_time 15 }}
 {{ attr_change "mc" "mood" 15 }}
 {{ attr_change "mc" "energy" -5 }}
-{{ if slide_roll == 2 && !vars.pool_slide_event }}
-{{ vars.pool_slide_event = true }}
-The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You surface, laughing, and push your hair out of your face. Someone is already in the pool — a man, standing waist-deep, watching the slide. He doesn't move out of the way. You end up closer than either of you planned, water moving between you.
-<p>He reaches out and steadies you by the arm without being asked, grip easy and unhurried. "You alright?" he asks, and waits for your answer before letting go.</p>
-{{ attr_change "mc" "horny" 7 }}
-{{ else }}
-The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You come up laughing despite yourself.
-{{ end }}
 [[Another go, outdoor_pool_area, slides]]
 [[Pool area, outdoor_pool_area]]
 #end
