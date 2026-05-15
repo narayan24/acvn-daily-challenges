@@ -3,6 +3,8 @@
 {{- register_daily "shift_done_today" false -}}
 {{ kron = item_count "kron" }}
 {{ has_job = (item_count "pool_job") > 0 }}
+{{ state = clothing_state }}
+{{ inhibition = get_attr "mc" "inhibition" }}
 You are standing in the entrance of the municipal swimming pool. The smell of chlorine and damp tiles drifts out from beyond the turnstiles. A bored staff member sits at the counter.
 {{ if vars.pool_paid_today }}
 <p style="color:#4CAF50; font-size:11px">✓ You already paid today. Go right through.</p>
@@ -22,7 +24,19 @@ You are standing in the entrance of the municipal swimming pool. The smell of ch
 <p style="color:#4CAF50; font-size:11px">✓ Shift done for today.</p>
 {{ end }}
 {{ end }}
+{{ if state == "dressed" }}
 [[Leave, outdoor_street]]
+{{ else if state == "underwear" && inhibition <= 15 }}
+[[Leave, outdoor_street]]
+{{ else if state == "naked" && inhibition <= 5 }}
+[[Leave, outdoor_street]]
+{{ else if state == "underwear" }}
+<p style="color:#FF6B6B; font-size:12px">You're still in your swimwear. You'd need to get changed before stepping out onto the street.</p>
+[[Changing room, outdoor_pool_changingroom]]
+{{ else }}
+<p style="color:#FF6B6B; font-size:12px">You can't go out onto the street like this.</p>
+[[Changing room, outdoor_pool_changingroom]]
+{{ end }}
 #end
 
 #begin workshift
