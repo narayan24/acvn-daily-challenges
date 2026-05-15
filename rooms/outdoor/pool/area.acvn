@@ -47,6 +47,7 @@ You are in the pool hall. The air is warm and heavy with chlorine. Lane ropes di
 You push off from the wall and settle into a steady crawl. The lane is long and quiet. Your thoughts empty out with each stroke.
 {{ harass_roll = random_int 1 10 }}
 {{ pat_in_pool = char_at "patrick" "outdoor_pool_area" }}
+{{ debug_log "SWIM harass_roll=" harass_roll "pool_harassed_today=" vars.pool_harassed_today "pat_in_pool=" pat_in_pool }}
 {{ if harass_roll == 1 && !vars.pool_harassed_today }}
 {{ vars.pool_harassed_today = true }}
 {{ if pat_in_pool }}
@@ -65,6 +66,7 @@ You push off from the wall and settle into a steady crawl. The lane is long and 
 <p>{{ if vars.swim_count == 1 }}A good first length. Your muscles are warm when you pull yourself out.{{ else }}Another solid set. Your body knows this now.{{ end }}</p>
 {{ end }}
 {{ lane_roll = random_int 1 7 }}
+{{ debug_log "SWIM lane_roll=" lane_roll "pool_lane_today=" vars.pool_lane_today }}
 {{ if lane_roll == 1 && !vars.pool_lane_today }}
 {{ vars.pool_lane_today = true }}
 {{ attr_change "mc" "horny" 6 }}
@@ -80,6 +82,7 @@ You step down into the whirlpool. The water is hot and the jets pulse steadily a
 {{ attr_change "mc" "energy" 10 }}
 {{ attr_change "mc" "mood" 12 }}
 {{ wp_roll = random_int 1 5 }}
+{{ debug_log "WHIRLPOOL wp_roll=" wp_roll "pool_wp_event=" vars.pool_wp_event }}
 {{ if wp_roll == 1 && !vars.pool_wp_event }}
 {{ vars.pool_wp_event = true }}
 <p>A man settles in across from you — closer than the available space requires. He doesn't say anything. The jets push warm water between you in a slow, steady pulse. He lets his gaze rest on you for a moment before looking away, and then back again.</p>
@@ -101,6 +104,7 @@ You step down into the whirlpool. The water is hot and the jets pulse steadily a
 The heat and the steady thrum of the jets pull you under. You close your eyes and drift.
 {{ nap_harass_roll = random_int 1 100 }}
 {{ pat_in_pool = char_at "patrick" "outdoor_pool_area" }}
+{{ debug_log "WHIRLPOOL NAP nap_harass_roll=" nap_harass_roll "pool_harassed_today=" vars.pool_harassed_today "pat_in_pool=" pat_in_pool }}
 {{ if nap_harass_roll <= 30 && !vars.pool_harassed_today && pat_in_pool }}
 {{ vars.pool_harassed_today = true }}
 {{ attr_change "mc" "mood" -10 }}
@@ -139,6 +143,7 @@ The heat and the steady thrum of the jets pull you under. You close your eyes an
 
 #begin slides
 {{ slide_roll = random_int 1 4 }}
+{{ debug_log "SLIDES slide_roll=" slide_roll "pool_slide_event=" vars.pool_slide_event }}
 {{ if slide_roll == 1 && !vars.pool_slide_event }}
 {{ vars.pool_slide_event = true }}
 {{ attr_change "mc" "horny" 5 }}
