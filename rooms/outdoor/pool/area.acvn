@@ -1,9 +1,5 @@
 #begin start
 {{- register_daily "swim_count" 0 -}}
-{{- register_daily "pool_harassed_today" false -}}
-{{- register_daily "pool_lane_today" false -}}
-{{- register_daily "pool_wp_event" false -}}
-{{- register_daily "pool_slide_event" false -}}
 {{ has_swimwear = any_clothing_has_tag "swimming" }}
 {{ state = clothing_state }}
 {{ pat_here = char_at "patrick" "outdoor_pool_area" }}
@@ -45,11 +41,10 @@ You are in the pool hall. The air is warm and heavy with chlorine. Lane ropes di
 {{ attr_change "mc" "mood" 8 }}
 {{ attr_change "mc" "hunger" -8 }}
 You push off from the wall and settle into a steady crawl. The lane is long and quiet. Your thoughts empty out with each stroke.
-{{ harass_roll = random_int 1 10 }}
+{{ harass_roll = random_int 1 6 }}
 {{ pat_in_pool = char_at "patrick" "outdoor_pool_area" }}
-{{ debug_log "SWIM harass_roll=" harass_roll "pool_harassed_today=" vars.pool_harassed_today "pat_in_pool=" pat_in_pool }}
-{{ if harass_roll == 1 && !vars.pool_harassed_today }}
-{{ vars.pool_harassed_today = true }}
+{{ debug_log "SWIM harass_roll=" harass_roll "(event on 1) pat_in_pool=" pat_in_pool }}
+{{ if harass_roll == 1 }}
 {{ if pat_in_pool }}
 {{ attr_change "mc" "mood" -8 }}
 {{ attr_change "mc" "horny" 10 }}
@@ -65,10 +60,9 @@ You push off from the wall and settle into a steady crawl. The lane is long and 
 {{ else }}
 <p>{{ if vars.swim_count == 1 }}A good first length. Your muscles are warm when you pull yourself out.{{ else }}Another solid set. Your body knows this now.{{ end }}</p>
 {{ end }}
-{{ lane_roll = random_int 1 7 }}
-{{ debug_log "SWIM lane_roll=" lane_roll "pool_lane_today=" vars.pool_lane_today }}
-{{ if lane_roll == 1 && !vars.pool_lane_today }}
-{{ vars.pool_lane_today = true }}
+{{ lane_roll = random_int 1 6 }}
+{{ debug_log "SWIM lane_roll=" lane_roll "(event on 1)" }}
+{{ if lane_roll == 1 }}
 {{ attr_change "mc" "horny" 6 }}
 <p>Somewhere around the fourth length you notice the swimmer in the next lane has started matching your pace exactly — stroke for stroke, turn for turn. You glance sideways through the water. Dark goggles. A deliberate half-smile as they push off the wall beside you.</p>
 <p>You keep swimming. They keep pace for two more lengths, then let you pull ahead without comment. You tell yourself it was coincidence.</p>
@@ -81,10 +75,9 @@ You step down into the whirlpool. The water is hot and the jets pulse steadily a
 {{ advance_time 15 }}
 {{ attr_change "mc" "energy" 10 }}
 {{ attr_change "mc" "mood" 12 }}
-{{ wp_roll = random_int 1 5 }}
-{{ debug_log "WHIRLPOOL wp_roll=" wp_roll "pool_wp_event=" vars.pool_wp_event }}
-{{ if wp_roll == 1 && !vars.pool_wp_event }}
-{{ vars.pool_wp_event = true }}
+{{ wp_roll = random_int 1 6 }}
+{{ debug_log "WHIRLPOOL wp_roll=" wp_roll "(event on 1)" }}
+{{ if wp_roll == 1 }}
 <p>A man settles in across from you — closer than the available space requires. He doesn't say anything. The jets push warm water between you in a slow, steady pulse. He lets his gaze rest on you for a moment before looking away, and then back again.</p>
 <p>You hold your position. The water is very warm.</p>
 {{ attr_change "mc" "horny" 8 }}
@@ -102,11 +95,10 @@ You step down into the whirlpool. The water is hot and the jets pulse steadily a
 {{ attr_change "mc" "energy" 20 }}
 {{ attr_change "mc" "mood" 5 }}
 The heat and the steady thrum of the jets pull you under. You close your eyes and drift.
-{{ nap_harass_roll = random_int 1 100 }}
+{{ nap_harass_roll = random_int 1 6 }}
 {{ pat_in_pool = char_at "patrick" "outdoor_pool_area" }}
-{{ debug_log "WHIRLPOOL NAP nap_harass_roll=" nap_harass_roll "pool_harassed_today=" vars.pool_harassed_today "pat_in_pool=" pat_in_pool }}
-{{ if nap_harass_roll <= 30 && !vars.pool_harassed_today && pat_in_pool }}
-{{ vars.pool_harassed_today = true }}
+{{ debug_log "WHIRLPOOL NAP nap_harass_roll=" nap_harass_roll "(event on 1) pat_in_pool=" pat_in_pool }}
+{{ if nap_harass_roll == 1 && pat_in_pool }}
 {{ attr_change "mc" "mood" -10 }}
 {{ attr_change "mc" "horny" 15 }}
 {{ attr_change "patrick" "horny" 15 }}
@@ -124,16 +116,12 @@ The heat and the steady thrum of the jets pull you under. You close your eyes an
 [["Keep your hands to yourself, Patrick.", outdoor_pool_area, whirlpool_pat_warn]]
 [["...", outdoor_pool_area, whirlpool_pat_stay]]
 {{ end }}
-{{ else if nap_harass_roll <= 30 && !vars.pool_harassed_today }}
-{{ vars.pool_harassed_today = true }}
+{{ else if nap_harass_roll == 1 }}
 {{ attr_change "mc" "mood" -15 }}
 {{ attr_change "mc" "horny" 10 }}
 <p>You surface slowly. Something feels off — then you realise: a hand is resting on your thigh. Not accidental. The person next to you meets your gaze with an unreadable expression.</p>
 <p>The moment you shift away, they withdraw without a word and look back at the water, as if nothing happened.</p>
 <p>You sit very still for a moment before getting out.</p>
-[[Pool area, outdoor_pool_area]]
-{{ else if nap_harass_roll <= 50 && vars.pool_harassed_today }}
-<p>When you come back to yourself, the whirlpool is empty except for you. You feel rested, if slightly waterlogged.</p>
 [[Pool area, outdoor_pool_area]]
 {{ else }}
 <p>When you open your eyes, a few minutes — or maybe forty-five — have passed. The whirlpool hums on. You feel warm all the way through.</p>
@@ -142,15 +130,13 @@ The heat and the steady thrum of the jets pull you under. You close your eyes an
 #end
 
 #begin slides
-{{ slide_roll = random_int 1 4 }}
-{{ debug_log "SLIDES slide_roll=" slide_roll "pool_slide_event=" vars.pool_slide_event }}
-{{ if slide_roll == 1 && !vars.pool_slide_event }}
-{{ vars.pool_slide_event = true }}
+{{ slide_roll = random_int 1 6 }}
+{{ debug_log "SLIDES slide_roll=" slide_roll "(event on 1 or 2)" }}
+{{ if slide_roll == 1 }}
 {{ attr_change "mc" "horny" 5 }}
 You climb the steps to the top. There's a short queue — a few kids, a couple, and one man standing just behind you who is maybe half a step too close. You can feel the warmth coming off him in the humid air of the tower.
 <p>He doesn't speak. You reach the top and push off without looking back. The rush hits fast — speed, then the cool slap of the splash pool. You come up laughing despite yourself.</p>
-{{ else if slide_roll == 2 && !vars.pool_slide_event }}
-{{ vars.pool_slide_event = true }}
+{{ else if slide_roll == 2 }}
 {{ attr_change "mc" "horny" 7 }}
 You climb the tower and push off.
 <p>The rush is brief and sharp — a burst of speed and then the cool slap of the splash pool at the bottom. You surface, laughing, and push your hair out of your face. Someone is already in the pool — a man, standing waist-deep, watching the slide. He doesn't move out of the way. You end up closer than either of you planned, water moving between you.</p>
